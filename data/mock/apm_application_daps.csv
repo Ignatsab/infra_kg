@@ -1,0 +1,11 @@
+id,apm_application,dap_id,dap_name,direction,protocol
+adap_001,app_payments,dap_payment_events,Payment Events,producer,kafka
+adap_002,app_payments,dap_auth_context,Auth Context,consumer,https
+adap_003,app_auth,dap_auth_context,Auth Context,producer,https
+adap_004,app_search,dap_product_index,Product Index,consumer,https
+adap_005,app_billing,dap_payment_events,Payment Events,consumer,kafka
+adap_006,app_inventory,dap_inventory_snapshot,Inventory Snapshot,producer,s3
+adap_007,app_events,dap_payment_events,Payment Events,consumer,kafka
+adap_008,app_events,dap_raw_clickstream,Raw Clickstream,producer,kafka
+adap_009,app_warehouse,dap_inventory_snapshot,Inventory Snapshot,consumer,s3
+adap_010,app_warehouse,dap_curated_metrics,Curated Metrics,producer,snowflake

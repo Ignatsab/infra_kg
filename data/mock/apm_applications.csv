@@ -1,0 +1,8 @@
+id,name,apm_cluster,criticality,business_owner,runtime_tier
+app_payments,Payments API,cl_eu_prod,tier_1,payments,api
+app_auth,Identity Service,cl_eu_prod,tier_1,platform,service
+app_search,Search Gateway,cl_eu_prod,tier_2,commerce,edge
+app_billing,Billing Worker,cl_us_prod,tier_1,finance,worker
+app_inventory,Inventory Service,cl_us_prod,tier_2,supply-chain,service
+app_events,Event Collector,cl_data_platform,tier_1,data-platform,streaming
+app_warehouse,Warehouse Loader,cl_data_platform,tier_2,analytics,batch

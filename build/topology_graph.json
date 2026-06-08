@@ -1,0 +1,2146 @@
+{
+  "edges": [
+    {
+      "end_key": "Host:auth-api-01.eu.prod",
+      "properties": {
+        "max_risk": "low",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "low"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "supported"
+        ],
+        "worst_status": "supported"
+      },
+      "start_key": "Application:app_auth",
+      "type": "DEPLOYED_ON"
+    },
+    {
+      "end_key": "Host:auth-db-01.eu.prod",
+      "properties": {
+        "max_risk": "high",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "high"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Application:app_auth",
+      "type": "DEPLOYED_ON"
+    },
+    {
+      "end_key": "Dap:dap_auth_context",
+      "properties": {
+        "binding_id": "adap_003",
+        "direction": "producer",
+        "protocol": "https",
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_auth",
+      "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "ObsolescenceRecord:obso_004",
+      "properties": {
+        "source_fk": "application_id"
+      },
+      "start_key": "Application:app_auth",
+      "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "ObsolescenceRecord:obso_005",
+      "properties": {
+        "source_fk": "application_id"
+      },
+      "start_key": "Application:app_auth",
+      "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "Application:app_inventory",
+      "properties": {
+        "derived": true,
+        "reasons": [
+          "shared_technology:tech_postgres12"
+        ],
+        "strength": 1
+      },
+      "start_key": "Application:app_auth",
+      "type": "RELATED_TO"
+    },
+    {
+      "end_key": "Application:app_payments",
+      "properties": {
+        "derived": true,
+        "reasons": [
+          "shared_cluster:cl_eu_prod",
+          "shared_dap:dap_auth_context",
+          "shared_technology:tech_postgres12"
+        ],
+        "strength": 3
+      },
+      "start_key": "Application:app_auth",
+      "type": "RELATED_TO"
+    },
+    {
+      "end_key": "Application:app_search",
+      "properties": {
+        "derived": true,
+        "reasons": [
+          "shared_cluster:cl_eu_prod"
+        ],
+        "strength": 1
+      },
+      "start_key": "Application:app_auth",
+      "type": "RELATED_TO"
+    },
+    {
+      "end_key": "Technology:tech_java17",
+      "properties": {
+        "hosts": [
+          "auth-api-01.eu.prod"
+        ],
+        "max_risk": "low",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "low"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "supported"
+        ],
+        "worst_status": "supported"
+      },
+      "start_key": "Application:app_auth",
+      "type": "USES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_postgres12",
+      "properties": {
+        "hosts": [
+          "auth-db-01.eu.prod"
+        ],
+        "max_risk": "high",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "high"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Application:app_auth",
+      "type": "USES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:billing-db-01.us.prod",
+      "properties": {
+        "max_risk": "critical",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "critical"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Application:app_billing",
+      "type": "DEPLOYED_ON"
+    },
+    {
+      "end_key": "Host:billing-worker-01.us.prod",
+      "properties": {
+        "max_risk": "high",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "high"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Application:app_billing",
+      "type": "DEPLOYED_ON"
+    },
+    {
+      "end_key": "Dap:dap_payment_events",
+      "properties": {
+        "binding_id": "adap_005",
+        "direction": "consumer",
+        "protocol": "kafka",
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_billing",
+      "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "ObsolescenceRecord:obso_008",
+      "properties": {
+        "source_fk": "application_id"
+      },
+      "start_key": "Application:app_billing",
+      "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "ObsolescenceRecord:obso_009",
+      "properties": {
+        "source_fk": "application_id"
+      },
+      "start_key": "Application:app_billing",
+      "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "Application:app_events",
+      "properties": {
+        "derived": true,
+        "reasons": [
+          "shared_dap:dap_payment_events"
+        ],
+        "strength": 1
+      },
+      "start_key": "Application:app_billing",
+      "type": "RELATED_TO"
+    },
+    {
+      "end_key": "Application:app_inventory",
+      "properties": {
+        "derived": true,
+        "reasons": [
+          "shared_cluster:cl_us_prod"
+        ],
+        "strength": 1
+      },
+      "start_key": "Application:app_billing",
+      "type": "RELATED_TO"
+    },
+    {
+      "end_key": "Application:app_payments",
+      "properties": {
+        "derived": true,
+        "reasons": [
+          "shared_dap:dap_payment_events",
+          "shared_technology:tech_java8"
+        ],
+        "strength": 2
+      },
+      "start_key": "Application:app_billing",
+      "type": "RELATED_TO"
+    },
+    {
+      "end_key": "Technology:tech_java8",
+      "properties": {
+        "hosts": [
+          "billing-worker-01.us.prod"
+        ],
+        "max_risk": "high",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "high"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Application:app_billing",
+      "type": "USES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_oracle11g",
+      "properties": {
+        "hosts": [
+          "billing-db-01.us.prod"
+        ],
+        "max_risk": "critical",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "critical"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Application:app_billing",
+      "type": "USES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:event-collector-01.global",
+      "properties": {
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "aging"
+        ],
+        "worst_status": "aging"
+      },
+      "start_key": "Application:app_events",
+      "type": "DEPLOYED_ON"
+    },
+    {
+      "end_key": "Host:shared-kafka-01.global",
+      "properties": {
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "aging"
+        ],
+        "worst_status": "aging"
+      },
+      "start_key": "Application:app_events",
+      "type": "DEPLOYED_ON"
+    },
+    {
+      "end_key": "Dap:dap_payment_events",
+      "properties": {
+        "binding_id": "adap_007",
+        "direction": "consumer",
+        "protocol": "kafka",
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_events",
+      "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "Dap:dap_raw_clickstream",
+      "properties": {
+        "binding_id": "adap_008",
+        "direction": "producer",
+        "protocol": "kafka",
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_events",
+      "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "ObsolescenceRecord:obso_012",
+      "properties": {
+        "source_fk": "application_id"
+      },
+      "start_key": "Application:app_events",
+      "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "ObsolescenceRecord:obso_013",
+      "properties": {
+        "source_fk": "application_id"
+      },
+      "start_key": "Application:app_events",
+      "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "Application:app_inventory",
+      "properties": {
+        "derived": true,
+        "reasons": [
+          "shared_technology:tech_python39"
+        ],
+        "strength": 1
+      },
+      "start_key": "Application:app_events",
+      "type": "RELATED_TO"
+    },
+    {
+      "end_key": "Application:app_payments",
+      "properties": {
+        "derived": true,
+        "reasons": [
+          "shared_dap:dap_payment_events",
+          "shared_host:shared-kafka-01.global",
+          "shared_technology:tech_kafka28"
+        ],
+        "strength": 3
+      },
+      "start_key": "Application:app_events",
+      "type": "RELATED_TO"
+    },
+    {
+      "end_key": "Application:app_warehouse",
+      "properties": {
+        "derived": true,
+        "reasons": [
+          "shared_cluster:cl_data_platform",
+          "shared_technology:tech_python39"
+        ],
+        "strength": 2
+      },
+      "start_key": "Application:app_events",
+      "type": "RELATED_TO"
+    },
+    {
+      "end_key": "Technology:tech_kafka28",
+      "properties": {
+        "hosts": [
+          "shared-kafka-01.global"
+        ],
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "aging"
+        ],
+        "worst_status": "aging"
+      },
+      "start_key": "Application:app_events",
+      "type": "USES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_python39",
+      "properties": {
+        "hosts": [
+          "event-collector-01.global"
+        ],
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "aging"
+        ],
+        "worst_status": "aging"
+      },
+      "start_key": "Application:app_events",
+      "type": "USES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:inventory-api-01.us.prod",
+      "properties": {
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "aging"
+        ],
+        "worst_status": "aging"
+      },
+      "start_key": "Application:app_inventory",
+      "type": "DEPLOYED_ON"
+    },
+    {
+      "end_key": "Host:inventory-db-01.us.prod",
+      "properties": {
+        "max_risk": "high",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "high"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Application:app_inventory",
+      "type": "DEPLOYED_ON"
+    },
+    {
+      "end_key": "Dap:dap_inventory_snapshot",
+      "properties": {
+        "binding_id": "adap_006",
+        "direction": "producer",
+        "protocol": "s3",
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_inventory",
+      "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "ObsolescenceRecord:obso_010",
+      "properties": {
+        "source_fk": "application_id"
+      },
+      "start_key": "Application:app_inventory",
+      "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "ObsolescenceRecord:obso_011",
+      "properties": {
+        "source_fk": "application_id"
+      },
+      "start_key": "Application:app_inventory",
+      "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "Application:app_payments",
+      "properties": {
+        "derived": true,
+        "reasons": [
+          "shared_technology:tech_postgres12"
+        ],
+        "strength": 1
+      },
+      "start_key": "Application:app_inventory",
+      "type": "RELATED_TO"
+    },
+    {
+      "end_key": "Application:app_warehouse",
+      "properties": {
+        "derived": true,
+        "reasons": [
+          "shared_dap:dap_inventory_snapshot",
+          "shared_technology:tech_python39"
+        ],
+        "strength": 2
+      },
+      "start_key": "Application:app_inventory",
+      "type": "RELATED_TO"
+    },
+    {
+      "end_key": "Technology:tech_postgres12",
+      "properties": {
+        "hosts": [
+          "inventory-db-01.us.prod"
+        ],
+        "max_risk": "high",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "high"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Application:app_inventory",
+      "type": "USES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_python39",
+      "properties": {
+        "hosts": [
+          "inventory-api-01.us.prod"
+        ],
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "aging"
+        ],
+        "worst_status": "aging"
+      },
+      "start_key": "Application:app_inventory",
+      "type": "USES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:pay-api-01.eu.prod",
+      "properties": {
+        "max_risk": "high",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "high"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Application:app_payments",
+      "type": "DEPLOYED_ON"
+    },
+    {
+      "end_key": "Host:pay-db-01.eu.prod",
+      "properties": {
+        "max_risk": "critical",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "critical"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Application:app_payments",
+      "type": "DEPLOYED_ON"
+    },
+    {
+      "end_key": "Host:shared-kafka-01.global",
+      "properties": {
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "aging"
+        ],
+        "worst_status": "aging"
+      },
+      "start_key": "Application:app_payments",
+      "type": "DEPLOYED_ON"
+    },
+    {
+      "end_key": "Dap:dap_auth_context",
+      "properties": {
+        "binding_id": "adap_002",
+        "direction": "consumer",
+        "protocol": "https",
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_payments",
+      "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "Dap:dap_payment_events",
+      "properties": {
+        "binding_id": "adap_001",
+        "direction": "producer",
+        "protocol": "kafka",
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_payments",
+      "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "ObsolescenceRecord:obso_001",
+      "properties": {
+        "source_fk": "application_id"
+      },
+      "start_key": "Application:app_payments",
+      "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "ObsolescenceRecord:obso_002",
+      "properties": {
+        "source_fk": "application_id"
+      },
+      "start_key": "Application:app_payments",
+      "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "ObsolescenceRecord:obso_003",
+      "properties": {
+        "source_fk": "application_id"
+      },
+      "start_key": "Application:app_payments",
+      "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "Application:app_search",
+      "properties": {
+        "derived": true,
+        "reasons": [
+          "shared_cluster:cl_eu_prod"
+        ],
+        "strength": 1
+      },
+      "start_key": "Application:app_payments",
+      "type": "RELATED_TO"
+    },
+    {
+      "end_key": "Technology:tech_java8",
+      "properties": {
+        "hosts": [
+          "pay-api-01.eu.prod"
+        ],
+        "max_risk": "high",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "high"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Application:app_payments",
+      "type": "USES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_kafka28",
+      "properties": {
+        "hosts": [
+          "shared-kafka-01.global"
+        ],
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "aging"
+        ],
+        "worst_status": "aging"
+      },
+      "start_key": "Application:app_payments",
+      "type": "USES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_postgres12",
+      "properties": {
+        "hosts": [
+          "pay-db-01.eu.prod"
+        ],
+        "max_risk": "critical",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "critical"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Application:app_payments",
+      "type": "USES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:edge-01.eu.prod",
+      "properties": {
+        "max_risk": "medium",
+        "obso_record_count": 2,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Application:app_search",
+      "type": "DEPLOYED_ON"
+    },
+    {
+      "end_key": "Dap:dap_product_index",
+      "properties": {
+        "binding_id": "adap_004",
+        "direction": "consumer",
+        "protocol": "https",
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_search",
+      "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "ObsolescenceRecord:obso_006",
+      "properties": {
+        "source_fk": "application_id"
+      },
+      "start_key": "Application:app_search",
+      "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "ObsolescenceRecord:obso_007",
+      "properties": {
+        "source_fk": "application_id"
+      },
+      "start_key": "Application:app_search",
+      "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "Technology:tech_nginx117",
+      "properties": {
+        "hosts": [
+          "edge-01.eu.prod"
+        ],
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Application:app_search",
+      "type": "USES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_node16",
+      "properties": {
+        "hosts": [
+          "edge-01.eu.prod"
+        ],
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Application:app_search",
+      "type": "USES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:warehouse-loader-01.global",
+      "properties": {
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "aging"
+        ],
+        "worst_status": "aging"
+      },
+      "start_key": "Application:app_warehouse",
+      "type": "DEPLOYED_ON"
+    },
+    {
+      "end_key": "Dap:dap_curated_metrics",
+      "properties": {
+        "binding_id": "adap_010",
+        "direction": "producer",
+        "protocol": "snowflake",
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_warehouse",
+      "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "Dap:dap_inventory_snapshot",
+      "properties": {
+        "binding_id": "adap_009",
+        "direction": "consumer",
+        "protocol": "s3",
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_warehouse",
+      "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "ObsolescenceRecord:obso_014",
+      "properties": {
+        "source_fk": "application_id"
+      },
+      "start_key": "Application:app_warehouse",
+      "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "Technology:tech_python39",
+      "properties": {
+        "hosts": [
+          "warehouse-loader-01.global"
+        ],
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "aging"
+        ],
+        "worst_status": "aging"
+      },
+      "start_key": "Application:app_warehouse",
+      "type": "USES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Application:app_events",
+      "properties": {
+        "source_fk": "apm_cluster"
+      },
+      "start_key": "Cluster:cl_data_platform",
+      "type": "HAS_APPLICATION"
+    },
+    {
+      "end_key": "Application:app_warehouse",
+      "properties": {
+        "source_fk": "apm_cluster"
+      },
+      "start_key": "Cluster:cl_data_platform",
+      "type": "HAS_APPLICATION"
+    },
+    {
+      "end_key": "Subcluster:sub_data_streaming",
+      "properties": {
+        "source_fk": "apm_cluster"
+      },
+      "start_key": "Cluster:cl_data_platform",
+      "type": "HAS_SUBCLUSTER"
+    },
+    {
+      "end_key": "Subcluster:sub_data_warehouse",
+      "properties": {
+        "source_fk": "apm_cluster"
+      },
+      "start_key": "Cluster:cl_data_platform",
+      "type": "HAS_SUBCLUSTER"
+    },
+    {
+      "end_key": "Application:app_auth",
+      "properties": {
+        "source_fk": "apm_cluster"
+      },
+      "start_key": "Cluster:cl_eu_prod",
+      "type": "HAS_APPLICATION"
+    },
+    {
+      "end_key": "Application:app_payments",
+      "properties": {
+        "source_fk": "apm_cluster"
+      },
+      "start_key": "Cluster:cl_eu_prod",
+      "type": "HAS_APPLICATION"
+    },
+    {
+      "end_key": "Application:app_search",
+      "properties": {
+        "source_fk": "apm_cluster"
+      },
+      "start_key": "Cluster:cl_eu_prod",
+      "type": "HAS_APPLICATION"
+    },
+    {
+      "end_key": "Subcluster:sub_eu_core",
+      "properties": {
+        "source_fk": "apm_cluster"
+      },
+      "start_key": "Cluster:cl_eu_prod",
+      "type": "HAS_SUBCLUSTER"
+    },
+    {
+      "end_key": "Subcluster:sub_eu_edge",
+      "properties": {
+        "source_fk": "apm_cluster"
+      },
+      "start_key": "Cluster:cl_eu_prod",
+      "type": "HAS_SUBCLUSTER"
+    },
+    {
+      "end_key": "Application:app_billing",
+      "properties": {
+        "source_fk": "apm_cluster"
+      },
+      "start_key": "Cluster:cl_us_prod",
+      "type": "HAS_APPLICATION"
+    },
+    {
+      "end_key": "Application:app_inventory",
+      "properties": {
+        "source_fk": "apm_cluster"
+      },
+      "start_key": "Cluster:cl_us_prod",
+      "type": "HAS_APPLICATION"
+    },
+    {
+      "end_key": "Subcluster:sub_us_batch",
+      "properties": {
+        "source_fk": "apm_cluster"
+      },
+      "start_key": "Cluster:cl_us_prod",
+      "type": "HAS_SUBCLUSTER"
+    },
+    {
+      "end_key": "Subcluster:sub_us_core",
+      "properties": {
+        "source_fk": "apm_cluster"
+      },
+      "start_key": "Cluster:cl_us_prod",
+      "type": "HAS_SUBCLUSTER"
+    },
+    {
+      "end_key": "Technology:tech_java17",
+      "properties": {
+        "applications": [
+          "app_auth"
+        ],
+        "max_risk": "low",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "low"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "supported"
+        ],
+        "worst_status": "supported"
+      },
+      "start_key": "Host:auth-api-01.eu.prod",
+      "type": "HAS_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_postgres12",
+      "properties": {
+        "applications": [
+          "app_auth"
+        ],
+        "max_risk": "high",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "high"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Host:auth-db-01.eu.prod",
+      "type": "HAS_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_oracle11g",
+      "properties": {
+        "applications": [
+          "app_billing"
+        ],
+        "max_risk": "critical",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "critical"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Host:billing-db-01.us.prod",
+      "type": "HAS_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_java8",
+      "properties": {
+        "applications": [
+          "app_billing"
+        ],
+        "max_risk": "high",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "high"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Host:billing-worker-01.us.prod",
+      "type": "HAS_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_nginx117",
+      "properties": {
+        "applications": [
+          "app_search"
+        ],
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Host:edge-01.eu.prod",
+      "type": "HAS_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_node16",
+      "properties": {
+        "applications": [
+          "app_search"
+        ],
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Host:edge-01.eu.prod",
+      "type": "HAS_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_python39",
+      "properties": {
+        "applications": [
+          "app_events"
+        ],
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "aging"
+        ],
+        "worst_status": "aging"
+      },
+      "start_key": "Host:event-collector-01.global",
+      "type": "HAS_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_python39",
+      "properties": {
+        "applications": [
+          "app_inventory"
+        ],
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "aging"
+        ],
+        "worst_status": "aging"
+      },
+      "start_key": "Host:inventory-api-01.us.prod",
+      "type": "HAS_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_postgres12",
+      "properties": {
+        "applications": [
+          "app_inventory"
+        ],
+        "max_risk": "high",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "high"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Host:inventory-db-01.us.prod",
+      "type": "HAS_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_java8",
+      "properties": {
+        "applications": [
+          "app_payments"
+        ],
+        "max_risk": "high",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "high"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Host:pay-api-01.eu.prod",
+      "type": "HAS_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_postgres12",
+      "properties": {
+        "applications": [
+          "app_payments"
+        ],
+        "max_risk": "critical",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "critical"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "obsolete"
+        ],
+        "worst_status": "obsolete"
+      },
+      "start_key": "Host:pay-db-01.eu.prod",
+      "type": "HAS_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_kafka28",
+      "properties": {
+        "applications": [
+          "app_events",
+          "app_payments"
+        ],
+        "max_risk": "medium",
+        "obso_record_count": 2,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "aging"
+        ],
+        "worst_status": "aging"
+      },
+      "start_key": "Host:shared-kafka-01.global",
+      "type": "HAS_TECHNOLOGY"
+    },
+    {
+      "end_key": "Technology:tech_python39",
+      "properties": {
+        "applications": [
+          "app_warehouse"
+        ],
+        "max_risk": "medium",
+        "obso_record_count": 1,
+        "risk_levels": [
+          "medium"
+        ],
+        "source_table": "apm_obso",
+        "statuses": [
+          "aging"
+        ],
+        "worst_status": "aging"
+      },
+      "start_key": "Host:warehouse-loader-01.global",
+      "type": "HAS_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:pay-api-01.eu.prod",
+      "properties": {
+        "source_field": "host"
+      },
+      "start_key": "ObsolescenceRecord:obso_001",
+      "type": "ON_HOST"
+    },
+    {
+      "end_key": "Technology:tech_java8",
+      "properties": {
+        "source_fk": "technology_id"
+      },
+      "start_key": "ObsolescenceRecord:obso_001",
+      "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:pay-db-01.eu.prod",
+      "properties": {
+        "source_field": "host"
+      },
+      "start_key": "ObsolescenceRecord:obso_002",
+      "type": "ON_HOST"
+    },
+    {
+      "end_key": "Technology:tech_postgres12",
+      "properties": {
+        "source_fk": "technology_id"
+      },
+      "start_key": "ObsolescenceRecord:obso_002",
+      "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:shared-kafka-01.global",
+      "properties": {
+        "source_field": "host"
+      },
+      "start_key": "ObsolescenceRecord:obso_003",
+      "type": "ON_HOST"
+    },
+    {
+      "end_key": "Technology:tech_kafka28",
+      "properties": {
+        "source_fk": "technology_id"
+      },
+      "start_key": "ObsolescenceRecord:obso_003",
+      "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:auth-api-01.eu.prod",
+      "properties": {
+        "source_field": "host"
+      },
+      "start_key": "ObsolescenceRecord:obso_004",
+      "type": "ON_HOST"
+    },
+    {
+      "end_key": "Technology:tech_java17",
+      "properties": {
+        "source_fk": "technology_id"
+      },
+      "start_key": "ObsolescenceRecord:obso_004",
+      "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:auth-db-01.eu.prod",
+      "properties": {
+        "source_field": "host"
+      },
+      "start_key": "ObsolescenceRecord:obso_005",
+      "type": "ON_HOST"
+    },
+    {
+      "end_key": "Technology:tech_postgres12",
+      "properties": {
+        "source_fk": "technology_id"
+      },
+      "start_key": "ObsolescenceRecord:obso_005",
+      "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:edge-01.eu.prod",
+      "properties": {
+        "source_field": "host"
+      },
+      "start_key": "ObsolescenceRecord:obso_006",
+      "type": "ON_HOST"
+    },
+    {
+      "end_key": "Technology:tech_node16",
+      "properties": {
+        "source_fk": "technology_id"
+      },
+      "start_key": "ObsolescenceRecord:obso_006",
+      "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:edge-01.eu.prod",
+      "properties": {
+        "source_field": "host"
+      },
+      "start_key": "ObsolescenceRecord:obso_007",
+      "type": "ON_HOST"
+    },
+    {
+      "end_key": "Technology:tech_nginx117",
+      "properties": {
+        "source_fk": "technology_id"
+      },
+      "start_key": "ObsolescenceRecord:obso_007",
+      "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:billing-worker-01.us.prod",
+      "properties": {
+        "source_field": "host"
+      },
+      "start_key": "ObsolescenceRecord:obso_008",
+      "type": "ON_HOST"
+    },
+    {
+      "end_key": "Technology:tech_java8",
+      "properties": {
+        "source_fk": "technology_id"
+      },
+      "start_key": "ObsolescenceRecord:obso_008",
+      "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:billing-db-01.us.prod",
+      "properties": {
+        "source_field": "host"
+      },
+      "start_key": "ObsolescenceRecord:obso_009",
+      "type": "ON_HOST"
+    },
+    {
+      "end_key": "Technology:tech_oracle11g",
+      "properties": {
+        "source_fk": "technology_id"
+      },
+      "start_key": "ObsolescenceRecord:obso_009",
+      "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:inventory-api-01.us.prod",
+      "properties": {
+        "source_field": "host"
+      },
+      "start_key": "ObsolescenceRecord:obso_010",
+      "type": "ON_HOST"
+    },
+    {
+      "end_key": "Technology:tech_python39",
+      "properties": {
+        "source_fk": "technology_id"
+      },
+      "start_key": "ObsolescenceRecord:obso_010",
+      "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:inventory-db-01.us.prod",
+      "properties": {
+        "source_field": "host"
+      },
+      "start_key": "ObsolescenceRecord:obso_011",
+      "type": "ON_HOST"
+    },
+    {
+      "end_key": "Technology:tech_postgres12",
+      "properties": {
+        "source_fk": "technology_id"
+      },
+      "start_key": "ObsolescenceRecord:obso_011",
+      "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:shared-kafka-01.global",
+      "properties": {
+        "source_field": "host"
+      },
+      "start_key": "ObsolescenceRecord:obso_012",
+      "type": "ON_HOST"
+    },
+    {
+      "end_key": "Technology:tech_kafka28",
+      "properties": {
+        "source_fk": "technology_id"
+      },
+      "start_key": "ObsolescenceRecord:obso_012",
+      "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:event-collector-01.global",
+      "properties": {
+        "source_field": "host"
+      },
+      "start_key": "ObsolescenceRecord:obso_013",
+      "type": "ON_HOST"
+    },
+    {
+      "end_key": "Technology:tech_python39",
+      "properties": {
+        "source_fk": "technology_id"
+      },
+      "start_key": "ObsolescenceRecord:obso_013",
+      "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Host:warehouse-loader-01.global",
+      "properties": {
+        "source_field": "host"
+      },
+      "start_key": "ObsolescenceRecord:obso_014",
+      "type": "ON_HOST"
+    },
+    {
+      "end_key": "Technology:tech_python39",
+      "properties": {
+        "source_fk": "technology_id"
+      },
+      "start_key": "ObsolescenceRecord:obso_014",
+      "type": "REFERENCES_TECHNOLOGY"
+    }
+  ],
+  "nodes": [
+    {
+      "identity": "app_auth",
+      "key": "Application:app_auth",
+      "label": "Application",
+      "properties": {
+        "business_owner": "platform",
+        "criticality": "tier_1",
+        "id": "app_auth",
+        "name": "Identity Service",
+        "runtime_tier": "service",
+        "source_table": "apm_applications"
+      }
+    },
+    {
+      "identity": "app_billing",
+      "key": "Application:app_billing",
+      "label": "Application",
+      "properties": {
+        "business_owner": "finance",
+        "criticality": "tier_1",
+        "id": "app_billing",
+        "name": "Billing Worker",
+        "runtime_tier": "worker",
+        "source_table": "apm_applications"
+      }
+    },
+    {
+      "identity": "app_events",
+      "key": "Application:app_events",
+      "label": "Application",
+      "properties": {
+        "business_owner": "data-platform",
+        "criticality": "tier_1",
+        "id": "app_events",
+        "name": "Event Collector",
+        "runtime_tier": "streaming",
+        "source_table": "apm_applications"
+      }
+    },
+    {
+      "identity": "app_inventory",
+      "key": "Application:app_inventory",
+      "label": "Application",
+      "properties": {
+        "business_owner": "supply-chain",
+        "criticality": "tier_2",
+        "id": "app_inventory",
+        "name": "Inventory Service",
+        "runtime_tier": "service",
+        "source_table": "apm_applications"
+      }
+    },
+    {
+      "identity": "app_payments",
+      "key": "Application:app_payments",
+      "label": "Application",
+      "properties": {
+        "business_owner": "payments",
+        "criticality": "tier_1",
+        "id": "app_payments",
+        "name": "Payments API",
+        "runtime_tier": "api",
+        "source_table": "apm_applications"
+      }
+    },
+    {
+      "identity": "app_search",
+      "key": "Application:app_search",
+      "label": "Application",
+      "properties": {
+        "business_owner": "commerce",
+        "criticality": "tier_2",
+        "id": "app_search",
+        "name": "Search Gateway",
+        "runtime_tier": "edge",
+        "source_table": "apm_applications"
+      }
+    },
+    {
+      "identity": "app_warehouse",
+      "key": "Application:app_warehouse",
+      "label": "Application",
+      "properties": {
+        "business_owner": "analytics",
+        "criticality": "tier_2",
+        "id": "app_warehouse",
+        "name": "Warehouse Loader",
+        "runtime_tier": "batch",
+        "source_table": "apm_applications"
+      }
+    },
+    {
+      "identity": "cl_data_platform",
+      "key": "Cluster:cl_data_platform",
+      "label": "Cluster",
+      "properties": {
+        "environment": "prod",
+        "id": "cl_data_platform",
+        "name": "Data Platform",
+        "owner_team": "data-platform",
+        "region": "global",
+        "source_table": "apm_cluster"
+      }
+    },
+    {
+      "identity": "cl_eu_prod",
+      "key": "Cluster:cl_eu_prod",
+      "label": "Cluster",
+      "properties": {
+        "environment": "prod",
+        "id": "cl_eu_prod",
+        "name": "EU Production",
+        "owner_team": "platform-eu",
+        "region": "eu-west",
+        "source_table": "apm_cluster"
+      }
+    },
+    {
+      "identity": "cl_us_prod",
+      "key": "Cluster:cl_us_prod",
+      "label": "Cluster",
+      "properties": {
+        "environment": "prod",
+        "id": "cl_us_prod",
+        "name": "US Production",
+        "owner_team": "platform-us",
+        "region": "us-east",
+        "source_table": "apm_cluster"
+      }
+    },
+    {
+      "identity": "dap_auth_context",
+      "key": "Dap:dap_auth_context",
+      "label": "Dap",
+      "properties": {
+        "id": "dap_auth_context",
+        "name": "Auth Context",
+        "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "dap_curated_metrics",
+      "key": "Dap:dap_curated_metrics",
+      "label": "Dap",
+      "properties": {
+        "id": "dap_curated_metrics",
+        "name": "Curated Metrics",
+        "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "dap_inventory_snapshot",
+      "key": "Dap:dap_inventory_snapshot",
+      "label": "Dap",
+      "properties": {
+        "id": "dap_inventory_snapshot",
+        "name": "Inventory Snapshot",
+        "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "dap_payment_events",
+      "key": "Dap:dap_payment_events",
+      "label": "Dap",
+      "properties": {
+        "id": "dap_payment_events",
+        "name": "Payment Events",
+        "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "dap_product_index",
+      "key": "Dap:dap_product_index",
+      "label": "Dap",
+      "properties": {
+        "id": "dap_product_index",
+        "name": "Product Index",
+        "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "dap_raw_clickstream",
+      "key": "Dap:dap_raw_clickstream",
+      "label": "Dap",
+      "properties": {
+        "id": "dap_raw_clickstream",
+        "name": "Raw Clickstream",
+        "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "auth-api-01.eu.prod",
+      "key": "Host:auth-api-01.eu.prod",
+      "label": "Host",
+      "properties": {
+        "id": "auth-api-01.eu.prod",
+        "name": "auth-api-01.eu.prod",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "auth-db-01.eu.prod",
+      "key": "Host:auth-db-01.eu.prod",
+      "label": "Host",
+      "properties": {
+        "id": "auth-db-01.eu.prod",
+        "name": "auth-db-01.eu.prod",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "billing-db-01.us.prod",
+      "key": "Host:billing-db-01.us.prod",
+      "label": "Host",
+      "properties": {
+        "id": "billing-db-01.us.prod",
+        "name": "billing-db-01.us.prod",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "billing-worker-01.us.prod",
+      "key": "Host:billing-worker-01.us.prod",
+      "label": "Host",
+      "properties": {
+        "id": "billing-worker-01.us.prod",
+        "name": "billing-worker-01.us.prod",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "edge-01.eu.prod",
+      "key": "Host:edge-01.eu.prod",
+      "label": "Host",
+      "properties": {
+        "id": "edge-01.eu.prod",
+        "name": "edge-01.eu.prod",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "event-collector-01.global",
+      "key": "Host:event-collector-01.global",
+      "label": "Host",
+      "properties": {
+        "id": "event-collector-01.global",
+        "name": "event-collector-01.global",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "inventory-api-01.us.prod",
+      "key": "Host:inventory-api-01.us.prod",
+      "label": "Host",
+      "properties": {
+        "id": "inventory-api-01.us.prod",
+        "name": "inventory-api-01.us.prod",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "inventory-db-01.us.prod",
+      "key": "Host:inventory-db-01.us.prod",
+      "label": "Host",
+      "properties": {
+        "id": "inventory-db-01.us.prod",
+        "name": "inventory-db-01.us.prod",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "pay-api-01.eu.prod",
+      "key": "Host:pay-api-01.eu.prod",
+      "label": "Host",
+      "properties": {
+        "id": "pay-api-01.eu.prod",
+        "name": "pay-api-01.eu.prod",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "pay-db-01.eu.prod",
+      "key": "Host:pay-db-01.eu.prod",
+      "label": "Host",
+      "properties": {
+        "id": "pay-db-01.eu.prod",
+        "name": "pay-db-01.eu.prod",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "shared-kafka-01.global",
+      "key": "Host:shared-kafka-01.global",
+      "label": "Host",
+      "properties": {
+        "id": "shared-kafka-01.global",
+        "name": "shared-kafka-01.global",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "warehouse-loader-01.global",
+      "key": "Host:warehouse-loader-01.global",
+      "label": "Host",
+      "properties": {
+        "id": "warehouse-loader-01.global",
+        "name": "warehouse-loader-01.global",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "obso_001",
+      "key": "ObsolescenceRecord:obso_001",
+      "label": "ObsolescenceRecord",
+      "properties": {
+        "detected_at": "2026-05-18",
+        "evidence": "runtime scan",
+        "id": "obso_001",
+        "obsolescence_status": "obsolete",
+        "risk_level": "high",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "obso_002",
+      "key": "ObsolescenceRecord:obso_002",
+      "label": "ObsolescenceRecord",
+      "properties": {
+        "detected_at": "2026-05-18",
+        "evidence": "cmdb",
+        "id": "obso_002",
+        "obsolescence_status": "obsolete",
+        "risk_level": "critical",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "obso_003",
+      "key": "ObsolescenceRecord:obso_003",
+      "label": "ObsolescenceRecord",
+      "properties": {
+        "detected_at": "2026-05-20",
+        "evidence": "runtime scan",
+        "id": "obso_003",
+        "obsolescence_status": "aging",
+        "risk_level": "medium",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "obso_004",
+      "key": "ObsolescenceRecord:obso_004",
+      "label": "ObsolescenceRecord",
+      "properties": {
+        "detected_at": "2026-05-21",
+        "evidence": "runtime scan",
+        "id": "obso_004",
+        "obsolescence_status": "supported",
+        "risk_level": "low",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "obso_005",
+      "key": "ObsolescenceRecord:obso_005",
+      "label": "ObsolescenceRecord",
+      "properties": {
+        "detected_at": "2026-05-21",
+        "evidence": "cmdb",
+        "id": "obso_005",
+        "obsolescence_status": "obsolete",
+        "risk_level": "high",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "obso_006",
+      "key": "ObsolescenceRecord:obso_006",
+      "label": "ObsolescenceRecord",
+      "properties": {
+        "detected_at": "2026-05-22",
+        "evidence": "container image",
+        "id": "obso_006",
+        "obsolescence_status": "obsolete",
+        "risk_level": "medium",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "obso_007",
+      "key": "ObsolescenceRecord:obso_007",
+      "label": "ObsolescenceRecord",
+      "properties": {
+        "detected_at": "2026-05-22",
+        "evidence": "package scan",
+        "id": "obso_007",
+        "obsolescence_status": "obsolete",
+        "risk_level": "medium",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "obso_008",
+      "key": "ObsolescenceRecord:obso_008",
+      "label": "ObsolescenceRecord",
+      "properties": {
+        "detected_at": "2026-05-23",
+        "evidence": "runtime scan",
+        "id": "obso_008",
+        "obsolescence_status": "obsolete",
+        "risk_level": "high",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "obso_009",
+      "key": "ObsolescenceRecord:obso_009",
+      "label": "ObsolescenceRecord",
+      "properties": {
+        "detected_at": "2026-05-23",
+        "evidence": "cmdb",
+        "id": "obso_009",
+        "obsolescence_status": "obsolete",
+        "risk_level": "critical",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "obso_010",
+      "key": "ObsolescenceRecord:obso_010",
+      "label": "ObsolescenceRecord",
+      "properties": {
+        "detected_at": "2026-05-24",
+        "evidence": "runtime scan",
+        "id": "obso_010",
+        "obsolescence_status": "aging",
+        "risk_level": "medium",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "obso_011",
+      "key": "ObsolescenceRecord:obso_011",
+      "label": "ObsolescenceRecord",
+      "properties": {
+        "detected_at": "2026-05-24",
+        "evidence": "cmdb",
+        "id": "obso_011",
+        "obsolescence_status": "obsolete",
+        "risk_level": "high",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "obso_012",
+      "key": "ObsolescenceRecord:obso_012",
+      "label": "ObsolescenceRecord",
+      "properties": {
+        "detected_at": "2026-05-25",
+        "evidence": "runtime scan",
+        "id": "obso_012",
+        "obsolescence_status": "aging",
+        "risk_level": "medium",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "obso_013",
+      "key": "ObsolescenceRecord:obso_013",
+      "label": "ObsolescenceRecord",
+      "properties": {
+        "detected_at": "2026-05-25",
+        "evidence": "container image",
+        "id": "obso_013",
+        "obsolescence_status": "aging",
+        "risk_level": "medium",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "obso_014",
+      "key": "ObsolescenceRecord:obso_014",
+      "label": "ObsolescenceRecord",
+      "properties": {
+        "detected_at": "2026-05-26",
+        "evidence": "runtime scan",
+        "id": "obso_014",
+        "obsolescence_status": "aging",
+        "risk_level": "medium",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "sub_data_streaming",
+      "key": "Subcluster:sub_data_streaming",
+      "label": "Subcluster",
+      "properties": {
+        "id": "sub_data_streaming",
+        "name": "Streaming Platform",
+        "role": "streaming",
+        "source_table": "apm_subclusters",
+        "zone": "global-a"
+      }
+    },
+    {
+      "identity": "sub_data_warehouse",
+      "key": "Subcluster:sub_data_warehouse",
+      "label": "Subcluster",
+      "properties": {
+        "id": "sub_data_warehouse",
+        "name": "Warehouse Platform",
+        "role": "warehouse",
+        "source_table": "apm_subclusters",
+        "zone": "global-b"
+      }
+    },
+    {
+      "identity": "sub_eu_core",
+      "key": "Subcluster:sub_eu_core",
+      "label": "Subcluster",
+      "properties": {
+        "id": "sub_eu_core",
+        "name": "EU Core Services",
+        "role": "services",
+        "source_table": "apm_subclusters",
+        "zone": "eu-west-1a"
+      }
+    },
+    {
+      "identity": "sub_eu_edge",
+      "key": "Subcluster:sub_eu_edge",
+      "label": "Subcluster",
+      "properties": {
+        "id": "sub_eu_edge",
+        "name": "EU Edge",
+        "role": "ingress",
+        "source_table": "apm_subclusters",
+        "zone": "eu-west-1b"
+      }
+    },
+    {
+      "identity": "sub_us_batch",
+      "key": "Subcluster:sub_us_batch",
+      "label": "Subcluster",
+      "properties": {
+        "id": "sub_us_batch",
+        "name": "US Batch",
+        "role": "batch",
+        "source_table": "apm_subclusters",
+        "zone": "us-east-1c"
+      }
+    },
+    {
+      "identity": "sub_us_core",
+      "key": "Subcluster:sub_us_core",
+      "label": "Subcluster",
+      "properties": {
+        "id": "sub_us_core",
+        "name": "US Core Services",
+        "role": "services",
+        "source_table": "apm_subclusters",
+        "zone": "us-east-1a"
+      }
+    },
+    {
+      "identity": "tech_java17",
+      "key": "Technology:tech_java17",
+      "label": "Technology",
+      "properties": {
+        "category": "runtime",
+        "id": "tech_java17",
+        "lifecycle": "supported",
+        "name": "Java",
+        "source_table": "apm_technologies",
+        "vendor": "Eclipse Adoptium",
+        "version": "17"
+      }
+    },
+    {
+      "identity": "tech_java8",
+      "key": "Technology:tech_java8",
+      "label": "Technology",
+      "properties": {
+        "category": "runtime",
+        "id": "tech_java8",
+        "lifecycle": "obsolete",
+        "name": "Java",
+        "source_table": "apm_technologies",
+        "vendor": "Oracle",
+        "version": "8"
+      }
+    },
+    {
+      "identity": "tech_kafka28",
+      "key": "Technology:tech_kafka28",
+      "label": "Technology",
+      "properties": {
+        "category": "messaging",
+        "id": "tech_kafka28",
+        "lifecycle": "aging",
+        "name": "Kafka",
+        "source_table": "apm_technologies",
+        "vendor": "Apache",
+        "version": "2.8"
+      }
+    },
+    {
+      "identity": "tech_nginx117",
+      "key": "Technology:tech_nginx117",
+      "label": "Technology",
+      "properties": {
+        "category": "proxy",
+        "id": "tech_nginx117",
+        "lifecycle": "obsolete",
+        "name": "Nginx",
+        "source_table": "apm_technologies",
+        "vendor": "F5",
+        "version": "1.17"
+      }
+    },
+    {
+      "identity": "tech_node16",
+      "key": "Technology:tech_node16",
+      "label": "Technology",
+      "properties": {
+        "category": "runtime",
+        "id": "tech_node16",
+        "lifecycle": "obsolete",
+        "name": "Node.js",
+        "source_table": "apm_technologies",
+        "vendor": "OpenJS",
+        "version": "16"
+      }
+    },
+    {
+      "identity": "tech_oracle11g",
+      "key": "Technology:tech_oracle11g",
+      "label": "Technology",
+      "properties": {
+        "category": "database",
+        "id": "tech_oracle11g",
+        "lifecycle": "obsolete",
+        "name": "Oracle Database",
+        "source_table": "apm_technologies",
+        "vendor": "Oracle",
+        "version": "11g"
+      }
+    },
+    {
+      "identity": "tech_postgres12",
+      "key": "Technology:tech_postgres12",
+      "label": "Technology",
+      "properties": {
+        "category": "database",
+        "id": "tech_postgres12",
+        "lifecycle": "obsolete",
+        "name": "PostgreSQL",
+        "source_table": "apm_technologies",
+        "vendor": "PostgreSQL",
+        "version": "12"
+      }
+    },
+    {
+      "identity": "tech_python39",
+      "key": "Technology:tech_python39",
+      "label": "Technology",
+      "properties": {
+        "category": "runtime",
+        "id": "tech_python39",
+        "lifecycle": "aging",
+        "name": "Python",
+        "source_table": "apm_technologies",
+        "vendor": "Python Software Foundation",
+        "version": "3.9"
+      }
+    }
+  ],
+  "warnings": []
+}

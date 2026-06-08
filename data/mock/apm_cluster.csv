@@ -1,0 +1,4 @@
+id,name,environment,region,owner_team
+cl_eu_prod,EU Production,prod,eu-west,platform-eu
+cl_us_prod,US Production,prod,us-east,platform-us
+cl_data_platform,Data Platform,prod,global,data-platform

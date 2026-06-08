@@ -1,0 +1,15 @@
+id,application_id,technology_id,host,obsolescence_status,risk_level,detected_at,evidence
+obso_001,app_payments,tech_java8,pay-api-01.eu.prod,obsolete,high,2026-05-18,runtime scan
+obso_002,app_payments,tech_postgres12,pay-db-01.eu.prod,obsolete,critical,2026-05-18,cmdb
+obso_003,app_payments,tech_kafka28,shared-kafka-01.global,aging,medium,2026-05-20,runtime scan
+obso_004,app_auth,tech_java17,auth-api-01.eu.prod,supported,low,2026-05-21,runtime scan
+obso_005,app_auth,tech_postgres12,auth-db-01.eu.prod,obsolete,high,2026-05-21,cmdb
+obso_006,app_search,tech_node16,edge-01.eu.prod,obsolete,medium,2026-05-22,container image
+obso_007,app_search,tech_nginx117,edge-01.eu.prod,obsolete,medium,2026-05-22,package scan
+obso_008,app_billing,tech_java8,billing-worker-01.us.prod,obsolete,high,2026-05-23,runtime scan
+obso_009,app_billing,tech_oracle11g,billing-db-01.us.prod,obsolete,critical,2026-05-23,cmdb
+obso_010,app_inventory,tech_python39,inventory-api-01.us.prod,aging,medium,2026-05-24,runtime scan
+obso_011,app_inventory,tech_postgres12,inventory-db-01.us.prod,obsolete,high,2026-05-24,cmdb
+obso_012,app_events,tech_kafka28,shared-kafka-01.global,aging,medium,2026-05-25,runtime scan
+obso_013,app_events,tech_python39,event-collector-01.global,aging,medium,2026-05-25,container image
+obso_014,app_warehouse,tech_python39,warehouse-loader-01.global,aging,medium,2026-05-26,runtime scan

@@ -1,0 +1,7 @@
+id,name,apm_cluster,role,zone
+sub_eu_core,EU Core Services,cl_eu_prod,services,eu-west-1a
+sub_eu_edge,EU Edge,cl_eu_prod,ingress,eu-west-1b
+sub_us_core,US Core Services,cl_us_prod,services,us-east-1a
+sub_us_batch,US Batch,cl_us_prod,batch,us-east-1c
+sub_data_streaming,Streaming Platform,cl_data_platform,streaming,global-a
+sub_data_warehouse,Warehouse Platform,cl_data_platform,warehouse,global-b

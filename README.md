@@ -80,7 +80,18 @@ Useful checks:
 docker compose ps
 docker compose logs memgraph
 nc -zv 127.0.0.1 7687
+python3 scripts/check_memgraph.py
 ```
+
+If Memgraph Lab is hard to open through a Cloud IDE port proxy, render the
+generated graph directly:
+
+```bash
+python3 scripts/render_graph_viewer.py
+python3 -m http.server 8080 --directory build
+```
+
+Then open forwarded port `8080` and go to `/topology_viewer.html`.
 
 ## Outputs
 

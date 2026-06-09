@@ -56,6 +56,7 @@ class KnowledgeGraph:
     nodes: dict[str, GraphNode] = field(default_factory=dict)
     edges: list[GraphEdge] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
+    _edge_keys: set[tuple[str, str, str]] = field(default_factory=set, init=False, repr=False)
 
     def add_node(self, label: str, identity: str, properties: dict[str, Any]) -> str:
         key = make_key(label, identity)
@@ -76,8 +77,10 @@ class KnowledgeGraph:
     ) -> None:
         clean = clean_properties(properties or {})
         edge = GraphEdge(start_key=start_key, type=edge_type, end_key=end_key, properties=clean)
-        if edge.key not in {existing.key for existing in self.edges}:
-            self.edges.append(edge)
+        if edge.key in self._edge_keys:
+            return
+        self.edges.append(edge)
+        self._edge_keys.add(edge.key)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -123,6 +126,7 @@ def build_graph(
     embedding_provider: EmbeddingProvider | None = None,
     enrich_with_llm: bool = False,
     env_path: Path | str = ".env",
+    max_related_group_size: int = 200,
 ) -> KnowledgeGraph:
     tables = load_tables(data_dir)
     return build_graph_from_tables(
@@ -132,6 +136,7 @@ def build_graph(
         embedding_provider=embedding_provider,
         enrich_with_llm=enrich_with_llm,
         env_path=env_path,
+        max_related_group_size=max_related_group_size,
     )
 
 
@@ -143,6 +148,7 @@ def build_graph_from_tables(
     embedding_provider: EmbeddingProvider | None = None,
     enrich_with_llm: bool = False,
     env_path: Path | str = ".env",
+    max_related_group_size: int = 200,
 ) -> KnowledgeGraph:
     graph = KnowledgeGraph()
     validate_required_tables(tables, graph)
@@ -280,7 +286,14 @@ def build_graph_from_tables(
             graph.warnings.append(f"Obsolescence record {row['id']} references missing technology {technology_id}")
 
     if include_derived:
-        add_derived_topology_edges(graph, applications, technologies, obso_records, tables.get("apm_application_daps", []))
+        add_derived_topology_edges(
+            graph,
+            applications,
+            technologies,
+            obso_records,
+            tables.get("apm_application_daps", []),
+            max_related_group_size=max_related_group_size,
+        )
 
     if enrich_with_llm:
         enrich_application_nodes(graph, applications, app_context, env_path)
@@ -300,6 +313,7 @@ def add_derived_topology_edges(
     technologies: dict[str, dict[str, str]],
     obso_records: dict[str, dict[str, str]],
     dap_rows: Iterable[dict[str, str]],
+    max_related_group_size: int = 200,
 ) -> None:
     app_host_records: dict[tuple[str, str], list[dict[str, str]]] = defaultdict(list)
     app_technology_records: dict[tuple[str, str], list[dict[str, str]]] = defaultdict(list)
@@ -344,7 +358,13 @@ def add_derived_topology_edges(
             props,
         )
 
-    app_reasons = application_relationship_reasons(applications, obso_records.values(), dap_rows)
+    app_reasons = application_relationship_reasons(
+        applications,
+        obso_records.values(),
+        dap_rows,
+        graph.warnings,
+        max_group_size=max_related_group_size,
+    )
     for (left_app, right_app), reasons in app_reasons.items():
         graph.add_edge(
             make_key("Application", left_app),
@@ -362,6 +382,8 @@ def application_relationship_reasons(
     applications: dict[str, dict[str, str]],
     obso_rows: Iterable[dict[str, str]],
     dap_rows: Iterable[dict[str, str]],
+    warnings: list[str] | None = None,
+    max_group_size: int = 200,
 ) -> dict[tuple[str, str], set[str]]:
     index: dict[str, dict[str, set[str]]] = {
         "cluster": defaultdict(set),
@@ -382,6 +404,14 @@ def application_relationship_reasons(
         for value, app_ids in values.items():
             clean_app_ids = sorted(app_id for app_id in app_ids if app_id in applications)
             if not value or len(clean_app_ids) < 2:
+                continue
+            if max_group_size > 0 and len(clean_app_ids) > max_group_size:
+                if warnings is not None:
+                    warnings.append(
+                        f"Skipped RELATED_TO expansion for shared_{reason_type}:{value} "
+                        f"because it contains {len(clean_app_ids)} applications "
+                        f"(limit {max_group_size})"
+                    )
                 continue
             for idx, left_app in enumerate(clean_app_ids):
                 for right_app in clean_app_ids[idx + 1 :]:

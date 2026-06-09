@@ -18,9 +18,27 @@ class LLMSettings:
 
     @classmethod
     def from_env(cls) -> "LLMSettings | None":
-        base_url = first_env("LLM_BASE_URL", "OPENAI_BASE_URL", "LOCAL_LLM_BASE_URL")
-        api_key = first_env("LLM_API_KEY", "OPENAI_API_KEY", "LOCAL_LLM_API_KEY")
-        model = first_env("LLM_MODEL", "OPENAI_MODEL", "LOCAL_LLM_MODEL")
+        base_url = first_env(
+            "LLM_BASE_URL",
+            "LLM_URL",
+            "LLM_LINK",
+            "LLM_ENDPOINT",
+            "LLM_API_BASE",
+            "OPENAI_BASE_URL",
+            "OPENAI_API_BASE",
+            "OPENAI_API_BASE_URL",
+            "LOCAL_LLM_BASE_URL",
+            "LOCAL_LLM_API_BASE",
+        )
+        api_key = first_env("LLM_API_KEY", "LLM_KEY", "OPENAI_API_KEY", "LOCAL_LLM_API_KEY")
+        model = first_env(
+            "LLM_MODEL",
+            "LLM_MODEL_NAME",
+            "OPENAI_MODEL",
+            "OPENAI_MODEL_NAME",
+            "LOCAL_LLM_MODEL",
+            "LOCAL_LLM_MODEL_NAME",
+        )
         if not base_url or not api_key or not model:
             return None
         return cls(base_url=base_url.rstrip("/"), api_key=api_key, model=model)

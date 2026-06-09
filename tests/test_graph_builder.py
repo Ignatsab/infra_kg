@@ -84,6 +84,27 @@ class GraphBuilderTest(unittest.TestCase):
         ][0]
         self.assertEqual("gold", exposes_dap.properties["SLA_Tier"])
 
+    def test_large_related_groups_are_skipped_by_default(self) -> None:
+        tables = mock_tables()
+        tables["apm_applications"] = [
+            {
+                "id": f"app_{idx}",
+                "name": f"Application {idx}",
+                "apm_cluster": "cl_eu_prod",
+                "criticality": "tier_3",
+                "business_owner": "test",
+                "runtime_tier": "service",
+            }
+            for idx in range(5)
+        ]
+        tables["apm_application_daps"] = []
+        tables["apm_obso"] = []
+
+        graph = build_graph_from_tables(tables, max_related_group_size=3)
+
+        self.assertNotIn("RELATED_TO", graph.edge_counts())
+        self.assertTrue(any("Skipped RELATED_TO expansion" in warning for warning in graph.warnings))
+
 
 if __name__ == "__main__":
     unittest.main()

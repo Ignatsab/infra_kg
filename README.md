@@ -31,6 +31,25 @@ Export the graph to JSON and Cypher:
 python3 scripts/export_graph.py
 ```
 
+For a first pass on larger real CSV exports, start with only the trusted FK
+graph:
+
+```bash
+python3 scripts/export_graph.py --no-derived
+python3 scripts/render_graph_viewer.py
+```
+
+Then enable derived shortcut edges:
+
+```bash
+python3 scripts/export_graph.py --max-related-group-size 200
+```
+
+`RELATED_TO` edges can grow quickly because every app sharing a large cluster,
+technology, host, or DAP can become related to every other app in that group.
+The exporter skips `RELATED_TO` expansion for groups above
+`--max-related-group-size` while preserving all source FK edges.
+
 Export with local test embeddings:
 
 ```bash
@@ -181,6 +200,19 @@ python3 scripts/export_graph.py --enrich-with-llm
 
 The LLM only adds application summaries/tags. It does not create or remove
 topology edges.
+
+If the exporter says no LLM env vars were found, run the safe checker. It never
+prints the API key:
+
+```bash
+python3 scripts/check_llm_env.py --env-path .env
+```
+
+If your `.env` lives somewhere else:
+
+```bash
+python3 scripts/export_graph.py --enrich-with-llm --env-path /path/to/.env
+```
 
 ## Optional Vector Retrieval
 

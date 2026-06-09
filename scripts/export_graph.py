@@ -18,6 +18,12 @@ def main() -> None:
     parser.add_argument("--out-json", default="build/topology_graph.json", help="Output graph JSON path.")
     parser.add_argument("--out-cypher", default="build/topology_graph.cypher", help="Output Cypher path.")
     parser.add_argument("--no-derived", action="store_true", help="Only emit source-of-truth FK edges.")
+    parser.add_argument(
+        "--max-related-group-size",
+        type=int,
+        default=200,
+        help="Skip derived RELATED_TO all-to-all expansion for groups larger than this. Use 0 for no cap.",
+    )
     parser.add_argument("--no-retrieval-text", action="store_true", help="Do not add retrieval_text to graph nodes.")
     parser.add_argument(
         "--embed",
@@ -27,15 +33,22 @@ def main() -> None:
     )
     parser.add_argument("--embedding-dimensions", type=int, default=64, help="Hash embedding dimensions.")
     parser.add_argument("--enrich-with-llm", action="store_true", help="Add optional LLM summaries/tags.")
+    parser.add_argument("--env-path", default=".env", help="Path to .env file for LLM/embedding settings.")
     args = parser.parse_args()
 
-    embedding_provider = embedding_provider_from_choice(args.embed, dimensions=args.embedding_dimensions)
+    embedding_provider = embedding_provider_from_choice(
+        args.embed,
+        dimensions=args.embedding_dimensions,
+        env_path=args.env_path,
+    )
     graph = build_graph(
         Path(args.data_dir),
         include_derived=not args.no_derived,
         include_retrieval_text=not args.no_retrieval_text,
         embedding_provider=embedding_provider,
         enrich_with_llm=args.enrich_with_llm,
+        env_path=args.env_path,
+        max_related_group_size=args.max_related_group_size,
     )
     write_graph_json(graph, args.out_json)
     write_graph_cypher(graph, args.out_cypher)

@@ -21,6 +21,12 @@ def main() -> None:
     parser.add_argument("--password", default=None, help="Memgraph password if auth is enabled.")
     parser.add_argument("--clear", action="store_true", help="Delete existing graph data before loading.")
     parser.add_argument("--no-derived", action="store_true", help="Only load source-of-truth FK edges.")
+    parser.add_argument(
+        "--max-related-group-size",
+        type=int,
+        default=200,
+        help="Skip derived RELATED_TO all-to-all expansion for groups larger than this. Use 0 for no cap.",
+    )
     parser.add_argument("--no-retrieval-text", action="store_true", help="Do not add retrieval_text to graph nodes.")
     parser.add_argument(
         "--embed",
@@ -30,17 +36,24 @@ def main() -> None:
     )
     parser.add_argument("--embedding-dimensions", type=int, default=64, help="Hash embedding dimensions.")
     parser.add_argument("--enrich-with-llm", action="store_true", help="Add optional LLM summaries/tags.")
+    parser.add_argument("--env-path", default=".env", help="Path to .env file for LLM/embedding settings.")
     parser.add_argument("--connect-retries", type=int, default=30, help="Memgraph connection attempts before failing.")
     parser.add_argument("--connect-retry-delay", type=float, default=1.0, help="Seconds between Memgraph connection attempts.")
     args = parser.parse_args()
 
-    embedding_provider = embedding_provider_from_choice(args.embed, dimensions=args.embedding_dimensions)
+    embedding_provider = embedding_provider_from_choice(
+        args.embed,
+        dimensions=args.embedding_dimensions,
+        env_path=args.env_path,
+    )
     graph = build_graph(
         Path(args.data_dir),
         include_derived=not args.no_derived,
         include_retrieval_text=not args.no_retrieval_text,
         embedding_provider=embedding_provider,
         enrich_with_llm=args.enrich_with_llm,
+        env_path=args.env_path,
+        max_related_group_size=args.max_related_group_size,
     )
     result = load_graph_to_memgraph(
         graph,

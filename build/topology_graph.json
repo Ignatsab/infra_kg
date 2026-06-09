@@ -37,13 +37,26 @@
     {
       "end_key": "Dap:dap_auth_context",
       "properties": {
+        "apm_application": "app_auth",
         "binding_id": "adap_003",
+        "dap_id": "dap_auth_context",
+        "dap_name": "Auth Context",
         "direction": "producer",
+        "id": "adap_003",
         "protocol": "https",
-        "source_fk": "apm_application"
+        "source_fk": "apm_application",
+        "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_auth",
       "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "ApplicationDap:adap_003",
+      "properties": {
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_auth",
+      "type": "HAS_DAP_BINDING"
     },
     {
       "end_key": "ObsolescenceRecord:obso_004",
@@ -176,13 +189,26 @@
     {
       "end_key": "Dap:dap_payment_events",
       "properties": {
+        "apm_application": "app_billing",
         "binding_id": "adap_005",
+        "dap_id": "dap_payment_events",
+        "dap_name": "Payment Events",
         "direction": "consumer",
+        "id": "adap_005",
         "protocol": "kafka",
-        "source_fk": "apm_application"
+        "source_fk": "apm_application",
+        "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_billing",
       "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "ApplicationDap:adap_005",
+      "properties": {
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_billing",
+      "type": "HAS_DAP_BINDING"
     },
     {
       "end_key": "ObsolescenceRecord:obso_008",
@@ -314,10 +340,15 @@
     {
       "end_key": "Dap:dap_payment_events",
       "properties": {
+        "apm_application": "app_events",
         "binding_id": "adap_007",
+        "dap_id": "dap_payment_events",
+        "dap_name": "Payment Events",
         "direction": "consumer",
+        "id": "adap_007",
         "protocol": "kafka",
-        "source_fk": "apm_application"
+        "source_fk": "apm_application",
+        "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_events",
       "type": "EXPOSES_DAP"
@@ -325,13 +356,34 @@
     {
       "end_key": "Dap:dap_raw_clickstream",
       "properties": {
+        "apm_application": "app_events",
         "binding_id": "adap_008",
+        "dap_id": "dap_raw_clickstream",
+        "dap_name": "Raw Clickstream",
         "direction": "producer",
+        "id": "adap_008",
         "protocol": "kafka",
-        "source_fk": "apm_application"
+        "source_fk": "apm_application",
+        "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_events",
       "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "ApplicationDap:adap_007",
+      "properties": {
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_events",
+      "type": "HAS_DAP_BINDING"
+    },
+    {
+      "end_key": "ApplicationDap:adap_008",
+      "properties": {
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_events",
+      "type": "HAS_DAP_BINDING"
     },
     {
       "end_key": "ObsolescenceRecord:obso_012",
@@ -465,13 +517,26 @@
     {
       "end_key": "Dap:dap_inventory_snapshot",
       "properties": {
+        "apm_application": "app_inventory",
         "binding_id": "adap_006",
+        "dap_id": "dap_inventory_snapshot",
+        "dap_name": "Inventory Snapshot",
         "direction": "producer",
+        "id": "adap_006",
         "protocol": "s3",
-        "source_fk": "apm_application"
+        "source_fk": "apm_application",
+        "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_inventory",
       "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "ApplicationDap:adap_006",
+      "properties": {
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_inventory",
+      "type": "HAS_DAP_BINDING"
     },
     {
       "end_key": "ObsolescenceRecord:obso_010",
@@ -608,10 +673,15 @@
     {
       "end_key": "Dap:dap_auth_context",
       "properties": {
+        "apm_application": "app_payments",
         "binding_id": "adap_002",
+        "dap_id": "dap_auth_context",
+        "dap_name": "Auth Context",
         "direction": "consumer",
+        "id": "adap_002",
         "protocol": "https",
-        "source_fk": "apm_application"
+        "source_fk": "apm_application",
+        "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_payments",
       "type": "EXPOSES_DAP"
@@ -619,13 +689,34 @@
     {
       "end_key": "Dap:dap_payment_events",
       "properties": {
+        "apm_application": "app_payments",
         "binding_id": "adap_001",
+        "dap_id": "dap_payment_events",
+        "dap_name": "Payment Events",
         "direction": "producer",
+        "id": "adap_001",
         "protocol": "kafka",
-        "source_fk": "apm_application"
+        "source_fk": "apm_application",
+        "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_payments",
       "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "ApplicationDap:adap_001",
+      "properties": {
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_payments",
+      "type": "HAS_DAP_BINDING"
+    },
+    {
+      "end_key": "ApplicationDap:adap_002",
+      "properties": {
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_payments",
+      "type": "HAS_DAP_BINDING"
     },
     {
       "end_key": "ObsolescenceRecord:obso_001",
@@ -743,13 +834,26 @@
     {
       "end_key": "Dap:dap_product_index",
       "properties": {
+        "apm_application": "app_search",
         "binding_id": "adap_004",
+        "dap_id": "dap_product_index",
+        "dap_name": "Product Index",
         "direction": "consumer",
+        "id": "adap_004",
         "protocol": "https",
-        "source_fk": "apm_application"
+        "source_fk": "apm_application",
+        "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_search",
       "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "ApplicationDap:adap_004",
+      "properties": {
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_search",
+      "type": "HAS_DAP_BINDING"
     },
     {
       "end_key": "ObsolescenceRecord:obso_006",
@@ -827,10 +931,15 @@
     {
       "end_key": "Dap:dap_curated_metrics",
       "properties": {
+        "apm_application": "app_warehouse",
         "binding_id": "adap_010",
+        "dap_id": "dap_curated_metrics",
+        "dap_name": "Curated Metrics",
         "direction": "producer",
+        "id": "adap_010",
         "protocol": "snowflake",
-        "source_fk": "apm_application"
+        "source_fk": "apm_application",
+        "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_warehouse",
       "type": "EXPOSES_DAP"
@@ -838,13 +947,34 @@
     {
       "end_key": "Dap:dap_inventory_snapshot",
       "properties": {
+        "apm_application": "app_warehouse",
         "binding_id": "adap_009",
+        "dap_id": "dap_inventory_snapshot",
+        "dap_name": "Inventory Snapshot",
         "direction": "consumer",
+        "id": "adap_009",
         "protocol": "s3",
-        "source_fk": "apm_application"
+        "source_fk": "apm_application",
+        "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_warehouse",
       "type": "EXPOSES_DAP"
+    },
+    {
+      "end_key": "ApplicationDap:adap_009",
+      "properties": {
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_warehouse",
+      "type": "HAS_DAP_BINDING"
+    },
+    {
+      "end_key": "ApplicationDap:adap_010",
+      "properties": {
+        "source_fk": "apm_application"
+      },
+      "start_key": "Application:app_warehouse",
+      "type": "HAS_DAP_BINDING"
     },
     {
       "end_key": "ObsolescenceRecord:obso_014",
@@ -873,6 +1003,86 @@
       },
       "start_key": "Application:app_warehouse",
       "type": "USES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Dap:dap_payment_events",
+      "properties": {
+        "source_field": "dap_id"
+      },
+      "start_key": "ApplicationDap:adap_001",
+      "type": "TARGETS_DAP"
+    },
+    {
+      "end_key": "Dap:dap_auth_context",
+      "properties": {
+        "source_field": "dap_id"
+      },
+      "start_key": "ApplicationDap:adap_002",
+      "type": "TARGETS_DAP"
+    },
+    {
+      "end_key": "Dap:dap_auth_context",
+      "properties": {
+        "source_field": "dap_id"
+      },
+      "start_key": "ApplicationDap:adap_003",
+      "type": "TARGETS_DAP"
+    },
+    {
+      "end_key": "Dap:dap_product_index",
+      "properties": {
+        "source_field": "dap_id"
+      },
+      "start_key": "ApplicationDap:adap_004",
+      "type": "TARGETS_DAP"
+    },
+    {
+      "end_key": "Dap:dap_payment_events",
+      "properties": {
+        "source_field": "dap_id"
+      },
+      "start_key": "ApplicationDap:adap_005",
+      "type": "TARGETS_DAP"
+    },
+    {
+      "end_key": "Dap:dap_inventory_snapshot",
+      "properties": {
+        "source_field": "dap_id"
+      },
+      "start_key": "ApplicationDap:adap_006",
+      "type": "TARGETS_DAP"
+    },
+    {
+      "end_key": "Dap:dap_payment_events",
+      "properties": {
+        "source_field": "dap_id"
+      },
+      "start_key": "ApplicationDap:adap_007",
+      "type": "TARGETS_DAP"
+    },
+    {
+      "end_key": "Dap:dap_raw_clickstream",
+      "properties": {
+        "source_field": "dap_id"
+      },
+      "start_key": "ApplicationDap:adap_008",
+      "type": "TARGETS_DAP"
+    },
+    {
+      "end_key": "Dap:dap_inventory_snapshot",
+      "properties": {
+        "source_field": "dap_id"
+      },
+      "start_key": "ApplicationDap:adap_009",
+      "type": "TARGETS_DAP"
+    },
+    {
+      "end_key": "Dap:dap_curated_metrics",
+      "properties": {
+        "source_field": "dap_id"
+      },
+      "start_key": "ApplicationDap:adap_010",
+      "type": "TARGETS_DAP"
     },
     {
       "end_key": "Application:app_events",
@@ -1470,11 +1680,12 @@
       "key": "Application:app_auth",
       "label": "Application",
       "properties": {
+        "apm_cluster": "cl_eu_prod",
         "business_owner": "platform",
         "criticality": "tier_1",
         "id": "app_auth",
         "name": "Identity Service",
-        "retrieval_text": "Application. business_owner: platform. criticality: tier_1. id: app_auth. name: Identity Service. runtime_tier: service. source_table: apm_applications. Relationships: DEPLOYED_ON Host auth-api-01.eu.prod; DEPLOYED_ON Host auth-db-01.eu.prod; EXPOSES_DAP Dap Auth Context (dap_auth_context); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_004; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_005; INCOMING_HAS_APPLICATION Cluster EU Production (cl_eu_prod); RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Payments API (app_payments); RELATED_TO Application Search Gateway (app_search); USES_TECHNOLOGY Technology Java (tech_java17); USES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
+        "retrieval_text": "Application. apm_cluster: cl_eu_prod. business_owner: platform. criticality: tier_1. id: app_auth. name: Identity Service. runtime_tier: service. source_table: apm_applications. Relationships: DEPLOYED_ON Host auth-api-01.eu.prod; DEPLOYED_ON Host auth-db-01.eu.prod; EXPOSES_DAP Dap Auth Context (dap_auth_context); HAS_DAP_BINDING ApplicationDap adap_003; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_004; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_005; INCOMING_HAS_APPLICATION Cluster EU Production (cl_eu_prod); RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Payments API (app_payments); RELATED_TO Application Search Gateway (app_search); USES_TECHNOLOGY Technology Java (tech_java17); USES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
         "runtime_tier": "service",
         "source_table": "apm_applications"
       }
@@ -1484,11 +1695,12 @@
       "key": "Application:app_billing",
       "label": "Application",
       "properties": {
+        "apm_cluster": "cl_us_prod",
         "business_owner": "finance",
         "criticality": "tier_1",
         "id": "app_billing",
         "name": "Billing Worker",
-        "retrieval_text": "Application. business_owner: finance. criticality: tier_1. id: app_billing. name: Billing Worker. runtime_tier: worker. source_table: apm_applications. Relationships: DEPLOYED_ON Host billing-db-01.us.prod; DEPLOYED_ON Host billing-worker-01.us.prod; EXPOSES_DAP Dap Payment Events (dap_payment_events); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_008; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_009; INCOMING_HAS_APPLICATION Cluster US Production (cl_us_prod); RELATED_TO Application Event Collector (app_events); RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Payments API (app_payments); USES_TECHNOLOGY Technology Java (tech_java8); USES_TECHNOLOGY Technology Oracle Database (tech_oracle11g)",
+        "retrieval_text": "Application. apm_cluster: cl_us_prod. business_owner: finance. criticality: tier_1. id: app_billing. name: Billing Worker. runtime_tier: worker. source_table: apm_applications. Relationships: DEPLOYED_ON Host billing-db-01.us.prod; DEPLOYED_ON Host billing-worker-01.us.prod; EXPOSES_DAP Dap Payment Events (dap_payment_events); HAS_DAP_BINDING ApplicationDap adap_005; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_008; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_009; INCOMING_HAS_APPLICATION Cluster US Production (cl_us_prod); RELATED_TO Application Event Collector (app_events); RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Payments API (app_payments); USES_TECHNOLOGY Technology Java (tech_java8); USES_TECHNOLOGY Technology Oracle Database (tech_oracle11g)",
         "runtime_tier": "worker",
         "source_table": "apm_applications"
       }
@@ -1498,11 +1710,12 @@
       "key": "Application:app_events",
       "label": "Application",
       "properties": {
+        "apm_cluster": "cl_data_platform",
         "business_owner": "data-platform",
         "criticality": "tier_1",
         "id": "app_events",
         "name": "Event Collector",
-        "retrieval_text": "Application. business_owner: data-platform. criticality: tier_1. id: app_events. name: Event Collector. runtime_tier: streaming. source_table: apm_applications. Relationships: DEPLOYED_ON Host event-collector-01.global; DEPLOYED_ON Host shared-kafka-01.global; EXPOSES_DAP Dap Payment Events (dap_payment_events); EXPOSES_DAP Dap Raw Clickstream (dap_raw_clickstream); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_012; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_013; INCOMING_HAS_APPLICATION Cluster Data Platform (cl_data_platform); INCOMING_RELATED_TO Application Billing Worker (app_billing); RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Payments API (app_payments); RELATED_TO Application Warehouse Loader (app_warehouse); USES_TECHNOLOGY Technology Kafka (tech_kafka28); USES_TECHNOLOGY Technology Python (tech_python39)",
+        "retrieval_text": "Application. apm_cluster: cl_data_platform. business_owner: data-platform. criticality: tier_1. id: app_events. name: Event Collector. runtime_tier: streaming. source_table: apm_applications. Relationships: DEPLOYED_ON Host event-collector-01.global; DEPLOYED_ON Host shared-kafka-01.global; EXPOSES_DAP Dap Payment Events (dap_payment_events); EXPOSES_DAP Dap Raw Clickstream (dap_raw_clickstream); HAS_DAP_BINDING ApplicationDap adap_007; HAS_DAP_BINDING ApplicationDap adap_008; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_012; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_013; INCOMING_HAS_APPLICATION Cluster Data Platform (cl_data_platform); INCOMING_RELATED_TO Application Billing Worker (app_billing); RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Payments API (app_payments); RELATED_TO Application Warehouse Loader (app_warehouse); USES_TECHNOLOGY Technology Kafka (tech_kafka28); USES_TECHNOLOGY Technology Python (tech_python39)",
         "runtime_tier": "streaming",
         "source_table": "apm_applications"
       }
@@ -1512,11 +1725,12 @@
       "key": "Application:app_inventory",
       "label": "Application",
       "properties": {
+        "apm_cluster": "cl_us_prod",
         "business_owner": "supply-chain",
         "criticality": "tier_2",
         "id": "app_inventory",
         "name": "Inventory Service",
-        "retrieval_text": "Application. business_owner: supply-chain. criticality: tier_2. id: app_inventory. name: Inventory Service. runtime_tier: service. source_table: apm_applications. Relationships: DEPLOYED_ON Host inventory-api-01.us.prod; DEPLOYED_ON Host inventory-db-01.us.prod; EXPOSES_DAP Dap Inventory Snapshot (dap_inventory_snapshot); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_010; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_011; INCOMING_HAS_APPLICATION Cluster US Production (cl_us_prod); INCOMING_RELATED_TO Application Billing Worker (app_billing); INCOMING_RELATED_TO Application Event Collector (app_events); INCOMING_RELATED_TO Application Identity Service (app_auth); RELATED_TO Application Payments API (app_payments); RELATED_TO Application Warehouse Loader (app_warehouse); USES_TECHNOLOGY Technology PostgreSQL (tech_postgres12); USES_TECHNOLOGY Technology Python (tech_python39)",
+        "retrieval_text": "Application. apm_cluster: cl_us_prod. business_owner: supply-chain. criticality: tier_2. id: app_inventory. name: Inventory Service. runtime_tier: service. source_table: apm_applications. Relationships: DEPLOYED_ON Host inventory-api-01.us.prod; DEPLOYED_ON Host inventory-db-01.us.prod; EXPOSES_DAP Dap Inventory Snapshot (dap_inventory_snapshot); HAS_DAP_BINDING ApplicationDap adap_006; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_010; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_011; INCOMING_HAS_APPLICATION Cluster US Production (cl_us_prod); INCOMING_RELATED_TO Application Billing Worker (app_billing); INCOMING_RELATED_TO Application Event Collector (app_events); INCOMING_RELATED_TO Application Identity Service (app_auth); RELATED_TO Application Payments API (app_payments); RELATED_TO Application Warehouse Loader (app_warehouse); USES_TECHNOLOGY Technology PostgreSQL (tech_postgres12); USES_TECHNOLOGY Technology Python (tech_python39)",
         "runtime_tier": "service",
         "source_table": "apm_applications"
       }
@@ -1526,11 +1740,12 @@
       "key": "Application:app_payments",
       "label": "Application",
       "properties": {
+        "apm_cluster": "cl_eu_prod",
         "business_owner": "payments",
         "criticality": "tier_1",
         "id": "app_payments",
         "name": "Payments API",
-        "retrieval_text": "Application. business_owner: payments. criticality: tier_1. id: app_payments. name: Payments API. runtime_tier: api. source_table: apm_applications. Relationships: DEPLOYED_ON Host pay-api-01.eu.prod; DEPLOYED_ON Host pay-db-01.eu.prod; DEPLOYED_ON Host shared-kafka-01.global; EXPOSES_DAP Dap Auth Context (dap_auth_context); EXPOSES_DAP Dap Payment Events (dap_payment_events); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_001; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_002; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_003; INCOMING_HAS_APPLICATION Cluster EU Production (cl_eu_prod); INCOMING_RELATED_TO Application Billing Worker (app_billing); INCOMING_RELATED_TO Application Event Collector (app_events); INCOMING_RELATED_TO Application Identity Service (app_auth); INCOMING_RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Search Gateway (app_search); USES_TECHNOLOGY Technology Java (tech_java8); USES_TECHNOLOGY Technology Kafka (tech_kafka28); USES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
+        "retrieval_text": "Application. apm_cluster: cl_eu_prod. business_owner: payments. criticality: tier_1. id: app_payments. name: Payments API. runtime_tier: api. source_table: apm_applications. Relationships: DEPLOYED_ON Host pay-api-01.eu.prod; DEPLOYED_ON Host pay-db-01.eu.prod; DEPLOYED_ON Host shared-kafka-01.global; EXPOSES_DAP Dap Auth Context (dap_auth_context); EXPOSES_DAP Dap Payment Events (dap_payment_events); HAS_DAP_BINDING ApplicationDap adap_001; HAS_DAP_BINDING ApplicationDap adap_002; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_001; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_002; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_003; INCOMING_HAS_APPLICATION Cluster EU Production (cl_eu_prod); INCOMING_RELATED_TO Application Billing Worker (app_billing); INCOMING_RELATED_TO Application Event Collector (app_events); INCOMING_RELATED_TO Application Identity Service (app_auth); INCOMING_RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Search Gateway (app_search); USES_TECHNOLOGY Technology Java (tech_java8); USES_TECHNOLOGY Technology Kafka (tech_kafka28); USES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
         "runtime_tier": "api",
         "source_table": "apm_applications"
       }
@@ -1540,11 +1755,12 @@
       "key": "Application:app_search",
       "label": "Application",
       "properties": {
+        "apm_cluster": "cl_eu_prod",
         "business_owner": "commerce",
         "criticality": "tier_2",
         "id": "app_search",
         "name": "Search Gateway",
-        "retrieval_text": "Application. business_owner: commerce. criticality: tier_2. id: app_search. name: Search Gateway. runtime_tier: edge. source_table: apm_applications. Relationships: DEPLOYED_ON Host edge-01.eu.prod; EXPOSES_DAP Dap Product Index (dap_product_index); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_006; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_007; INCOMING_HAS_APPLICATION Cluster EU Production (cl_eu_prod); INCOMING_RELATED_TO Application Identity Service (app_auth); INCOMING_RELATED_TO Application Payments API (app_payments); USES_TECHNOLOGY Technology Nginx (tech_nginx117); USES_TECHNOLOGY Technology Node.js (tech_node16)",
+        "retrieval_text": "Application. apm_cluster: cl_eu_prod. business_owner: commerce. criticality: tier_2. id: app_search. name: Search Gateway. runtime_tier: edge. source_table: apm_applications. Relationships: DEPLOYED_ON Host edge-01.eu.prod; EXPOSES_DAP Dap Product Index (dap_product_index); HAS_DAP_BINDING ApplicationDap adap_004; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_006; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_007; INCOMING_HAS_APPLICATION Cluster EU Production (cl_eu_prod); INCOMING_RELATED_TO Application Identity Service (app_auth); INCOMING_RELATED_TO Application Payments API (app_payments); USES_TECHNOLOGY Technology Nginx (tech_nginx117); USES_TECHNOLOGY Technology Node.js (tech_node16)",
         "runtime_tier": "edge",
         "source_table": "apm_applications"
       }
@@ -1554,13 +1770,164 @@
       "key": "Application:app_warehouse",
       "label": "Application",
       "properties": {
+        "apm_cluster": "cl_data_platform",
         "business_owner": "analytics",
         "criticality": "tier_2",
         "id": "app_warehouse",
         "name": "Warehouse Loader",
-        "retrieval_text": "Application. business_owner: analytics. criticality: tier_2. id: app_warehouse. name: Warehouse Loader. runtime_tier: batch. source_table: apm_applications. Relationships: DEPLOYED_ON Host warehouse-loader-01.global; EXPOSES_DAP Dap Curated Metrics (dap_curated_metrics); EXPOSES_DAP Dap Inventory Snapshot (dap_inventory_snapshot); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_014; INCOMING_HAS_APPLICATION Cluster Data Platform (cl_data_platform); INCOMING_RELATED_TO Application Event Collector (app_events); INCOMING_RELATED_TO Application Inventory Service (app_inventory); USES_TECHNOLOGY Technology Python (tech_python39)",
+        "retrieval_text": "Application. apm_cluster: cl_data_platform. business_owner: analytics. criticality: tier_2. id: app_warehouse. name: Warehouse Loader. runtime_tier: batch. source_table: apm_applications. Relationships: DEPLOYED_ON Host warehouse-loader-01.global; EXPOSES_DAP Dap Curated Metrics (dap_curated_metrics); EXPOSES_DAP Dap Inventory Snapshot (dap_inventory_snapshot); HAS_DAP_BINDING ApplicationDap adap_009; HAS_DAP_BINDING ApplicationDap adap_010; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_014; INCOMING_HAS_APPLICATION Cluster Data Platform (cl_data_platform); INCOMING_RELATED_TO Application Event Collector (app_events); INCOMING_RELATED_TO Application Inventory Service (app_inventory); USES_TECHNOLOGY Technology Python (tech_python39)",
         "runtime_tier": "batch",
         "source_table": "apm_applications"
+      }
+    },
+    {
+      "identity": "adap_001",
+      "key": "ApplicationDap:adap_001",
+      "label": "ApplicationDap",
+      "properties": {
+        "apm_application": "app_payments",
+        "dap_id": "dap_payment_events",
+        "dap_name": "Payment Events",
+        "direction": "producer",
+        "id": "adap_001",
+        "protocol": "kafka",
+        "retrieval_text": "ApplicationDap. apm_application: app_payments. dap_id: dap_payment_events. dap_name: Payment Events. direction: producer. id: adap_001. protocol: kafka. source_table: apm_application_daps. Relationships: INCOMING_HAS_DAP_BINDING Application Payments API (app_payments); TARGETS_DAP Dap Payment Events (dap_payment_events)",
+        "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "adap_002",
+      "key": "ApplicationDap:adap_002",
+      "label": "ApplicationDap",
+      "properties": {
+        "apm_application": "app_payments",
+        "dap_id": "dap_auth_context",
+        "dap_name": "Auth Context",
+        "direction": "consumer",
+        "id": "adap_002",
+        "protocol": "https",
+        "retrieval_text": "ApplicationDap. apm_application: app_payments. dap_id: dap_auth_context. dap_name: Auth Context. direction: consumer. id: adap_002. protocol: https. source_table: apm_application_daps. Relationships: INCOMING_HAS_DAP_BINDING Application Payments API (app_payments); TARGETS_DAP Dap Auth Context (dap_auth_context)",
+        "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "adap_003",
+      "key": "ApplicationDap:adap_003",
+      "label": "ApplicationDap",
+      "properties": {
+        "apm_application": "app_auth",
+        "dap_id": "dap_auth_context",
+        "dap_name": "Auth Context",
+        "direction": "producer",
+        "id": "adap_003",
+        "protocol": "https",
+        "retrieval_text": "ApplicationDap. apm_application: app_auth. dap_id: dap_auth_context. dap_name: Auth Context. direction: producer. id: adap_003. protocol: https. source_table: apm_application_daps. Relationships: INCOMING_HAS_DAP_BINDING Application Identity Service (app_auth); TARGETS_DAP Dap Auth Context (dap_auth_context)",
+        "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "adap_004",
+      "key": "ApplicationDap:adap_004",
+      "label": "ApplicationDap",
+      "properties": {
+        "apm_application": "app_search",
+        "dap_id": "dap_product_index",
+        "dap_name": "Product Index",
+        "direction": "consumer",
+        "id": "adap_004",
+        "protocol": "https",
+        "retrieval_text": "ApplicationDap. apm_application: app_search. dap_id: dap_product_index. dap_name: Product Index. direction: consumer. id: adap_004. protocol: https. source_table: apm_application_daps. Relationships: INCOMING_HAS_DAP_BINDING Application Search Gateway (app_search); TARGETS_DAP Dap Product Index (dap_product_index)",
+        "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "adap_005",
+      "key": "ApplicationDap:adap_005",
+      "label": "ApplicationDap",
+      "properties": {
+        "apm_application": "app_billing",
+        "dap_id": "dap_payment_events",
+        "dap_name": "Payment Events",
+        "direction": "consumer",
+        "id": "adap_005",
+        "protocol": "kafka",
+        "retrieval_text": "ApplicationDap. apm_application: app_billing. dap_id: dap_payment_events. dap_name: Payment Events. direction: consumer. id: adap_005. protocol: kafka. source_table: apm_application_daps. Relationships: INCOMING_HAS_DAP_BINDING Application Billing Worker (app_billing); TARGETS_DAP Dap Payment Events (dap_payment_events)",
+        "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "adap_006",
+      "key": "ApplicationDap:adap_006",
+      "label": "ApplicationDap",
+      "properties": {
+        "apm_application": "app_inventory",
+        "dap_id": "dap_inventory_snapshot",
+        "dap_name": "Inventory Snapshot",
+        "direction": "producer",
+        "id": "adap_006",
+        "protocol": "s3",
+        "retrieval_text": "ApplicationDap. apm_application: app_inventory. dap_id: dap_inventory_snapshot. dap_name: Inventory Snapshot. direction: producer. id: adap_006. protocol: s3. source_table: apm_application_daps. Relationships: INCOMING_HAS_DAP_BINDING Application Inventory Service (app_inventory); TARGETS_DAP Dap Inventory Snapshot (dap_inventory_snapshot)",
+        "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "adap_007",
+      "key": "ApplicationDap:adap_007",
+      "label": "ApplicationDap",
+      "properties": {
+        "apm_application": "app_events",
+        "dap_id": "dap_payment_events",
+        "dap_name": "Payment Events",
+        "direction": "consumer",
+        "id": "adap_007",
+        "protocol": "kafka",
+        "retrieval_text": "ApplicationDap. apm_application: app_events. dap_id: dap_payment_events. dap_name: Payment Events. direction: consumer. id: adap_007. protocol: kafka. source_table: apm_application_daps. Relationships: INCOMING_HAS_DAP_BINDING Application Event Collector (app_events); TARGETS_DAP Dap Payment Events (dap_payment_events)",
+        "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "adap_008",
+      "key": "ApplicationDap:adap_008",
+      "label": "ApplicationDap",
+      "properties": {
+        "apm_application": "app_events",
+        "dap_id": "dap_raw_clickstream",
+        "dap_name": "Raw Clickstream",
+        "direction": "producer",
+        "id": "adap_008",
+        "protocol": "kafka",
+        "retrieval_text": "ApplicationDap. apm_application: app_events. dap_id: dap_raw_clickstream. dap_name: Raw Clickstream. direction: producer. id: adap_008. protocol: kafka. source_table: apm_application_daps. Relationships: INCOMING_HAS_DAP_BINDING Application Event Collector (app_events); TARGETS_DAP Dap Raw Clickstream (dap_raw_clickstream)",
+        "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "adap_009",
+      "key": "ApplicationDap:adap_009",
+      "label": "ApplicationDap",
+      "properties": {
+        "apm_application": "app_warehouse",
+        "dap_id": "dap_inventory_snapshot",
+        "dap_name": "Inventory Snapshot",
+        "direction": "consumer",
+        "id": "adap_009",
+        "protocol": "s3",
+        "retrieval_text": "ApplicationDap. apm_application: app_warehouse. dap_id: dap_inventory_snapshot. dap_name: Inventory Snapshot. direction: consumer. id: adap_009. protocol: s3. source_table: apm_application_daps. Relationships: INCOMING_HAS_DAP_BINDING Application Warehouse Loader (app_warehouse); TARGETS_DAP Dap Inventory Snapshot (dap_inventory_snapshot)",
+        "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "adap_010",
+      "key": "ApplicationDap:adap_010",
+      "label": "ApplicationDap",
+      "properties": {
+        "apm_application": "app_warehouse",
+        "dap_id": "dap_curated_metrics",
+        "dap_name": "Curated Metrics",
+        "direction": "producer",
+        "id": "adap_010",
+        "protocol": "snowflake",
+        "retrieval_text": "ApplicationDap. apm_application: app_warehouse. dap_id: dap_curated_metrics. dap_name: Curated Metrics. direction: producer. id: adap_010. protocol: snowflake. source_table: apm_application_daps. Relationships: INCOMING_HAS_DAP_BINDING Application Warehouse Loader (app_warehouse); TARGETS_DAP Dap Curated Metrics (dap_curated_metrics)",
+        "source_table": "apm_application_daps"
       }
     },
     {
@@ -1612,7 +1979,7 @@
       "properties": {
         "id": "dap_auth_context",
         "name": "Auth Context",
-        "retrieval_text": "Dap. id: dap_auth_context. name: Auth Context. source_table: apm_application_daps. Relationships: INCOMING_EXPOSES_DAP Application Identity Service (app_auth); INCOMING_EXPOSES_DAP Application Payments API (app_payments)",
+        "retrieval_text": "Dap. id: dap_auth_context. name: Auth Context. source_table: apm_application_daps. Relationships: INCOMING_EXPOSES_DAP Application Identity Service (app_auth); INCOMING_EXPOSES_DAP Application Payments API (app_payments); INCOMING_TARGETS_DAP ApplicationDap adap_002; INCOMING_TARGETS_DAP ApplicationDap adap_003",
         "source_table": "apm_application_daps"
       }
     },
@@ -1623,7 +1990,7 @@
       "properties": {
         "id": "dap_curated_metrics",
         "name": "Curated Metrics",
-        "retrieval_text": "Dap. id: dap_curated_metrics. name: Curated Metrics. source_table: apm_application_daps. Relationships: INCOMING_EXPOSES_DAP Application Warehouse Loader (app_warehouse)",
+        "retrieval_text": "Dap. id: dap_curated_metrics. name: Curated Metrics. source_table: apm_application_daps. Relationships: INCOMING_EXPOSES_DAP Application Warehouse Loader (app_warehouse); INCOMING_TARGETS_DAP ApplicationDap adap_010",
         "source_table": "apm_application_daps"
       }
     },
@@ -1634,7 +2001,7 @@
       "properties": {
         "id": "dap_inventory_snapshot",
         "name": "Inventory Snapshot",
-        "retrieval_text": "Dap. id: dap_inventory_snapshot. name: Inventory Snapshot. source_table: apm_application_daps. Relationships: INCOMING_EXPOSES_DAP Application Inventory Service (app_inventory); INCOMING_EXPOSES_DAP Application Warehouse Loader (app_warehouse)",
+        "retrieval_text": "Dap. id: dap_inventory_snapshot. name: Inventory Snapshot. source_table: apm_application_daps. Relationships: INCOMING_EXPOSES_DAP Application Inventory Service (app_inventory); INCOMING_EXPOSES_DAP Application Warehouse Loader (app_warehouse); INCOMING_TARGETS_DAP ApplicationDap adap_006; INCOMING_TARGETS_DAP ApplicationDap adap_009",
         "source_table": "apm_application_daps"
       }
     },
@@ -1645,7 +2012,7 @@
       "properties": {
         "id": "dap_payment_events",
         "name": "Payment Events",
-        "retrieval_text": "Dap. id: dap_payment_events. name: Payment Events. source_table: apm_application_daps. Relationships: INCOMING_EXPOSES_DAP Application Billing Worker (app_billing); INCOMING_EXPOSES_DAP Application Event Collector (app_events); INCOMING_EXPOSES_DAP Application Payments API (app_payments)",
+        "retrieval_text": "Dap. id: dap_payment_events. name: Payment Events. source_table: apm_application_daps. Relationships: INCOMING_EXPOSES_DAP Application Billing Worker (app_billing); INCOMING_EXPOSES_DAP Application Event Collector (app_events); INCOMING_EXPOSES_DAP Application Payments API (app_payments); INCOMING_TARGETS_DAP ApplicationDap adap_001; INCOMING_TARGETS_DAP ApplicationDap adap_005; INCOMING_TARGETS_DAP ApplicationDap adap_007",
         "source_table": "apm_application_daps"
       }
     },
@@ -1656,7 +2023,7 @@
       "properties": {
         "id": "dap_product_index",
         "name": "Product Index",
-        "retrieval_text": "Dap. id: dap_product_index. name: Product Index. source_table: apm_application_daps. Relationships: INCOMING_EXPOSES_DAP Application Search Gateway (app_search)",
+        "retrieval_text": "Dap. id: dap_product_index. name: Product Index. source_table: apm_application_daps. Relationships: INCOMING_EXPOSES_DAP Application Search Gateway (app_search); INCOMING_TARGETS_DAP ApplicationDap adap_004",
         "source_table": "apm_application_daps"
       }
     },
@@ -1667,7 +2034,7 @@
       "properties": {
         "id": "dap_raw_clickstream",
         "name": "Raw Clickstream",
-        "retrieval_text": "Dap. id: dap_raw_clickstream. name: Raw Clickstream. source_table: apm_application_daps. Relationships: INCOMING_EXPOSES_DAP Application Event Collector (app_events)",
+        "retrieval_text": "Dap. id: dap_raw_clickstream. name: Raw Clickstream. source_table: apm_application_daps. Relationships: INCOMING_EXPOSES_DAP Application Event Collector (app_events); INCOMING_TARGETS_DAP ApplicationDap adap_008",
         "source_table": "apm_application_daps"
       }
     },
@@ -1808,13 +2175,16 @@
       "key": "ObsolescenceRecord:obso_001",
       "label": "ObsolescenceRecord",
       "properties": {
+        "application_id": "app_payments",
         "detected_at": "2026-05-18",
         "evidence": "runtime scan",
+        "host": "pay-api-01.eu.prod",
         "id": "obso_001",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. detected_at: 2026-05-18. evidence: runtime scan. id: obso_001. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); ON_HOST Host pay-api-01.eu.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java8)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_payments. detected_at: 2026-05-18. evidence: runtime scan. host: pay-api-01.eu.prod. id: obso_001. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_java8. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); ON_HOST Host pay-api-01.eu.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java8)",
         "risk_level": "high",
-        "source_table": "apm_obso"
+        "source_table": "apm_obso",
+        "technology_id": "tech_java8"
       }
     },
     {
@@ -1822,13 +2192,16 @@
       "key": "ObsolescenceRecord:obso_002",
       "label": "ObsolescenceRecord",
       "properties": {
+        "application_id": "app_payments",
         "detected_at": "2026-05-18",
         "evidence": "cmdb",
+        "host": "pay-db-01.eu.prod",
         "id": "obso_002",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. detected_at: 2026-05-18. evidence: cmdb. id: obso_002. obsolescence_status: obsolete. risk_level: critical. source_table: apm_obso. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); ON_HOST Host pay-db-01.eu.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_payments. detected_at: 2026-05-18. evidence: cmdb. host: pay-db-01.eu.prod. id: obso_002. obsolescence_status: obsolete. risk_level: critical. source_table: apm_obso. technology_id: tech_postgres12. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); ON_HOST Host pay-db-01.eu.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
         "risk_level": "critical",
-        "source_table": "apm_obso"
+        "source_table": "apm_obso",
+        "technology_id": "tech_postgres12"
       }
     },
     {
@@ -1836,13 +2209,16 @@
       "key": "ObsolescenceRecord:obso_003",
       "label": "ObsolescenceRecord",
       "properties": {
+        "application_id": "app_payments",
         "detected_at": "2026-05-20",
         "evidence": "runtime scan",
+        "host": "shared-kafka-01.global",
         "id": "obso_003",
         "obsolescence_status": "aging",
-        "retrieval_text": "ObsolescenceRecord. detected_at: 2026-05-20. evidence: runtime scan. id: obso_003. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); ON_HOST Host shared-kafka-01.global; REFERENCES_TECHNOLOGY Technology Kafka (tech_kafka28)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_payments. detected_at: 2026-05-20. evidence: runtime scan. host: shared-kafka-01.global. id: obso_003. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_kafka28. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); ON_HOST Host shared-kafka-01.global; REFERENCES_TECHNOLOGY Technology Kafka (tech_kafka28)",
         "risk_level": "medium",
-        "source_table": "apm_obso"
+        "source_table": "apm_obso",
+        "technology_id": "tech_kafka28"
       }
     },
     {
@@ -1850,13 +2226,16 @@
       "key": "ObsolescenceRecord:obso_004",
       "label": "ObsolescenceRecord",
       "properties": {
+        "application_id": "app_auth",
         "detected_at": "2026-05-21",
         "evidence": "runtime scan",
+        "host": "auth-api-01.eu.prod",
         "id": "obso_004",
         "obsolescence_status": "supported",
-        "retrieval_text": "ObsolescenceRecord. detected_at: 2026-05-21. evidence: runtime scan. id: obso_004. obsolescence_status: supported. risk_level: low. source_table: apm_obso. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Identity Service (app_auth); ON_HOST Host auth-api-01.eu.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java17)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_auth. detected_at: 2026-05-21. evidence: runtime scan. host: auth-api-01.eu.prod. id: obso_004. obsolescence_status: supported. risk_level: low. source_table: apm_obso. technology_id: tech_java17. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Identity Service (app_auth); ON_HOST Host auth-api-01.eu.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java17)",
         "risk_level": "low",
-        "source_table": "apm_obso"
+        "source_table": "apm_obso",
+        "technology_id": "tech_java17"
       }
     },
     {
@@ -1864,13 +2243,16 @@
       "key": "ObsolescenceRecord:obso_005",
       "label": "ObsolescenceRecord",
       "properties": {
+        "application_id": "app_auth",
         "detected_at": "2026-05-21",
         "evidence": "cmdb",
+        "host": "auth-db-01.eu.prod",
         "id": "obso_005",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. detected_at: 2026-05-21. evidence: cmdb. id: obso_005. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Identity Service (app_auth); ON_HOST Host auth-db-01.eu.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_auth. detected_at: 2026-05-21. evidence: cmdb. host: auth-db-01.eu.prod. id: obso_005. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_postgres12. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Identity Service (app_auth); ON_HOST Host auth-db-01.eu.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
         "risk_level": "high",
-        "source_table": "apm_obso"
+        "source_table": "apm_obso",
+        "technology_id": "tech_postgres12"
       }
     },
     {
@@ -1878,13 +2260,16 @@
       "key": "ObsolescenceRecord:obso_006",
       "label": "ObsolescenceRecord",
       "properties": {
+        "application_id": "app_search",
         "detected_at": "2026-05-22",
         "evidence": "container image",
+        "host": "edge-01.eu.prod",
         "id": "obso_006",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. detected_at: 2026-05-22. evidence: container image. id: obso_006. obsolescence_status: obsolete. risk_level: medium. source_table: apm_obso. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Search Gateway (app_search); ON_HOST Host edge-01.eu.prod; REFERENCES_TECHNOLOGY Technology Node.js (tech_node16)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_search. detected_at: 2026-05-22. evidence: container image. host: edge-01.eu.prod. id: obso_006. obsolescence_status: obsolete. risk_level: medium. source_table: apm_obso. technology_id: tech_node16. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Search Gateway (app_search); ON_HOST Host edge-01.eu.prod; REFERENCES_TECHNOLOGY Technology Node.js (tech_node16)",
         "risk_level": "medium",
-        "source_table": "apm_obso"
+        "source_table": "apm_obso",
+        "technology_id": "tech_node16"
       }
     },
     {
@@ -1892,13 +2277,16 @@
       "key": "ObsolescenceRecord:obso_007",
       "label": "ObsolescenceRecord",
       "properties": {
+        "application_id": "app_search",
         "detected_at": "2026-05-22",
         "evidence": "package scan",
+        "host": "edge-01.eu.prod",
         "id": "obso_007",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. detected_at: 2026-05-22. evidence: package scan. id: obso_007. obsolescence_status: obsolete. risk_level: medium. source_table: apm_obso. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Search Gateway (app_search); ON_HOST Host edge-01.eu.prod; REFERENCES_TECHNOLOGY Technology Nginx (tech_nginx117)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_search. detected_at: 2026-05-22. evidence: package scan. host: edge-01.eu.prod. id: obso_007. obsolescence_status: obsolete. risk_level: medium. source_table: apm_obso. technology_id: tech_nginx117. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Search Gateway (app_search); ON_HOST Host edge-01.eu.prod; REFERENCES_TECHNOLOGY Technology Nginx (tech_nginx117)",
         "risk_level": "medium",
-        "source_table": "apm_obso"
+        "source_table": "apm_obso",
+        "technology_id": "tech_nginx117"
       }
     },
     {
@@ -1906,13 +2294,16 @@
       "key": "ObsolescenceRecord:obso_008",
       "label": "ObsolescenceRecord",
       "properties": {
+        "application_id": "app_billing",
         "detected_at": "2026-05-23",
         "evidence": "runtime scan",
+        "host": "billing-worker-01.us.prod",
         "id": "obso_008",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. detected_at: 2026-05-23. evidence: runtime scan. id: obso_008. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Billing Worker (app_billing); ON_HOST Host billing-worker-01.us.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java8)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_billing. detected_at: 2026-05-23. evidence: runtime scan. host: billing-worker-01.us.prod. id: obso_008. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_java8. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Billing Worker (app_billing); ON_HOST Host billing-worker-01.us.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java8)",
         "risk_level": "high",
-        "source_table": "apm_obso"
+        "source_table": "apm_obso",
+        "technology_id": "tech_java8"
       }
     },
     {
@@ -1920,13 +2311,16 @@
       "key": "ObsolescenceRecord:obso_009",
       "label": "ObsolescenceRecord",
       "properties": {
+        "application_id": "app_billing",
         "detected_at": "2026-05-23",
         "evidence": "cmdb",
+        "host": "billing-db-01.us.prod",
         "id": "obso_009",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. detected_at: 2026-05-23. evidence: cmdb. id: obso_009. obsolescence_status: obsolete. risk_level: critical. source_table: apm_obso. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Billing Worker (app_billing); ON_HOST Host billing-db-01.us.prod; REFERENCES_TECHNOLOGY Technology Oracle Database (tech_oracle11g)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_billing. detected_at: 2026-05-23. evidence: cmdb. host: billing-db-01.us.prod. id: obso_009. obsolescence_status: obsolete. risk_level: critical. source_table: apm_obso. technology_id: tech_oracle11g. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Billing Worker (app_billing); ON_HOST Host billing-db-01.us.prod; REFERENCES_TECHNOLOGY Technology Oracle Database (tech_oracle11g)",
         "risk_level": "critical",
-        "source_table": "apm_obso"
+        "source_table": "apm_obso",
+        "technology_id": "tech_oracle11g"
       }
     },
     {
@@ -1934,13 +2328,16 @@
       "key": "ObsolescenceRecord:obso_010",
       "label": "ObsolescenceRecord",
       "properties": {
+        "application_id": "app_inventory",
         "detected_at": "2026-05-24",
         "evidence": "runtime scan",
+        "host": "inventory-api-01.us.prod",
         "id": "obso_010",
         "obsolescence_status": "aging",
-        "retrieval_text": "ObsolescenceRecord. detected_at: 2026-05-24. evidence: runtime scan. id: obso_010. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Inventory Service (app_inventory); ON_HOST Host inventory-api-01.us.prod; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_inventory. detected_at: 2026-05-24. evidence: runtime scan. host: inventory-api-01.us.prod. id: obso_010. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Inventory Service (app_inventory); ON_HOST Host inventory-api-01.us.prod; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
         "risk_level": "medium",
-        "source_table": "apm_obso"
+        "source_table": "apm_obso",
+        "technology_id": "tech_python39"
       }
     },
     {
@@ -1948,13 +2345,16 @@
       "key": "ObsolescenceRecord:obso_011",
       "label": "ObsolescenceRecord",
       "properties": {
+        "application_id": "app_inventory",
         "detected_at": "2026-05-24",
         "evidence": "cmdb",
+        "host": "inventory-db-01.us.prod",
         "id": "obso_011",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. detected_at: 2026-05-24. evidence: cmdb. id: obso_011. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Inventory Service (app_inventory); ON_HOST Host inventory-db-01.us.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_inventory. detected_at: 2026-05-24. evidence: cmdb. host: inventory-db-01.us.prod. id: obso_011. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_postgres12. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Inventory Service (app_inventory); ON_HOST Host inventory-db-01.us.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
         "risk_level": "high",
-        "source_table": "apm_obso"
+        "source_table": "apm_obso",
+        "technology_id": "tech_postgres12"
       }
     },
     {
@@ -1962,13 +2362,16 @@
       "key": "ObsolescenceRecord:obso_012",
       "label": "ObsolescenceRecord",
       "properties": {
+        "application_id": "app_events",
         "detected_at": "2026-05-25",
         "evidence": "runtime scan",
+        "host": "shared-kafka-01.global",
         "id": "obso_012",
         "obsolescence_status": "aging",
-        "retrieval_text": "ObsolescenceRecord. detected_at: 2026-05-25. evidence: runtime scan. id: obso_012. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Event Collector (app_events); ON_HOST Host shared-kafka-01.global; REFERENCES_TECHNOLOGY Technology Kafka (tech_kafka28)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_events. detected_at: 2026-05-25. evidence: runtime scan. host: shared-kafka-01.global. id: obso_012. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_kafka28. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Event Collector (app_events); ON_HOST Host shared-kafka-01.global; REFERENCES_TECHNOLOGY Technology Kafka (tech_kafka28)",
         "risk_level": "medium",
-        "source_table": "apm_obso"
+        "source_table": "apm_obso",
+        "technology_id": "tech_kafka28"
       }
     },
     {
@@ -1976,13 +2379,16 @@
       "key": "ObsolescenceRecord:obso_013",
       "label": "ObsolescenceRecord",
       "properties": {
+        "application_id": "app_events",
         "detected_at": "2026-05-25",
         "evidence": "container image",
+        "host": "event-collector-01.global",
         "id": "obso_013",
         "obsolescence_status": "aging",
-        "retrieval_text": "ObsolescenceRecord. detected_at: 2026-05-25. evidence: container image. id: obso_013. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Event Collector (app_events); ON_HOST Host event-collector-01.global; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_events. detected_at: 2026-05-25. evidence: container image. host: event-collector-01.global. id: obso_013. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Event Collector (app_events); ON_HOST Host event-collector-01.global; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
         "risk_level": "medium",
-        "source_table": "apm_obso"
+        "source_table": "apm_obso",
+        "technology_id": "tech_python39"
       }
     },
     {
@@ -1990,13 +2396,16 @@
       "key": "ObsolescenceRecord:obso_014",
       "label": "ObsolescenceRecord",
       "properties": {
+        "application_id": "app_warehouse",
         "detected_at": "2026-05-26",
         "evidence": "runtime scan",
+        "host": "warehouse-loader-01.global",
         "id": "obso_014",
         "obsolescence_status": "aging",
-        "retrieval_text": "ObsolescenceRecord. detected_at: 2026-05-26. evidence: runtime scan. id: obso_014. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Warehouse Loader (app_warehouse); ON_HOST Host warehouse-loader-01.global; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_warehouse. detected_at: 2026-05-26. evidence: runtime scan. host: warehouse-loader-01.global. id: obso_014. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Warehouse Loader (app_warehouse); ON_HOST Host warehouse-loader-01.global; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
         "risk_level": "medium",
-        "source_table": "apm_obso"
+        "source_table": "apm_obso",
+        "technology_id": "tech_python39"
       }
     },
     {
@@ -2004,9 +2413,10 @@
       "key": "Subcluster:sub_data_streaming",
       "label": "Subcluster",
       "properties": {
+        "apm_cluster": "cl_data_platform",
         "id": "sub_data_streaming",
         "name": "Streaming Platform",
-        "retrieval_text": "Subcluster. id: sub_data_streaming. name: Streaming Platform. role: streaming. source_table: apm_subclusters. zone: global-a. Relationships: INCOMING_HAS_SUBCLUSTER Cluster Data Platform (cl_data_platform)",
+        "retrieval_text": "Subcluster. apm_cluster: cl_data_platform. id: sub_data_streaming. name: Streaming Platform. role: streaming. source_table: apm_subclusters. zone: global-a. Relationships: INCOMING_HAS_SUBCLUSTER Cluster Data Platform (cl_data_platform)",
         "role": "streaming",
         "source_table": "apm_subclusters",
         "zone": "global-a"
@@ -2017,9 +2427,10 @@
       "key": "Subcluster:sub_data_warehouse",
       "label": "Subcluster",
       "properties": {
+        "apm_cluster": "cl_data_platform",
         "id": "sub_data_warehouse",
         "name": "Warehouse Platform",
-        "retrieval_text": "Subcluster. id: sub_data_warehouse. name: Warehouse Platform. role: warehouse. source_table: apm_subclusters. zone: global-b. Relationships: INCOMING_HAS_SUBCLUSTER Cluster Data Platform (cl_data_platform)",
+        "retrieval_text": "Subcluster. apm_cluster: cl_data_platform. id: sub_data_warehouse. name: Warehouse Platform. role: warehouse. source_table: apm_subclusters. zone: global-b. Relationships: INCOMING_HAS_SUBCLUSTER Cluster Data Platform (cl_data_platform)",
         "role": "warehouse",
         "source_table": "apm_subclusters",
         "zone": "global-b"
@@ -2030,9 +2441,10 @@
       "key": "Subcluster:sub_eu_core",
       "label": "Subcluster",
       "properties": {
+        "apm_cluster": "cl_eu_prod",
         "id": "sub_eu_core",
         "name": "EU Core Services",
-        "retrieval_text": "Subcluster. id: sub_eu_core. name: EU Core Services. role: services. source_table: apm_subclusters. zone: eu-west-1a. Relationships: INCOMING_HAS_SUBCLUSTER Cluster EU Production (cl_eu_prod)",
+        "retrieval_text": "Subcluster. apm_cluster: cl_eu_prod. id: sub_eu_core. name: EU Core Services. role: services. source_table: apm_subclusters. zone: eu-west-1a. Relationships: INCOMING_HAS_SUBCLUSTER Cluster EU Production (cl_eu_prod)",
         "role": "services",
         "source_table": "apm_subclusters",
         "zone": "eu-west-1a"
@@ -2043,9 +2455,10 @@
       "key": "Subcluster:sub_eu_edge",
       "label": "Subcluster",
       "properties": {
+        "apm_cluster": "cl_eu_prod",
         "id": "sub_eu_edge",
         "name": "EU Edge",
-        "retrieval_text": "Subcluster. id: sub_eu_edge. name: EU Edge. role: ingress. source_table: apm_subclusters. zone: eu-west-1b. Relationships: INCOMING_HAS_SUBCLUSTER Cluster EU Production (cl_eu_prod)",
+        "retrieval_text": "Subcluster. apm_cluster: cl_eu_prod. id: sub_eu_edge. name: EU Edge. role: ingress. source_table: apm_subclusters. zone: eu-west-1b. Relationships: INCOMING_HAS_SUBCLUSTER Cluster EU Production (cl_eu_prod)",
         "role": "ingress",
         "source_table": "apm_subclusters",
         "zone": "eu-west-1b"
@@ -2056,9 +2469,10 @@
       "key": "Subcluster:sub_us_batch",
       "label": "Subcluster",
       "properties": {
+        "apm_cluster": "cl_us_prod",
         "id": "sub_us_batch",
         "name": "US Batch",
-        "retrieval_text": "Subcluster. id: sub_us_batch. name: US Batch. role: batch. source_table: apm_subclusters. zone: us-east-1c. Relationships: INCOMING_HAS_SUBCLUSTER Cluster US Production (cl_us_prod)",
+        "retrieval_text": "Subcluster. apm_cluster: cl_us_prod. id: sub_us_batch. name: US Batch. role: batch. source_table: apm_subclusters. zone: us-east-1c. Relationships: INCOMING_HAS_SUBCLUSTER Cluster US Production (cl_us_prod)",
         "role": "batch",
         "source_table": "apm_subclusters",
         "zone": "us-east-1c"
@@ -2069,9 +2483,10 @@
       "key": "Subcluster:sub_us_core",
       "label": "Subcluster",
       "properties": {
+        "apm_cluster": "cl_us_prod",
         "id": "sub_us_core",
         "name": "US Core Services",
-        "retrieval_text": "Subcluster. id: sub_us_core. name: US Core Services. role: services. source_table: apm_subclusters. zone: us-east-1a. Relationships: INCOMING_HAS_SUBCLUSTER Cluster US Production (cl_us_prod)",
+        "retrieval_text": "Subcluster. apm_cluster: cl_us_prod. id: sub_us_core. name: US Core Services. role: services. source_table: apm_subclusters. zone: us-east-1a. Relationships: INCOMING_HAS_SUBCLUSTER Cluster US Production (cl_us_prod)",
         "role": "services",
         "source_table": "apm_subclusters",
         "zone": "us-east-1a"

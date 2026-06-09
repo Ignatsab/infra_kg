@@ -19,6 +19,14 @@ MATCH p=(a:Application {id: "app_payments"})-[*1..2]-(n)
 RETURN p
 LIMIT 100;
 
+// Inspect all source columns kept for an application.
+MATCH (a:Application {id: "app_payments"})
+RETURN properties(a) AS application_source_properties;
+
+// Inspect row-level DAP bindings and their full source columns.
+MATCH p=(a:Application {id: "app_payments"})-[:HAS_DAP_BINDING]->(binding:ApplicationDap)-[:TARGETS_DAP]->(dap:Dap)
+RETURN p, properties(binding) AS binding_source_properties;
+
 // Hosts with multiple applications.
 MATCH (h:Host)<-[:DEPLOYED_ON]-(a:Application)
 WITH h, collect(a.name) AS applications

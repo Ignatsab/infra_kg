@@ -15,6 +15,7 @@ class GraphBuilderTest(unittest.TestCase):
         self.assertEqual(
             {
                 "Application": 7,
+                "ApplicationDap": 10,
                 "Cluster": 3,
                 "Dap": 6,
                 "Host": 12,
@@ -28,10 +29,12 @@ class GraphBuilderTest(unittest.TestCase):
             {
                 "EXPOSES_DAP": 10,
                 "HAS_APPLICATION": 7,
+                "HAS_DAP_BINDING": 10,
                 "HAS_OBSOLESCENCE_RECORD": 14,
                 "HAS_SUBCLUSTER": 6,
                 "ON_HOST": 14,
                 "REFERENCES_TECHNOLOGY": 14,
+                "TARGETS_DAP": 10,
             },
             graph.edge_counts(),
         )
@@ -55,6 +58,31 @@ class GraphBuilderTest(unittest.TestCase):
         app_payments = graph.nodes["Application:app_payments"]
         self.assertEqual(16, len(app_payments.properties["embedding"]))
         self.assertEqual(16, app_payments.properties["embedding_dimensions"])
+
+    def test_extra_source_columns_are_preserved(self) -> None:
+        tables = mock_tables()
+        tables["apm_applications"][0]["Owner Email"] = "payments@example.test"
+        tables["apm_application_daps"][0]["SLA Tier"] = "gold"
+
+        graph = build_graph_from_tables(tables, include_derived=False)
+
+        self.assertEqual(
+            "payments@example.test",
+            graph.nodes["Application:app_payments"].properties["Owner_Email"],
+        )
+        self.assertEqual(
+            "gold",
+            graph.nodes["ApplicationDap:adap_001"].properties["SLA_Tier"],
+        )
+
+        exposes_dap = [
+            edge
+            for edge in graph.edges
+            if edge.start_key == "Application:app_payments"
+            and edge.type == "EXPOSES_DAP"
+            and edge.end_key == "Dap:dap_payment_events"
+        ][0]
+        self.assertEqual("gold", exposes_dap.properties["SLA_Tier"])
 
 
 if __name__ == "__main__":

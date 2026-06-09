@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import json
+import re
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -24,6 +25,7 @@ REQUIRED_TABLES = [
 
 RISK_ORDER = {"low": 1, "medium": 2, "high": 3, "critical": 4}
 STATUS_ORDER = {"supported": 1, "aging": 2, "obsolete": 3}
+PROPERTY_KEY_PATTERN = re.compile(r"[^0-9A-Za-z_]+")
 
 
 @dataclass
@@ -155,25 +157,14 @@ def build_graph_from_tables(
         graph.add_node(
             "Cluster",
             row["id"],
-            {
-                "name": row.get("name"),
-                "environment": row.get("environment"),
-                "region": row.get("region"),
-                "owner_team": row.get("owner_team"),
-                "source_table": "apm_cluster",
-            },
+            row_properties(row, "apm_cluster"),
         )
 
     for row in subclusters.values():
         subcluster_key = graph.add_node(
             "Subcluster",
             row["id"],
-            {
-                "name": row.get("name"),
-                "role": row.get("role"),
-                "zone": row.get("zone"),
-                "source_table": "apm_subclusters",
-            },
+            row_properties(row, "apm_subclusters"),
         )
         cluster_id = row.get("apm_cluster", "")
         cluster_key = make_key("Cluster", cluster_id)
@@ -189,13 +180,7 @@ def build_graph_from_tables(
         app_key = graph.add_node(
             "Application",
             row["id"],
-            {
-                "name": row.get("name"),
-                "criticality": row.get("criticality"),
-                "business_owner": row.get("business_owner"),
-                "runtime_tier": row.get("runtime_tier"),
-                "source_table": "apm_applications",
-            },
+            row_properties(row, "apm_applications"),
         )
         cluster_key = make_key("Cluster", cluster_id)
         if cluster_id in clusters:
@@ -206,6 +191,11 @@ def build_graph_from_tables(
     for row in tables.get("apm_application_daps", []):
         application_id = row.get("apm_application", "")
         dap_id = row.get("dap_id") or row.get("id", "")
+        binding_key = graph.add_node(
+            "ApplicationDap",
+            row.get("id") or f"{application_id}:{dap_id}",
+            row_properties(row, "apm_application_daps"),
+        )
         dap_key = graph.add_node(
             "Dap",
             dap_id,
@@ -218,9 +208,22 @@ def build_graph_from_tables(
             app_key = make_key("Application", application_id)
             graph.add_edge(
                 app_key,
+                "HAS_DAP_BINDING",
+                binding_key,
+                {"source_fk": "apm_application"},
+            )
+            graph.add_edge(
+                binding_key,
+                "TARGETS_DAP",
+                dap_key,
+                {"source_field": "dap_id"},
+            )
+            graph.add_edge(
+                app_key,
                 "EXPOSES_DAP",
                 dap_key,
                 {
+                    **row_properties(row, "apm_application_daps"),
                     "binding_id": row.get("id"),
                     "direction": row.get("direction"),
                     "protocol": row.get("protocol"),
@@ -242,27 +245,14 @@ def build_graph_from_tables(
         graph.add_node(
             "Technology",
             row["id"],
-            {
-                "name": row.get("name"),
-                "category": row.get("category"),
-                "vendor": row.get("vendor"),
-                "version": row.get("version"),
-                "lifecycle": row.get("lifecycle"),
-                "source_table": "apm_technologies",
-            },
+            row_properties(row, "apm_technologies"),
         )
 
     for row in obso_records.values():
         obso_key = graph.add_node(
             "ObsolescenceRecord",
             row["id"],
-            {
-                "obsolescence_status": row.get("obsolescence_status"),
-                "risk_level": row.get("risk_level"),
-                "detected_at": row.get("detected_at"),
-                "evidence": row.get("evidence"),
-                "source_table": "apm_obso",
-            },
+            row_properties(row, "apm_obso"),
         )
         host = row.get("host", "")
         host_key = graph.add_node("Host", host, {"name": host, "source_table": "apm_obso"})
@@ -503,6 +493,38 @@ def by_id(rows: Iterable[dict[str, str]]) -> dict[str, dict[str, str]]:
         if row_id:
             result[row_id] = row
     return result
+
+
+def row_properties(row: dict[str, str], table_name: str) -> dict[str, Any]:
+    properties: dict[str, Any] = {"source_table": table_name}
+    used_keys = set(properties)
+    for column_name, value in row.items():
+        property_key = unique_property_key(normalize_property_key(column_name), used_keys)
+        properties[property_key] = value
+    return properties
+
+
+def normalize_property_key(column_name: str) -> str:
+    key = PROPERTY_KEY_PATTERN.sub("_", column_name.strip())
+    key = re.sub(r"_+", "_", key).strip("_")
+    if not key:
+        key = "field"
+    if key[0].isdigit():
+        key = f"field_{key}"
+    return key
+
+
+def unique_property_key(key: str, used_keys: set[str]) -> str:
+    if key not in used_keys:
+        used_keys.add(key)
+        return key
+
+    suffix = 2
+    while f"{key}_{suffix}" in used_keys:
+        suffix += 1
+    unique_key = f"{key}_{suffix}"
+    used_keys.add(unique_key)
+    return unique_key
 
 
 def make_key(label: str, identity: str) -> str:

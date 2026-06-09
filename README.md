@@ -84,6 +84,7 @@ Primary nodes:
 - `Cluster`
 - `Subcluster`
 - `Application`
+- `ApplicationDap`
 - `Dap`
 - `ObsolescenceRecord`
 - `Technology`
@@ -94,6 +95,8 @@ Source-of-truth edges:
 - `(:Cluster)-[:HAS_SUBCLUSTER]->(:Subcluster)`
 - `(:Cluster)-[:HAS_APPLICATION]->(:Application)`
 - `(:Application)-[:EXPOSES_DAP]->(:Dap)`
+- `(:Application)-[:HAS_DAP_BINDING]->(:ApplicationDap)`
+- `(:ApplicationDap)-[:TARGETS_DAP]->(:Dap)`
 - `(:Application)-[:HAS_OBSOLESCENCE_RECORD]->(:ObsolescenceRecord)`
 - `(:ObsolescenceRecord)-[:ON_HOST]->(:Host)`
 - `(:ObsolescenceRecord)-[:REFERENCES_TECHNOLOGY]->(:Technology)`
@@ -105,6 +108,29 @@ Derived topology edges for easier agent traversal:
 - `(:Host)-[:HAS_TECHNOLOGY]->(:Technology)`
 - `(:Application)-[:RELATED_TO]->(:Application)` when apps share hosts,
   clusters, DAPs, or technologies.
+
+## Source Columns
+
+The graph preserves all source columns by default:
+
+- Entity tables such as `apm_cluster`, `apm_subclusters`,
+  `apm_applications`, `apm_obso`, and `apm_technologies` become graph nodes
+  with every CSV/DB column copied as a node property.
+- The join-like `apm_application_daps` table is represented as row-level
+  `ApplicationDap` nodes so every binding row keeps all of its columns.
+- The direct `(:Application)-[:EXPOSES_DAP]->(:Dap)` edge is still kept as a
+  traversal shortcut, and it also receives the source binding row properties.
+
+Column names are normalized into Memgraph-safe property keys. For example,
+`Owner Email` becomes `Owner_Email`.
+
+The intended layering is:
+
+1. Source properties preserve raw table data.
+2. Deterministic FK edges preserve trusted topology.
+3. Derived shortcut edges make the topology agent easier to query.
+4. LLM summaries and embeddings use the full row context without changing the
+   trusted topology edges.
 
 ## Optional LLM Enrichment
 

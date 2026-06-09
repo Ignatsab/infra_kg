@@ -67,6 +67,21 @@ python3 scripts/load_memgraph.py --clear
 
 Memgraph Lab will be available at <http://localhost:3000>.
 
+If Docker has started the containers but the loader still says connection
+refused, force IPv4 and let the loader wait:
+
+```bash
+python3 scripts/load_memgraph.py --clear --uri bolt://127.0.0.1:7687 --connect-retries 60
+```
+
+Useful checks:
+
+```bash
+docker compose ps
+docker compose logs memgraph
+nc -zv 127.0.0.1 7687
+```
+
 ## Outputs
 
 - Mock tables: `data/mock/*.csv`

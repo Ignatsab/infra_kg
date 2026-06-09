@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import time
 from pathlib import Path
 
 from infra_kg.env import load_dotenv
@@ -17,6 +18,8 @@ def load_graph_to_memgraph(
     password: str | None = None,
     clear: bool = False,
     env_path: Path | str = ".env",
+    connect_retries: int | None = None,
+    connect_retry_delay: float | None = None,
 ) -> dict[str, int]:
     try:
         from neo4j import GraphDatabase
@@ -27,14 +30,20 @@ def load_graph_to_memgraph(
         ) from exc
 
     load_dotenv(env_path)
-    uri = uri or os.environ.get("MEMGRAPH_URI", "bolt://localhost:7687")
+    uri = uri or os.environ.get("MEMGRAPH_URI", "bolt://127.0.0.1:7687")
     username = username if username is not None else os.environ.get("MEMGRAPH_USERNAME")
     password = password if password is not None else os.environ.get("MEMGRAPH_PASSWORD")
+    connect_retries = connect_retries if connect_retries is not None else int(os.environ.get("MEMGRAPH_CONNECT_RETRIES", "30"))
+    connect_retry_delay = (
+        connect_retry_delay
+        if connect_retry_delay is not None
+        else float(os.environ.get("MEMGRAPH_CONNECT_RETRY_DELAY", "1"))
+    )
     auth = (username, password) if username and password else None
 
     driver = GraphDatabase.driver(uri, auth=auth)
     with driver:
-        driver.verify_connectivity()
+        verify_connectivity_with_retry(driver, uri, connect_retries, connect_retry_delay)
         with driver.session() as session:
             if clear:
                 session.run("MATCH (n) DETACH DELETE n").consume()
@@ -61,6 +70,33 @@ def load_graph_to_memgraph(
                     properties=edge.properties,
                 ).consume()
     return {"nodes": len(graph.nodes), "edges": len(graph.edges), "vector_indexes": vector_indexes}
+
+
+def verify_connectivity_with_retry(driver, uri: str, retries: int, retry_delay: float) -> None:
+    attempts = max(1, retries)
+    last_error: Exception | None = None
+    for attempt in range(1, attempts + 1):
+        try:
+            driver.verify_connectivity()
+            if attempt > 1:
+                print(f"Connected to Memgraph at {uri} after {attempt} attempts")
+            return
+        except Exception as exc:
+            last_error = exc
+            if attempt == attempts:
+                break
+            print(
+                f"Waiting for Memgraph at {uri} "
+                f"({attempt}/{attempts}): {exc.__class__.__name__}"
+            )
+            time.sleep(retry_delay)
+
+    raise RuntimeError(
+        f"Could not connect to Memgraph at {uri} after {attempts} attempts. "
+        "If you started Docker Compose moments ago, check `docker compose ps` "
+        "and `docker compose logs memgraph`. If your machine resolves localhost "
+        "to IPv6 first, use `--uri bolt://127.0.0.1:7687`."
+    ) from last_error
 
 
 def create_indexes(session, graph: KnowledgeGraph) -> None:

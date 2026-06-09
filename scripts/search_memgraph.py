@@ -29,7 +29,7 @@ def main() -> None:
         help="Embedding provider used for the query. Must match the loaded node embeddings.",
     )
     parser.add_argument("--embedding-dimensions", type=int, default=64, help="Hash embedding dimensions.")
-    parser.add_argument("--uri", default=None, help="Memgraph Bolt URI. Defaults to MEMGRAPH_URI or bolt://localhost:7687.")
+    parser.add_argument("--uri", default=None, help="Memgraph Bolt URI. Defaults to MEMGRAPH_URI or bolt://127.0.0.1:7687.")
     parser.add_argument("--username", default=None, help="Memgraph username if auth is enabled.")
     parser.add_argument("--password", default=None, help="Memgraph password if auth is enabled.")
     args = parser.parse_args()
@@ -48,7 +48,7 @@ def main() -> None:
         raise RuntimeError("A query embedding provider is required")
     query_vector = provider.embed_texts([args.query])[0]
 
-    uri = args.uri or os.environ.get("MEMGRAPH_URI", "bolt://localhost:7687")
+    uri = args.uri or os.environ.get("MEMGRAPH_URI", "bolt://127.0.0.1:7687")
     username = args.username if args.username is not None else os.environ.get("MEMGRAPH_USERNAME")
     password = args.password if args.password is not None else os.environ.get("MEMGRAPH_PASSWORD")
     auth = (username, password) if username and password else None

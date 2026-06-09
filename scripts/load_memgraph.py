@@ -16,7 +16,7 @@ from infra_kg.memgraph import load_graph_to_memgraph
 def main() -> None:
     parser = argparse.ArgumentParser(description="Load the topology graph into local Memgraph.")
     parser.add_argument("--data-dir", default="data/mock", help="Directory containing apm_*.csv tables.")
-    parser.add_argument("--uri", default=None, help="Memgraph Bolt URI. Defaults to MEMGRAPH_URI or bolt://localhost:7687.")
+    parser.add_argument("--uri", default=None, help="Memgraph Bolt URI. Defaults to MEMGRAPH_URI or bolt://127.0.0.1:7687.")
     parser.add_argument("--username", default=None, help="Memgraph username if auth is enabled.")
     parser.add_argument("--password", default=None, help="Memgraph password if auth is enabled.")
     parser.add_argument("--clear", action="store_true", help="Delete existing graph data before loading.")
@@ -30,6 +30,8 @@ def main() -> None:
     )
     parser.add_argument("--embedding-dimensions", type=int, default=64, help="Hash embedding dimensions.")
     parser.add_argument("--enrich-with-llm", action="store_true", help="Add optional LLM summaries/tags.")
+    parser.add_argument("--connect-retries", type=int, default=30, help="Memgraph connection attempts before failing.")
+    parser.add_argument("--connect-retry-delay", type=float, default=1.0, help="Seconds between Memgraph connection attempts.")
     args = parser.parse_args()
 
     embedding_provider = embedding_provider_from_choice(args.embed, dimensions=args.embedding_dimensions)
@@ -46,6 +48,8 @@ def main() -> None:
         username=args.username,
         password=args.password,
         clear=args.clear,
+        connect_retries=args.connect_retries,
+        connect_retry_delay=args.connect_retry_delay,
     )
     print(f"Loaded {result['nodes']} nodes and {result['edges']} edges into Memgraph")
     if result.get("vector_indexes"):

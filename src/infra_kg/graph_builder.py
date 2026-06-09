@@ -9,6 +9,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable
 
+from infra_kg.embeddings import EmbeddingProvider
 from infra_kg.env import load_dotenv
 from infra_kg.llm import LLMSettings, OpenAICompatibleLLM
 
@@ -116,6 +117,8 @@ def build_graph(
     data_dir: Path | str,
     *,
     include_derived: bool = True,
+    include_retrieval_text: bool = True,
+    embedding_provider: EmbeddingProvider | None = None,
     enrich_with_llm: bool = False,
     env_path: Path | str = ".env",
 ) -> KnowledgeGraph:
@@ -123,6 +126,8 @@ def build_graph(
     return build_graph_from_tables(
         tables,
         include_derived=include_derived,
+        include_retrieval_text=include_retrieval_text,
+        embedding_provider=embedding_provider,
         enrich_with_llm=enrich_with_llm,
         env_path=env_path,
     )
@@ -132,6 +137,8 @@ def build_graph_from_tables(
     tables: dict[str, list[dict[str, str]]],
     *,
     include_derived: bool = True,
+    include_retrieval_text: bool = True,
+    embedding_provider: EmbeddingProvider | None = None,
     enrich_with_llm: bool = False,
     env_path: Path | str = ".env",
 ) -> KnowledgeGraph:
@@ -288,6 +295,12 @@ def build_graph_from_tables(
     if enrich_with_llm:
         enrich_application_nodes(graph, applications, app_context, env_path)
 
+    if include_retrieval_text:
+        add_retrieval_text(graph)
+
+    if embedding_provider is not None:
+        add_embeddings(graph, embedding_provider)
+
     return graph
 
 
@@ -418,6 +431,53 @@ def enrich_application_nodes(
         graph.nodes[key].properties.update(clean_properties(enrichment))
 
 
+def add_retrieval_text(graph: KnowledgeGraph) -> None:
+    neighbor_index: dict[str, list[str]] = defaultdict(list)
+    for edge in graph.edges:
+        start_node = graph.nodes.get(edge.start_key)
+        end_node = graph.nodes.get(edge.end_key)
+        if not start_node or not end_node:
+            continue
+        neighbor_index[edge.start_key].append(f"{edge.type} {node_display(end_node)}")
+        neighbor_index[edge.end_key].append(f"INCOMING_{edge.type} {node_display(start_node)}")
+
+    for node in graph.nodes.values():
+        fields = []
+        for key, value in sorted(node.properties.items()):
+            if key in {"embedding", "retrieval_text"}:
+                continue
+            if isinstance(value, list):
+                value_text = ", ".join(str(item) for item in value)
+            else:
+                value_text = str(value)
+            fields.append(f"{key}: {value_text}")
+        relationships = "; ".join(sorted(neighbor_index.get(node.key, []))[:40])
+        text = f"{node.label}. " + ". ".join(fields)
+        if relationships:
+            text += f". Relationships: {relationships}"
+        node.properties["retrieval_text"] = text[:4000]
+
+
+def add_embeddings(graph: KnowledgeGraph, provider: EmbeddingProvider) -> None:
+    nodes = sorted(graph.nodes.values(), key=lambda item: item.key)
+    texts = [str(node.properties.get("retrieval_text") or node_display(node)) for node in nodes]
+    embeddings = provider.embed_texts(texts)
+    if len(embeddings) != len(nodes):
+        raise RuntimeError(f"Embedding provider returned {len(embeddings)} embeddings for {len(nodes)} nodes")
+
+    for node, embedding in zip(nodes, embeddings):
+        node.properties["embedding"] = [float(value) for value in embedding]
+        node.properties["embedding_model"] = provider.__class__.__name__
+        node.properties["embedding_dimensions"] = len(embedding)
+
+
+def node_display(node: GraphNode) -> str:
+    name = node.properties.get("name")
+    if name and name != node.identity:
+        return f"{node.label} {name} ({node.identity})"
+    return f"{node.label} {node.identity}"
+
+
 def load_tables(data_dir: Path | str) -> dict[str, list[dict[str, str]]]:
     base = Path(data_dir)
     return {table_name: read_csv(base / f"{table_name}.csv") for table_name in REQUIRED_TABLES}
@@ -484,6 +544,8 @@ def write_graph_cypher(graph: KnowledgeGraph, path: Path | str, *, clear: bool =
 
     for label in sorted({node.label for node in graph.nodes.values()}):
         lines.append(f"CREATE INDEX ON :{label}(id);")
+    for index_statement in vector_index_statements(graph):
+        lines.append(index_statement)
     lines.append("")
 
     for node in sorted(graph.nodes.values(), key=lambda item: item.key):
@@ -504,6 +566,33 @@ def write_graph_cypher(graph: KnowledgeGraph, path: Path | str, *, clear: bool =
         )
 
     output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def vector_index_statements(graph: KnowledgeGraph) -> list[str]:
+    statements: list[str] = []
+    for label, dimension in vector_dimensions_by_label(graph).items():
+        count = sum(1 for node in graph.nodes.values() if node.label == label and "embedding" in node.properties)
+        capacity = max(100, count * 2)
+        index_name = f"{label.lower()}_embedding_index"
+        statements.append(
+            f"CREATE VECTOR INDEX {index_name} ON :{label}(embedding) "
+            f"WITH CONFIG {{'dimension': {dimension}, 'capacity': {capacity}, 'metric': 'cos'}};"
+        )
+    return statements
+
+
+def vector_dimensions_by_label(graph: KnowledgeGraph) -> dict[str, int]:
+    dimensions: dict[str, int] = {}
+    for node in graph.nodes.values():
+        embedding = node.properties.get("embedding")
+        if not isinstance(embedding, list) or not embedding:
+            continue
+        dimension = len(embedding)
+        existing = dimensions.get(node.label)
+        if existing is not None and existing != dimension:
+            raise ValueError(f"Mixed embedding dimensions for label {node.label}: {existing} and {dimension}")
+        dimensions[node.label] = dimension
+    return dict(sorted(dimensions.items()))
 
 
 def cypher_literal(value: Any) -> str:

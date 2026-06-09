@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import unittest
 
+from infra_kg.embeddings import HashEmbeddingProvider
 from infra_kg.graph_builder import build_graph_from_tables
 from infra_kg.mock_data import mock_tables
 
@@ -46,6 +47,14 @@ class GraphBuilderTest(unittest.TestCase):
 
         app_payments = graph.nodes["Application:app_payments"]
         self.assertEqual("Payments API", app_payments.properties["name"])
+        self.assertIn("retrieval_text", app_payments.properties)
+
+    def test_hash_embeddings_are_added_to_nodes(self) -> None:
+        graph = build_graph_from_tables(mock_tables(), embedding_provider=HashEmbeddingProvider(dimensions=16))
+
+        app_payments = graph.nodes["Application:app_payments"]
+        self.assertEqual(16, len(app_payments.properties["embedding"]))
+        self.assertEqual(16, app_payments.properties["embedding_dimensions"])
 
 
 if __name__ == "__main__":

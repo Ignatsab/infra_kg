@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 
 from infra_kg.env import load_dotenv
-from infra_kg.graph_builder import KnowledgeGraph, split_key
+from infra_kg.graph_builder import KnowledgeGraph, split_key, vector_dimensions_by_label
 
 
 def load_graph_to_memgraph(
@@ -45,6 +45,7 @@ def load_graph_to_memgraph(
                     id=node.identity,
                     properties=node.properties,
                 ).consume()
+            vector_indexes = create_vector_indexes(session, graph)
             for edge in graph.edges:
                 start_label, start_id = split_key(edge.start_key)
                 end_label, end_id = split_key(edge.end_key)
@@ -59,7 +60,7 @@ def load_graph_to_memgraph(
                     end_id=end_id,
                     properties=edge.properties,
                 ).consume()
-    return {"nodes": len(graph.nodes), "edges": len(graph.edges)}
+    return {"nodes": len(graph.nodes), "edges": len(graph.edges), "vector_indexes": vector_indexes}
 
 
 def create_indexes(session, graph: KnowledgeGraph) -> None:
@@ -69,3 +70,24 @@ def create_indexes(session, graph: KnowledgeGraph) -> None:
         except Exception:
             # Memgraph reports an error if an index already exists in some versions.
             pass
+
+
+def create_vector_indexes(session, graph: KnowledgeGraph) -> int:
+    created = 0
+    for label, dimension in vector_dimensions_by_label(graph).items():
+        count = sum(1 for node in graph.nodes.values() if node.label == label and "embedding" in node.properties)
+        capacity = max(100, count * 2)
+        index_name = f"{label.lower()}_embedding_index"
+        try:
+            session.run(
+                f"""
+                CREATE VECTOR INDEX {index_name} ON :{label}(embedding)
+                WITH CONFIG {{'dimension': {dimension}, 'capacity': {capacity}, 'metric': 'cos'}}
+                """
+            ).consume()
+            created += 1
+        except Exception:
+            # Older Memgraph versions may not support vector indexes, and existing
+            # indexes can also raise. The embeddings are still stored on nodes.
+            pass
+    return created

@@ -31,6 +31,12 @@ Export the graph to JSON and Cypher:
 python3 scripts/export_graph.py
 ```
 
+Export with local test embeddings:
+
+```bash
+python3 scripts/export_graph.py --embed hash --embedding-dimensions 64
+```
+
 Run tests:
 
 ```bash
@@ -66,7 +72,10 @@ Memgraph Lab will be available at <http://localhost:3000>.
 - Mock tables: `data/mock/*.csv`
 - Graph JSON: `build/topology_graph.json`
 - Graph Cypher: `build/topology_graph.cypher`
+- Hash-embedding test JSON: `build/topology_graph_hash_embeddings.json`
+- Hash-embedding test Cypher: `build/topology_graph_hash_embeddings.cypher`
 - Useful inspection queries: `cypher/inspect_topology.cypher`
+- Vector search examples: `cypher/vector_search.cypher`
 
 ## Graph Model
 
@@ -120,6 +129,59 @@ python3 scripts/export_graph.py --enrich-with-llm
 
 The LLM only adds application summaries/tags. It does not create or remove
 topology edges.
+
+## Optional Vector Retrieval
+
+You do not need embeddings to create or inspect the graph. For the first visual
+check, exact Cypher traversal and property search are enough:
+
+```cypher
+MATCH p=(a:Application)-[:USES_TECHNOLOGY]->(t:Technology)
+WHERE toLower(t.name) CONTAINS "java"
+RETURN p;
+```
+
+Embeddings become useful once your topology agent needs semantic retrieval, for
+example queries like "apps with old payment database risk" where the user does
+not know exact application, host, or technology names.
+
+This project supports two embedding modes:
+
+- `--embed hash` creates deterministic local vectors only for plumbing tests.
+  These are not real semantic embeddings.
+- `--embed openai` calls an OpenAI-compatible `/embeddings` endpoint, which can
+  be your work proxy/local model.
+
+For real semantic retrieval, set:
+
+```dotenv
+EMBEDDING_BASE_URL=https://your-proxy.example.com/v1
+EMBEDDING_API_KEY=...
+EMBEDDING_MODEL=your-embedding-model
+EMBEDDING_DIMENSIONS=1536
+```
+
+Then load embedded nodes into Memgraph:
+
+```bash
+python3 scripts/load_memgraph.py --clear --embed openai
+```
+
+Search embedded nodes:
+
+```bash
+python3 scripts/search_memgraph.py "obsolete payment database risk" \
+  --embed openai \
+  --index application_embedding_index
+```
+
+Memgraph can run vector search and graph traversal in the same Cypher query, so
+the intended retrieval flow is:
+
+1. Embed the user question.
+2. Retrieve the closest graph nodes with `vector_search.search`.
+3. Traverse from those nodes through deterministic KG edges.
+4. Give the topology agent the retrieved paths as grounded context.
 
 ## Why Not GraFlo In This First Pass?
 

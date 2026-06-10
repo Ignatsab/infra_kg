@@ -112,6 +112,20 @@ python3 -m http.server 8080 --directory build
 
 Then open forwarded port `8080` and go to `/topology_viewer.html`.
 
+For large real graphs, the HTML viewer renders a representative sample by
+default so it opens quickly and remains readable. The sample tries to include
+all node labels and relationship types:
+
+```bash
+python3 scripts/render_graph_viewer.py --max-nodes 120 --max-edges 180
+```
+
+If you intentionally want the full graph:
+
+```bash
+python3 scripts/render_graph_viewer.py --full
+```
+
 ## Outputs
 
 - Mock tables: `data/mock/*.csv`

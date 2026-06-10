@@ -1,0 +1,396 @@
+{
+  "builder_warnings": [],
+  "connectivity": {
+    "component_count": 1,
+    "component_samples": [
+      {
+        "labels": {
+          "Application": 7,
+          "ApplicationDap": 10,
+          "Cluster": 3,
+          "Dap": 6,
+          "Host": 12,
+          "ObsolescenceRecord": 14,
+          "Subcluster": 6,
+          "Technology": 8
+        },
+        "sample_nodes": [
+          "Application:app_auth",
+          "Application:app_billing",
+          "Application:app_events",
+          "Application:app_inventory",
+          "Application:app_payments",
+          "Application:app_search",
+          "Application:app_warehouse",
+          "ApplicationDap:adap_001"
+        ],
+        "size": 66
+      }
+    ],
+    "isolated_node_count": 0,
+    "isolated_node_samples": [],
+    "largest_component_ratio": 1.0,
+    "largest_component_size": 66,
+    "unreachable_from_clusters_count": 0,
+    "unreachable_from_clusters_samples": []
+  },
+  "coverage": [
+    {
+      "coverage_ratio": 1.0,
+      "description": "applications attached to a cluster",
+      "direction": "incoming",
+      "label": "Application",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 7,
+      "relationship_types": [
+        "HAS_APPLICATION"
+      ],
+      "total": 7
+    },
+    {
+      "coverage_ratio": 1.0,
+      "description": "subclusters attached to a cluster",
+      "direction": "incoming",
+      "label": "Subcluster",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 6,
+      "relationship_types": [
+        "HAS_SUBCLUSTER"
+      ],
+      "total": 6
+    },
+    {
+      "coverage_ratio": 1.0,
+      "description": "DAP binding rows attached to an application",
+      "direction": "incoming",
+      "label": "ApplicationDap",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 10,
+      "relationship_types": [
+        "HAS_DAP_BINDING"
+      ],
+      "total": 10
+    },
+    {
+      "coverage_ratio": 1.0,
+      "description": "DAP binding rows point to a DAP",
+      "direction": "outgoing",
+      "label": "ApplicationDap",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 10,
+      "relationship_types": [
+        "TARGETS_DAP"
+      ],
+      "total": 10
+    },
+    {
+      "coverage_ratio": 1.0,
+      "description": "obsolescence rows attached to an application",
+      "direction": "incoming",
+      "label": "ObsolescenceRecord",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 14,
+      "relationship_types": [
+        "HAS_OBSOLESCENCE_RECORD"
+      ],
+      "total": 14
+    },
+    {
+      "coverage_ratio": 1.0,
+      "description": "obsolescence rows point to a host",
+      "direction": "outgoing",
+      "label": "ObsolescenceRecord",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 14,
+      "relationship_types": [
+        "ON_HOST"
+      ],
+      "total": 14
+    },
+    {
+      "coverage_ratio": 1.0,
+      "description": "obsolescence rows point to a technology",
+      "direction": "outgoing",
+      "label": "ObsolescenceRecord",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 14,
+      "relationship_types": [
+        "REFERENCES_TECHNOLOGY"
+      ],
+      "total": 14
+    },
+    {
+      "coverage_ratio": 1.0,
+      "description": "DAPs referenced by an application or binding row",
+      "direction": "incoming",
+      "label": "Dap",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 6,
+      "relationship_types": [
+        "EXPOSES_DAP",
+        "TARGETS_DAP"
+      ],
+      "total": 6
+    },
+    {
+      "coverage_ratio": 1.0,
+      "description": "hosts referenced by an application or obsolescence row",
+      "direction": "incoming",
+      "label": "Host",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 12,
+      "relationship_types": [
+        "DEPLOYED_ON",
+        "ON_HOST"
+      ],
+      "total": 12
+    },
+    {
+      "coverage_ratio": 1.0,
+      "description": "technologies referenced by topology data",
+      "direction": "incoming",
+      "label": "Technology",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 8,
+      "relationship_types": [
+        "HAS_TECHNOLOGY",
+        "REFERENCES_TECHNOLOGY",
+        "USES_TECHNOLOGY"
+      ],
+      "total": 8
+    }
+  ],
+  "degree": {
+    "average": 4.152,
+    "max": 19,
+    "min": 1,
+    "top_hubs": [
+      {
+        "degree": 19,
+        "in_degree": 5,
+        "key": "Application:app_payments",
+        "label": "Application",
+        "name": "Payments API",
+        "out_degree": 14
+      },
+      {
+        "degree": 15,
+        "in_degree": 2,
+        "key": "Application:app_events",
+        "label": "Application",
+        "name": "Event Collector",
+        "out_degree": 13
+      },
+      {
+        "degree": 14,
+        "in_degree": 4,
+        "key": "Application:app_inventory",
+        "label": "Application",
+        "name": "Inventory Service",
+        "out_degree": 10
+      },
+      {
+        "degree": 12,
+        "in_degree": 1,
+        "key": "Application:app_billing",
+        "label": "Application",
+        "name": "Billing Worker",
+        "out_degree": 11
+      },
+      {
+        "degree": 12,
+        "in_degree": 1,
+        "key": "Application:app_auth",
+        "label": "Application",
+        "name": "Identity Service",
+        "out_degree": 11
+      },
+      {
+        "degree": 10,
+        "in_degree": 3,
+        "key": "Application:app_warehouse",
+        "label": "Application",
+        "name": "Warehouse Loader",
+        "out_degree": 7
+      },
+      {
+        "degree": 10,
+        "in_degree": 3,
+        "key": "Application:app_search",
+        "label": "Application",
+        "name": "Search Gateway",
+        "out_degree": 7
+      },
+      {
+        "degree": 9,
+        "in_degree": 9,
+        "key": "Technology:tech_python39",
+        "label": "Technology",
+        "name": "Python",
+        "out_degree": 0
+      },
+      {
+        "degree": 9,
+        "in_degree": 9,
+        "key": "Technology:tech_postgres12",
+        "label": "Technology",
+        "name": "PostgreSQL",
+        "out_degree": 0
+      },
+      {
+        "degree": 6,
+        "in_degree": 6,
+        "key": "Technology:tech_java8",
+        "label": "Technology",
+        "name": "Java",
+        "out_degree": 0
+      }
+    ]
+  },
+  "node_labels": {
+    "Application": 7,
+    "ApplicationDap": 10,
+    "Cluster": 3,
+    "Dap": 6,
+    "Host": 12,
+    "ObsolescenceRecord": 14,
+    "Subcluster": 6,
+    "Technology": 8
+  },
+  "property_completeness": [
+    {
+      "coverage_ratio": 1.0,
+      "label": "Application",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 7,
+      "required_properties": [
+        "id"
+      ],
+      "total": 7
+    },
+    {
+      "coverage_ratio": 1.0,
+      "label": "ApplicationDap",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 10,
+      "required_properties": [
+        "id"
+      ],
+      "total": 10
+    },
+    {
+      "coverage_ratio": 1.0,
+      "label": "Cluster",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 3,
+      "required_properties": [
+        "id"
+      ],
+      "total": 3
+    },
+    {
+      "coverage_ratio": 1.0,
+      "label": "Dap",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 6,
+      "required_properties": [
+        "id"
+      ],
+      "total": 6
+    },
+    {
+      "coverage_ratio": 1.0,
+      "label": "Host",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 12,
+      "required_properties": [
+        "id"
+      ],
+      "total": 12
+    },
+    {
+      "coverage_ratio": 1.0,
+      "label": "ObsolescenceRecord",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 14,
+      "required_properties": [
+        "id"
+      ],
+      "total": 14
+    },
+    {
+      "coverage_ratio": 1.0,
+      "label": "Subcluster",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 6,
+      "required_properties": [
+        "id"
+      ],
+      "total": 6
+    },
+    {
+      "coverage_ratio": 1.0,
+      "label": "Technology",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 8,
+      "required_properties": [
+        "id"
+      ],
+      "total": 8
+    }
+  ],
+  "quality_score": 100,
+  "recommendations": [
+    "No major structural issues found. Next evaluate domain quality with real expected paths and sample applications."
+  ],
+  "relationship_types": {
+    "DEPLOYED_ON": 13,
+    "EXPOSES_DAP": 10,
+    "HAS_APPLICATION": 7,
+    "HAS_DAP_BINDING": 10,
+    "HAS_OBSOLESCENCE_RECORD": 14,
+    "HAS_SUBCLUSTER": 6,
+    "HAS_TECHNOLOGY": 13,
+    "ON_HOST": 14,
+    "REFERENCES_TECHNOLOGY": 14,
+    "RELATED_TO": 12,
+    "TARGETS_DAP": 10,
+    "USES_TECHNOLOGY": 14
+  },
+  "schema": {
+    "broken_edge_count": 0,
+    "broken_edge_samples": [],
+    "duplicate_edge_count": 0,
+    "duplicate_edge_samples": [],
+    "missing_expected_labels": [],
+    "schema_violation_count": 0,
+    "schema_violation_samples": [],
+    "unexpected_labels": [],
+    "unexpected_relationship_types": []
+  },
+  "score_note": "Heuristic score. Use concrete issue counts for decisions.",
+  "status": "PASS",
+  "totals": {
+    "edge_to_node_ratio": 2.076,
+    "edges": 137,
+    "nodes": 66
+  }
+}

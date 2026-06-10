@@ -126,6 +126,16 @@ If you intentionally want the full graph:
 python3 scripts/render_graph_viewer.py --full
 ```
 
+Evaluate the full exported graph automatically:
+
+```bash
+python3 scripts/evaluate_graph.py --graph-json build/topology_graph.json --out-json build/graph_quality_report.json
+```
+
+The evaluator checks structural quality: broken edges, schema mismatches,
+isolated nodes, connected components, reachability from clusters, required
+relationship coverage, duplicate edges, and high-degree hubs.
+
 ## Outputs
 
 - Mock tables: `data/mock/*.csv`
@@ -135,6 +145,7 @@ python3 scripts/render_graph_viewer.py --full
 - Hash-embedding test Cypher: `build/topology_graph_hash_embeddings.cypher`
 - Useful inspection queries: `cypher/inspect_topology.cypher`
 - Vector search examples: `cypher/vector_search.cypher`
+- Graph quality report: `build/graph_quality_report.json`
 
 ## Graph Model
 

@@ -270,6 +270,25 @@ EMBEDDING_MODEL=your-embedding-model
 EMBEDDING_DIMENSIONS=1536
 ```
 
+Aliases such as `EMBEDDING_LINK`, `EMBEDDING_KEY`, `LLM_LINK`, `LLM_KEY`, and
+`LLM_MODEL` are also accepted. If your URL already ends with `/embeddings`, the
+exporter normalizes it to the OpenAI-compatible base URL automatically.
+
+Check the embedding environment safely:
+
+```bash
+python3 scripts/check_embedding_env.py --env-path .env
+```
+
+Export files with real semantic embeddings:
+
+```bash
+python3 scripts/export_graph.py \
+  --embed openai \
+  --out-json build/topology_graph_real_embeddings.json \
+  --out-cypher build/topology_graph_real_embeddings.cypher
+```
+
 Then load embedded nodes into Memgraph:
 
 ```bash

@@ -32,18 +32,65 @@ class OpenAIEmbeddingSettings:
     api_key: str
     model: str
     dimensions: int | None = None
+    batch_size: int = 32
+    timeout_seconds: int = 120
 
     @classmethod
     def from_env(cls, env_path: str = ".env") -> "OpenAIEmbeddingSettings | None":
         load_dotenv(env_path)
-        base_url = first_env("EMBEDDING_BASE_URL", "OPENAI_BASE_URL", "LLM_BASE_URL", "LOCAL_LLM_BASE_URL")
-        api_key = first_env("EMBEDDING_API_KEY", "OPENAI_API_KEY", "LLM_API_KEY", "LOCAL_LLM_API_KEY")
-        model = first_env("EMBEDDING_MODEL", "OPENAI_EMBEDDING_MODEL", "LOCAL_EMBEDDING_MODEL")
+        base_url = first_env(
+            "EMBEDDING_BASE_URL",
+            "EMBEDDING_URL",
+            "EMBEDDING_LINK",
+            "EMBEDDING_ENDPOINT",
+            "EMBEDDING_API",
+            "EMBEDDING_API_BASE",
+            "OPENAI_BASE_URL",
+            "OPENAI_API_BASE",
+            "OPENAI_API_BASE_URL",
+            "LLM_BASE_URL",
+            "LLM_URL",
+            "LLM_LINK",
+            "LLM_ENDPOINT",
+            "LLM_API_BASE",
+            "LOCAL_LLM_BASE_URL",
+            "LOCAL_LLM_API_BASE",
+        )
+        api_key = first_env(
+            "EMBEDDING_API_KEY",
+            "EMBEDDING_KEY",
+            "OPENAI_API_KEY",
+            "LLM_API_KEY",
+            "LLM_KEY",
+            "LOCAL_LLM_API_KEY",
+        )
+        model = first_env(
+            "EMBEDDING_MODEL",
+            "EMBEDDING_MODEL_NAME",
+            "OPENAI_EMBEDDING_MODEL",
+            "LOCAL_EMBEDDING_MODEL",
+            "LLM_EMBEDDING_MODEL",
+            "LLM_MODEL",
+            "LLM_MODEL_NAME",
+            "OPENAI_MODEL",
+            "OPENAI_MODEL_NAME",
+            "LOCAL_LLM_MODEL",
+            "LOCAL_LLM_MODEL_NAME",
+        )
         dimensions_raw = first_env("EMBEDDING_DIMENSIONS", "OPENAI_EMBEDDING_DIMENSIONS")
         dimensions = int(dimensions_raw) if dimensions_raw and dimensions_raw.isdigit() else None
+        batch_size = positive_int_env("EMBEDDING_BATCH_SIZE", default=32)
+        timeout_seconds = positive_int_env("EMBEDDING_TIMEOUT_SECONDS", default=120)
         if not base_url or not api_key or not model:
             return None
-        return cls(base_url=base_url.rstrip("/"), api_key=api_key, model=model, dimensions=dimensions)
+        return cls(
+            base_url=normalize_embedding_base_url(base_url),
+            api_key=api_key,
+            model=model,
+            dimensions=dimensions,
+            batch_size=batch_size,
+            timeout_seconds=timeout_seconds,
+        )
 
 
 class OpenAICompatibleEmbeddingProvider:
@@ -58,6 +105,12 @@ class OpenAICompatibleEmbeddingProvider:
     def embed_texts(self, texts: list[str]) -> list[list[float]]:
         if not texts:
             return []
+        embeddings: list[list[float]] = []
+        for batch in chunked(texts, self.settings.batch_size):
+            embeddings.extend(self._embed_batch(batch))
+        return embeddings
+
+    def _embed_batch(self, texts: list[str]) -> list[list[float]]:
         payload: dict[str, object] = {
             "model": self.settings.model,
             "input": texts,
@@ -68,6 +121,8 @@ class OpenAICompatibleEmbeddingProvider:
         response = self._post_json("/embeddings", payload)
         data = sorted(response.get("data", []), key=lambda item: item.get("index", 0))
         embeddings = [[float(value) for value in item["embedding"]] for item in data]
+        if len(embeddings) != len(texts):
+            raise RuntimeError(f"Embedding endpoint returned {len(embeddings)} embeddings for {len(texts)} inputs")
         if embeddings:
             self._dimensions = len(embeddings[0])
         return embeddings
@@ -84,7 +139,7 @@ class OpenAICompatibleEmbeddingProvider:
             method="POST",
         )
         try:
-            with urllib.request.urlopen(request, timeout=60) as response:
+            with urllib.request.urlopen(request, timeout=self.settings.timeout_seconds) as response:
                 return json.loads(response.read().decode("utf-8"))
         except urllib.error.URLError as exc:
             raise RuntimeError(f"Embedding request failed: {exc}") from exc
@@ -146,3 +201,26 @@ def first_env(*names: str) -> str | None:
         if value:
             return value
     return None
+
+
+def positive_int_env(name: str, *, default: int) -> int:
+    raw = os.environ.get(name)
+    if not raw:
+        return default
+    try:
+        value = int(raw)
+    except ValueError:
+        return default
+    return value if value > 0 else default
+
+
+def normalize_embedding_base_url(raw_url: str) -> str:
+    url = raw_url.strip().rstrip("/")
+    for suffix in ("/embeddings", "/chat/completions"):
+        if url.endswith(suffix):
+            return url[: -len(suffix)].rstrip("/")
+    return url
+
+
+def chunked(items: list[str], size: int) -> list[list[str]]:
+    return [items[index : index + size] for index in range(0, len(items), size)]

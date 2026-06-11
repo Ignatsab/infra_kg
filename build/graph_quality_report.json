@@ -8,6 +8,7 @@
           "Application": 7,
           "ApplicationDap": 10,
           "Cluster": 3,
+          "Contact": 6,
           "Dap": 6,
           "Host": 12,
           "ObsolescenceRecord": 14,
@@ -24,13 +25,13 @@
           "Application:app_warehouse",
           "ApplicationDap:adap_001"
         ],
-        "size": 66
+        "size": 72
       }
     ],
     "isolated_node_count": 0,
     "isolated_node_samples": [],
     "largest_component_ratio": 1.0,
-    "largest_component_size": 66,
+    "largest_component_size": 72,
     "unreachable_from_clusters_count": 0,
     "unreachable_from_clusters_samples": []
   },
@@ -50,6 +51,23 @@
     },
     {
       "coverage_ratio": 1.0,
+      "description": "applications attached to at least one contact role",
+      "direction": "outgoing",
+      "label": "Application",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 7,
+      "relationship_types": [
+        "HAS_APM_SPOC",
+        "HAS_APPLICATION_MANAGER",
+        "HAS_DOMAIN_MANAGER",
+        "HAS_PRODUCTION_DOMAIN_MANAGER",
+        "HAS_PRODUCTION_MANAGER"
+      ],
+      "total": 7
+    },
+    {
+      "coverage_ratio": 1.0,
       "description": "subclusters attached to a cluster",
       "direction": "incoming",
       "label": "Subcluster",
@@ -58,6 +76,23 @@
       "ok_count": 6,
       "relationship_types": [
         "HAS_SUBCLUSTER"
+      ],
+      "total": 6
+    },
+    {
+      "coverage_ratio": 1.0,
+      "description": "contacts referenced by an application role",
+      "direction": "incoming",
+      "label": "Contact",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 6,
+      "relationship_types": [
+        "HAS_APM_SPOC",
+        "HAS_APPLICATION_MANAGER",
+        "HAS_DOMAIN_MANAGER",
+        "HAS_PRODUCTION_DOMAIN_MANAGER",
+        "HAS_PRODUCTION_MANAGER"
       ],
       "total": 6
     },
@@ -171,65 +206,65 @@
     }
   ],
   "degree": {
-    "average": 4.152,
-    "max": 19,
+    "average": 4.778,
+    "max": 24,
     "min": 1,
     "top_hubs": [
       {
-        "degree": 19,
+        "degree": 24,
         "in_degree": 5,
         "key": "Application:app_payments",
         "label": "Application",
         "name": "Payments API",
-        "out_degree": 14
+        "out_degree": 19
       },
       {
-        "degree": 15,
+        "degree": 20,
         "in_degree": 2,
         "key": "Application:app_events",
         "label": "Application",
         "name": "Event Collector",
-        "out_degree": 13
+        "out_degree": 18
       },
       {
-        "degree": 14,
+        "degree": 19,
         "in_degree": 4,
         "key": "Application:app_inventory",
         "label": "Application",
         "name": "Inventory Service",
-        "out_degree": 10
+        "out_degree": 15
       },
       {
-        "degree": 12,
+        "degree": 17,
         "in_degree": 1,
         "key": "Application:app_billing",
         "label": "Application",
         "name": "Billing Worker",
-        "out_degree": 11
+        "out_degree": 16
       },
       {
-        "degree": 12,
+        "degree": 17,
         "in_degree": 1,
         "key": "Application:app_auth",
         "label": "Application",
         "name": "Identity Service",
-        "out_degree": 11
+        "out_degree": 16
       },
       {
-        "degree": 10,
+        "degree": 15,
         "in_degree": 3,
         "key": "Application:app_warehouse",
         "label": "Application",
         "name": "Warehouse Loader",
-        "out_degree": 7
+        "out_degree": 12
       },
       {
-        "degree": 10,
+        "degree": 15,
         "in_degree": 3,
         "key": "Application:app_search",
         "label": "Application",
         "name": "Search Gateway",
-        "out_degree": 7
+        "out_degree": 12
       },
       {
         "degree": 9,
@@ -248,11 +283,11 @@
         "out_degree": 0
       },
       {
-        "degree": 6,
-        "in_degree": 6,
-        "key": "Technology:tech_java8",
-        "label": "Technology",
-        "name": "Java",
+        "degree": 9,
+        "in_degree": 9,
+        "key": "Contact:contact_chloe",
+        "label": "Contact",
+        "name": "Chloe Dubois",
         "out_degree": 0
       }
     ]
@@ -261,6 +296,7 @@
     "Application": 7,
     "ApplicationDap": 10,
     "Cluster": 3,
+    "Contact": 6,
     "Dap": 6,
     "Host": 12,
     "ObsolescenceRecord": 14,
@@ -300,6 +336,17 @@
         "id"
       ],
       "total": 3
+    },
+    {
+      "coverage_ratio": 1.0,
+      "label": "Contact",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 6,
+      "required_properties": [
+        "id"
+      ],
+      "total": 6
     },
     {
       "coverage_ratio": 1.0,
@@ -364,9 +411,14 @@
   "relationship_types": {
     "DEPLOYED_ON": 13,
     "EXPOSES_DAP": 10,
+    "HAS_APM_SPOC": 7,
     "HAS_APPLICATION": 7,
+    "HAS_APPLICATION_MANAGER": 7,
     "HAS_DAP_BINDING": 10,
+    "HAS_DOMAIN_MANAGER": 7,
     "HAS_OBSOLESCENCE_RECORD": 14,
+    "HAS_PRODUCTION_DOMAIN_MANAGER": 7,
+    "HAS_PRODUCTION_MANAGER": 7,
     "HAS_SUBCLUSTER": 6,
     "HAS_TECHNOLOGY": 13,
     "ON_HOST": 14,
@@ -389,8 +441,8 @@
   "score_note": "Heuristic score. Use concrete issue counts for decisions.",
   "status": "PASS",
   "totals": {
-    "edge_to_node_ratio": 2.076,
-    "edges": 137,
-    "nodes": 66
+    "edge_to_node_ratio": 2.389,
+    "edges": 172,
+    "nodes": 72
   }
 }

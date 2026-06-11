@@ -51,12 +51,39 @@
       "type": "EXPOSES_DAP"
     },
     {
+      "end_key": "Contact:contact_boris",
+      "properties": {
+        "role": "apm_spoc",
+        "source_fk": "apm_spoc"
+      },
+      "start_key": "Application:app_auth",
+      "type": "HAS_APM_SPOC"
+    },
+    {
+      "end_key": "Contact:contact_boris",
+      "properties": {
+        "role": "application_manager",
+        "source_fk": "application_manager"
+      },
+      "start_key": "Application:app_auth",
+      "type": "HAS_APPLICATION_MANAGER"
+    },
+    {
       "end_key": "ApplicationDap:adap_003",
       "properties": {
         "source_fk": "apm_application"
       },
       "start_key": "Application:app_auth",
       "type": "HAS_DAP_BINDING"
+    },
+    {
+      "end_key": "Contact:contact_chloe",
+      "properties": {
+        "role": "domain_manager",
+        "source_fk": "domain_manager"
+      },
+      "start_key": "Application:app_auth",
+      "type": "HAS_DOMAIN_MANAGER"
     },
     {
       "end_key": "ObsolescenceRecord:obso_004",
@@ -73,6 +100,24 @@
       },
       "start_key": "Application:app_auth",
       "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "Contact:contact_alice",
+      "properties": {
+        "role": "production_domain_manager",
+        "source_fk": "production_domain_manager"
+      },
+      "start_key": "Application:app_auth",
+      "type": "HAS_PRODUCTION_DOMAIN_MANAGER"
+    },
+    {
+      "end_key": "Contact:contact_daniel",
+      "properties": {
+        "role": "production_manager",
+        "source_fk": "production_manager"
+      },
+      "start_key": "Application:app_auth",
+      "type": "HAS_PRODUCTION_MANAGER"
     },
     {
       "end_key": "Application:app_inventory",
@@ -203,12 +248,39 @@
       "type": "EXPOSES_DAP"
     },
     {
+      "end_key": "Contact:contact_elena",
+      "properties": {
+        "role": "apm_spoc",
+        "source_fk": "apm_spoc"
+      },
+      "start_key": "Application:app_billing",
+      "type": "HAS_APM_SPOC"
+    },
+    {
+      "end_key": "Contact:contact_boris",
+      "properties": {
+        "role": "application_manager",
+        "source_fk": "application_manager"
+      },
+      "start_key": "Application:app_billing",
+      "type": "HAS_APPLICATION_MANAGER"
+    },
+    {
       "end_key": "ApplicationDap:adap_005",
       "properties": {
         "source_fk": "apm_application"
       },
       "start_key": "Application:app_billing",
       "type": "HAS_DAP_BINDING"
+    },
+    {
+      "end_key": "Contact:contact_chloe",
+      "properties": {
+        "role": "domain_manager",
+        "source_fk": "domain_manager"
+      },
+      "start_key": "Application:app_billing",
+      "type": "HAS_DOMAIN_MANAGER"
     },
     {
       "end_key": "ObsolescenceRecord:obso_008",
@@ -225,6 +297,24 @@
       },
       "start_key": "Application:app_billing",
       "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "Contact:contact_farah",
+      "properties": {
+        "role": "production_domain_manager",
+        "source_fk": "production_domain_manager"
+      },
+      "start_key": "Application:app_billing",
+      "type": "HAS_PRODUCTION_DOMAIN_MANAGER"
+    },
+    {
+      "end_key": "Contact:contact_daniel",
+      "properties": {
+        "role": "production_manager",
+        "source_fk": "production_manager"
+      },
+      "start_key": "Application:app_billing",
+      "type": "HAS_PRODUCTION_MANAGER"
     },
     {
       "end_key": "Application:app_events",
@@ -370,6 +460,24 @@
       "type": "EXPOSES_DAP"
     },
     {
+      "end_key": "Contact:contact_elena",
+      "properties": {
+        "role": "apm_spoc",
+        "source_fk": "apm_spoc"
+      },
+      "start_key": "Application:app_events",
+      "type": "HAS_APM_SPOC"
+    },
+    {
+      "end_key": "Contact:contact_chloe",
+      "properties": {
+        "role": "application_manager",
+        "source_fk": "application_manager"
+      },
+      "start_key": "Application:app_events",
+      "type": "HAS_APPLICATION_MANAGER"
+    },
+    {
       "end_key": "ApplicationDap:adap_007",
       "properties": {
         "source_fk": "apm_application"
@@ -386,6 +494,15 @@
       "type": "HAS_DAP_BINDING"
     },
     {
+      "end_key": "Contact:contact_chloe",
+      "properties": {
+        "role": "domain_manager",
+        "source_fk": "domain_manager"
+      },
+      "start_key": "Application:app_events",
+      "type": "HAS_DOMAIN_MANAGER"
+    },
+    {
       "end_key": "ObsolescenceRecord:obso_012",
       "properties": {
         "source_fk": "application_id"
@@ -400,6 +517,24 @@
       },
       "start_key": "Application:app_events",
       "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "Contact:contact_farah",
+      "properties": {
+        "role": "production_domain_manager",
+        "source_fk": "production_domain_manager"
+      },
+      "start_key": "Application:app_events",
+      "type": "HAS_PRODUCTION_DOMAIN_MANAGER"
+    },
+    {
+      "end_key": "Contact:contact_daniel",
+      "properties": {
+        "role": "production_manager",
+        "source_fk": "production_manager"
+      },
+      "start_key": "Application:app_events",
+      "type": "HAS_PRODUCTION_MANAGER"
     },
     {
       "end_key": "Application:app_inventory",
@@ -531,12 +666,39 @@
       "type": "EXPOSES_DAP"
     },
     {
+      "end_key": "Contact:contact_elena",
+      "properties": {
+        "role": "apm_spoc",
+        "source_fk": "apm_spoc"
+      },
+      "start_key": "Application:app_inventory",
+      "type": "HAS_APM_SPOC"
+    },
+    {
+      "end_key": "Contact:contact_boris",
+      "properties": {
+        "role": "application_manager",
+        "source_fk": "application_manager"
+      },
+      "start_key": "Application:app_inventory",
+      "type": "HAS_APPLICATION_MANAGER"
+    },
+    {
       "end_key": "ApplicationDap:adap_006",
       "properties": {
         "source_fk": "apm_application"
       },
       "start_key": "Application:app_inventory",
       "type": "HAS_DAP_BINDING"
+    },
+    {
+      "end_key": "Contact:contact_chloe",
+      "properties": {
+        "role": "domain_manager",
+        "source_fk": "domain_manager"
+      },
+      "start_key": "Application:app_inventory",
+      "type": "HAS_DOMAIN_MANAGER"
     },
     {
       "end_key": "ObsolescenceRecord:obso_010",
@@ -553,6 +715,24 @@
       },
       "start_key": "Application:app_inventory",
       "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "Contact:contact_farah",
+      "properties": {
+        "role": "production_domain_manager",
+        "source_fk": "production_domain_manager"
+      },
+      "start_key": "Application:app_inventory",
+      "type": "HAS_PRODUCTION_DOMAIN_MANAGER"
+    },
+    {
+      "end_key": "Contact:contact_alice",
+      "properties": {
+        "role": "production_manager",
+        "source_fk": "production_manager"
+      },
+      "start_key": "Application:app_inventory",
+      "type": "HAS_PRODUCTION_MANAGER"
     },
     {
       "end_key": "Application:app_payments",
@@ -703,6 +883,24 @@
       "type": "EXPOSES_DAP"
     },
     {
+      "end_key": "Contact:contact_elena",
+      "properties": {
+        "role": "apm_spoc",
+        "source_fk": "apm_spoc"
+      },
+      "start_key": "Application:app_payments",
+      "type": "HAS_APM_SPOC"
+    },
+    {
+      "end_key": "Contact:contact_boris",
+      "properties": {
+        "role": "application_manager",
+        "source_fk": "application_manager"
+      },
+      "start_key": "Application:app_payments",
+      "type": "HAS_APPLICATION_MANAGER"
+    },
+    {
       "end_key": "ApplicationDap:adap_001",
       "properties": {
         "source_fk": "apm_application"
@@ -717,6 +915,15 @@
       },
       "start_key": "Application:app_payments",
       "type": "HAS_DAP_BINDING"
+    },
+    {
+      "end_key": "Contact:contact_chloe",
+      "properties": {
+        "role": "domain_manager",
+        "source_fk": "domain_manager"
+      },
+      "start_key": "Application:app_payments",
+      "type": "HAS_DOMAIN_MANAGER"
     },
     {
       "end_key": "ObsolescenceRecord:obso_001",
@@ -741,6 +948,24 @@
       },
       "start_key": "Application:app_payments",
       "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "Contact:contact_alice",
+      "properties": {
+        "role": "production_domain_manager",
+        "source_fk": "production_domain_manager"
+      },
+      "start_key": "Application:app_payments",
+      "type": "HAS_PRODUCTION_DOMAIN_MANAGER"
+    },
+    {
+      "end_key": "Contact:contact_daniel",
+      "properties": {
+        "role": "production_manager",
+        "source_fk": "production_manager"
+      },
+      "start_key": "Application:app_payments",
+      "type": "HAS_PRODUCTION_MANAGER"
     },
     {
       "end_key": "Application:app_search",
@@ -848,12 +1073,39 @@
       "type": "EXPOSES_DAP"
     },
     {
+      "end_key": "Contact:contact_elena",
+      "properties": {
+        "role": "apm_spoc",
+        "source_fk": "apm_spoc"
+      },
+      "start_key": "Application:app_search",
+      "type": "HAS_APM_SPOC"
+    },
+    {
+      "end_key": "Contact:contact_farah",
+      "properties": {
+        "role": "application_manager",
+        "source_fk": "application_manager"
+      },
+      "start_key": "Application:app_search",
+      "type": "HAS_APPLICATION_MANAGER"
+    },
+    {
       "end_key": "ApplicationDap:adap_004",
       "properties": {
         "source_fk": "apm_application"
       },
       "start_key": "Application:app_search",
       "type": "HAS_DAP_BINDING"
+    },
+    {
+      "end_key": "Contact:contact_chloe",
+      "properties": {
+        "role": "domain_manager",
+        "source_fk": "domain_manager"
+      },
+      "start_key": "Application:app_search",
+      "type": "HAS_DOMAIN_MANAGER"
     },
     {
       "end_key": "ObsolescenceRecord:obso_006",
@@ -870,6 +1122,24 @@
       },
       "start_key": "Application:app_search",
       "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "Contact:contact_alice",
+      "properties": {
+        "role": "production_domain_manager",
+        "source_fk": "production_domain_manager"
+      },
+      "start_key": "Application:app_search",
+      "type": "HAS_PRODUCTION_DOMAIN_MANAGER"
+    },
+    {
+      "end_key": "Contact:contact_daniel",
+      "properties": {
+        "role": "production_manager",
+        "source_fk": "production_manager"
+      },
+      "start_key": "Application:app_search",
+      "type": "HAS_PRODUCTION_MANAGER"
     },
     {
       "end_key": "Technology:tech_nginx117",
@@ -961,6 +1231,24 @@
       "type": "EXPOSES_DAP"
     },
     {
+      "end_key": "Contact:contact_elena",
+      "properties": {
+        "role": "apm_spoc",
+        "source_fk": "apm_spoc"
+      },
+      "start_key": "Application:app_warehouse",
+      "type": "HAS_APM_SPOC"
+    },
+    {
+      "end_key": "Contact:contact_chloe",
+      "properties": {
+        "role": "application_manager",
+        "source_fk": "application_manager"
+      },
+      "start_key": "Application:app_warehouse",
+      "type": "HAS_APPLICATION_MANAGER"
+    },
+    {
       "end_key": "ApplicationDap:adap_009",
       "properties": {
         "source_fk": "apm_application"
@@ -977,12 +1265,39 @@
       "type": "HAS_DAP_BINDING"
     },
     {
+      "end_key": "Contact:contact_chloe",
+      "properties": {
+        "role": "domain_manager",
+        "source_fk": "domain_manager"
+      },
+      "start_key": "Application:app_warehouse",
+      "type": "HAS_DOMAIN_MANAGER"
+    },
+    {
       "end_key": "ObsolescenceRecord:obso_014",
       "properties": {
         "source_fk": "application_id"
       },
       "start_key": "Application:app_warehouse",
       "type": "HAS_OBSOLESCENCE_RECORD"
+    },
+    {
+      "end_key": "Contact:contact_farah",
+      "properties": {
+        "role": "production_domain_manager",
+        "source_fk": "production_domain_manager"
+      },
+      "start_key": "Application:app_warehouse",
+      "type": "HAS_PRODUCTION_DOMAIN_MANAGER"
+    },
+    {
+      "end_key": "Contact:contact_daniel",
+      "properties": {
+        "role": "production_manager",
+        "source_fk": "production_manager"
+      },
+      "start_key": "Application:app_warehouse",
+      "type": "HAS_PRODUCTION_MANAGER"
     },
     {
       "end_key": "Technology:tech_python39",
@@ -1681,11 +1996,16 @@
       "label": "Application",
       "properties": {
         "apm_cluster": "cl_eu_prod",
+        "apm_spoc": "contact_boris",
+        "application_manager": "contact_boris",
         "business_owner": "platform",
         "criticality": "tier_1",
+        "domain_manager": "contact_chloe",
         "id": "app_auth",
         "name": "Identity Service",
-        "retrieval_text": "Application. apm_cluster: cl_eu_prod. business_owner: platform. criticality: tier_1. id: app_auth. name: Identity Service. runtime_tier: service. source_table: apm_applications. Relationships: DEPLOYED_ON Host auth-api-01.eu.prod; DEPLOYED_ON Host auth-db-01.eu.prod; EXPOSES_DAP Dap Auth Context (dap_auth_context); HAS_DAP_BINDING ApplicationDap adap_003; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_004; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_005; INCOMING_HAS_APPLICATION Cluster EU Production (cl_eu_prod); RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Payments API (app_payments); RELATED_TO Application Search Gateway (app_search); USES_TECHNOLOGY Technology Java (tech_java17); USES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
+        "production_domain_manager": "contact_alice",
+        "production_manager": "contact_daniel",
+        "retrieval_text": "Application. apm_cluster: cl_eu_prod. apm_spoc: contact_boris. application_manager: contact_boris. business_owner: platform. criticality: tier_1. domain_manager: contact_chloe. id: app_auth. name: Identity Service. production_domain_manager: contact_alice. production_manager: contact_daniel. runtime_tier: service. source_table: apm_applications. Relationships: DEPLOYED_ON Host auth-api-01.eu.prod; DEPLOYED_ON Host auth-db-01.eu.prod; EXPOSES_DAP Dap Auth Context (dap_auth_context); HAS_APM_SPOC Contact Boris Martin (contact_boris); HAS_APPLICATION_MANAGER Contact Boris Martin (contact_boris); HAS_DAP_BINDING ApplicationDap adap_003; HAS_DOMAIN_MANAGER Contact Chloe Dubois (contact_chloe); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_004; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_005; HAS_PRODUCTION_DOMAIN_MANAGER Contact Alice Laurent (contact_alice); HAS_PRODUCTION_MANAGER Contact Daniel Moreau (contact_daniel); INCOMING_HAS_APPLICATION Cluster EU Production (cl_eu_prod); RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Payments API (app_payments); RELATED_TO Application Search Gateway (app_search); USES_TECHNOLOGY Technology Java (tech_java17); USES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
         "runtime_tier": "service",
         "source_table": "apm_applications"
       }
@@ -1696,11 +2016,16 @@
       "label": "Application",
       "properties": {
         "apm_cluster": "cl_us_prod",
+        "apm_spoc": "contact_elena",
+        "application_manager": "contact_boris",
         "business_owner": "finance",
         "criticality": "tier_1",
+        "domain_manager": "contact_chloe",
         "id": "app_billing",
         "name": "Billing Worker",
-        "retrieval_text": "Application. apm_cluster: cl_us_prod. business_owner: finance. criticality: tier_1. id: app_billing. name: Billing Worker. runtime_tier: worker. source_table: apm_applications. Relationships: DEPLOYED_ON Host billing-db-01.us.prod; DEPLOYED_ON Host billing-worker-01.us.prod; EXPOSES_DAP Dap Payment Events (dap_payment_events); HAS_DAP_BINDING ApplicationDap adap_005; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_008; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_009; INCOMING_HAS_APPLICATION Cluster US Production (cl_us_prod); RELATED_TO Application Event Collector (app_events); RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Payments API (app_payments); USES_TECHNOLOGY Technology Java (tech_java8); USES_TECHNOLOGY Technology Oracle Database (tech_oracle11g)",
+        "production_domain_manager": "contact_farah",
+        "production_manager": "contact_daniel",
+        "retrieval_text": "Application. apm_cluster: cl_us_prod. apm_spoc: contact_elena. application_manager: contact_boris. business_owner: finance. criticality: tier_1. domain_manager: contact_chloe. id: app_billing. name: Billing Worker. production_domain_manager: contact_farah. production_manager: contact_daniel. runtime_tier: worker. source_table: apm_applications. Relationships: DEPLOYED_ON Host billing-db-01.us.prod; DEPLOYED_ON Host billing-worker-01.us.prod; EXPOSES_DAP Dap Payment Events (dap_payment_events); HAS_APM_SPOC Contact Elena Rossi (contact_elena); HAS_APPLICATION_MANAGER Contact Boris Martin (contact_boris); HAS_DAP_BINDING ApplicationDap adap_005; HAS_DOMAIN_MANAGER Contact Chloe Dubois (contact_chloe); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_008; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_009; HAS_PRODUCTION_DOMAIN_MANAGER Contact Farah Haddad (contact_farah); HAS_PRODUCTION_MANAGER Contact Daniel Moreau (contact_daniel); INCOMING_HAS_APPLICATION Cluster US Production (cl_us_prod); RELATED_TO Application Event Collector (app_events); RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Payments API (app_payments); USES_TECHNOLOGY Technology Java (tech_java8); USES_TECHNOLOGY Technology Oracle Database (tech_oracle11g)",
         "runtime_tier": "worker",
         "source_table": "apm_applications"
       }
@@ -1711,11 +2036,16 @@
       "label": "Application",
       "properties": {
         "apm_cluster": "cl_data_platform",
+        "apm_spoc": "contact_elena",
+        "application_manager": "contact_chloe",
         "business_owner": "data-platform",
         "criticality": "tier_1",
+        "domain_manager": "contact_chloe",
         "id": "app_events",
         "name": "Event Collector",
-        "retrieval_text": "Application. apm_cluster: cl_data_platform. business_owner: data-platform. criticality: tier_1. id: app_events. name: Event Collector. runtime_tier: streaming. source_table: apm_applications. Relationships: DEPLOYED_ON Host event-collector-01.global; DEPLOYED_ON Host shared-kafka-01.global; EXPOSES_DAP Dap Payment Events (dap_payment_events); EXPOSES_DAP Dap Raw Clickstream (dap_raw_clickstream); HAS_DAP_BINDING ApplicationDap adap_007; HAS_DAP_BINDING ApplicationDap adap_008; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_012; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_013; INCOMING_HAS_APPLICATION Cluster Data Platform (cl_data_platform); INCOMING_RELATED_TO Application Billing Worker (app_billing); RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Payments API (app_payments); RELATED_TO Application Warehouse Loader (app_warehouse); USES_TECHNOLOGY Technology Kafka (tech_kafka28); USES_TECHNOLOGY Technology Python (tech_python39)",
+        "production_domain_manager": "contact_farah",
+        "production_manager": "contact_daniel",
+        "retrieval_text": "Application. apm_cluster: cl_data_platform. apm_spoc: contact_elena. application_manager: contact_chloe. business_owner: data-platform. criticality: tier_1. domain_manager: contact_chloe. id: app_events. name: Event Collector. production_domain_manager: contact_farah. production_manager: contact_daniel. runtime_tier: streaming. source_table: apm_applications. Relationships: DEPLOYED_ON Host event-collector-01.global; DEPLOYED_ON Host shared-kafka-01.global; EXPOSES_DAP Dap Payment Events (dap_payment_events); EXPOSES_DAP Dap Raw Clickstream (dap_raw_clickstream); HAS_APM_SPOC Contact Elena Rossi (contact_elena); HAS_APPLICATION_MANAGER Contact Chloe Dubois (contact_chloe); HAS_DAP_BINDING ApplicationDap adap_007; HAS_DAP_BINDING ApplicationDap adap_008; HAS_DOMAIN_MANAGER Contact Chloe Dubois (contact_chloe); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_012; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_013; HAS_PRODUCTION_DOMAIN_MANAGER Contact Farah Haddad (contact_farah); HAS_PRODUCTION_MANAGER Contact Daniel Moreau (contact_daniel); INCOMING_HAS_APPLICATION Cluster Data Platform (cl_data_platform); INCOMING_RELATED_TO Application Billing Worker (app_billing); RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Payments API (app_payments); RELATED_TO Application Warehouse Loader (app_warehouse); USES_TECHNOLOGY Technology Kafka (tech_kafka28); USES_TECHNOLOGY Technology Python (tech_python39)",
         "runtime_tier": "streaming",
         "source_table": "apm_applications"
       }
@@ -1726,11 +2056,16 @@
       "label": "Application",
       "properties": {
         "apm_cluster": "cl_us_prod",
+        "apm_spoc": "contact_elena",
+        "application_manager": "contact_boris",
         "business_owner": "supply-chain",
         "criticality": "tier_2",
+        "domain_manager": "contact_chloe",
         "id": "app_inventory",
         "name": "Inventory Service",
-        "retrieval_text": "Application. apm_cluster: cl_us_prod. business_owner: supply-chain. criticality: tier_2. id: app_inventory. name: Inventory Service. runtime_tier: service. source_table: apm_applications. Relationships: DEPLOYED_ON Host inventory-api-01.us.prod; DEPLOYED_ON Host inventory-db-01.us.prod; EXPOSES_DAP Dap Inventory Snapshot (dap_inventory_snapshot); HAS_DAP_BINDING ApplicationDap adap_006; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_010; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_011; INCOMING_HAS_APPLICATION Cluster US Production (cl_us_prod); INCOMING_RELATED_TO Application Billing Worker (app_billing); INCOMING_RELATED_TO Application Event Collector (app_events); INCOMING_RELATED_TO Application Identity Service (app_auth); RELATED_TO Application Payments API (app_payments); RELATED_TO Application Warehouse Loader (app_warehouse); USES_TECHNOLOGY Technology PostgreSQL (tech_postgres12); USES_TECHNOLOGY Technology Python (tech_python39)",
+        "production_domain_manager": "contact_farah",
+        "production_manager": "contact_alice",
+        "retrieval_text": "Application. apm_cluster: cl_us_prod. apm_spoc: contact_elena. application_manager: contact_boris. business_owner: supply-chain. criticality: tier_2. domain_manager: contact_chloe. id: app_inventory. name: Inventory Service. production_domain_manager: contact_farah. production_manager: contact_alice. runtime_tier: service. source_table: apm_applications. Relationships: DEPLOYED_ON Host inventory-api-01.us.prod; DEPLOYED_ON Host inventory-db-01.us.prod; EXPOSES_DAP Dap Inventory Snapshot (dap_inventory_snapshot); HAS_APM_SPOC Contact Elena Rossi (contact_elena); HAS_APPLICATION_MANAGER Contact Boris Martin (contact_boris); HAS_DAP_BINDING ApplicationDap adap_006; HAS_DOMAIN_MANAGER Contact Chloe Dubois (contact_chloe); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_010; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_011; HAS_PRODUCTION_DOMAIN_MANAGER Contact Farah Haddad (contact_farah); HAS_PRODUCTION_MANAGER Contact Alice Laurent (contact_alice); INCOMING_HAS_APPLICATION Cluster US Production (cl_us_prod); INCOMING_RELATED_TO Application Billing Worker (app_billing); INCOMING_RELATED_TO Application Event Collector (app_events); INCOMING_RELATED_TO Application Identity Service (app_auth); RELATED_TO Application Payments API (app_payments); RELATED_TO Application Warehouse Loader (app_warehouse); USES_TECHNOLOGY Technology PostgreSQL (tech_postgres12); USES_TECHNOLOGY Technology Python (tech_python39)",
         "runtime_tier": "service",
         "source_table": "apm_applications"
       }
@@ -1741,11 +2076,16 @@
       "label": "Application",
       "properties": {
         "apm_cluster": "cl_eu_prod",
+        "apm_spoc": "contact_elena",
+        "application_manager": "contact_boris",
         "business_owner": "payments",
         "criticality": "tier_1",
+        "domain_manager": "contact_chloe",
         "id": "app_payments",
         "name": "Payments API",
-        "retrieval_text": "Application. apm_cluster: cl_eu_prod. business_owner: payments. criticality: tier_1. id: app_payments. name: Payments API. runtime_tier: api. source_table: apm_applications. Relationships: DEPLOYED_ON Host pay-api-01.eu.prod; DEPLOYED_ON Host pay-db-01.eu.prod; DEPLOYED_ON Host shared-kafka-01.global; EXPOSES_DAP Dap Auth Context (dap_auth_context); EXPOSES_DAP Dap Payment Events (dap_payment_events); HAS_DAP_BINDING ApplicationDap adap_001; HAS_DAP_BINDING ApplicationDap adap_002; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_001; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_002; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_003; INCOMING_HAS_APPLICATION Cluster EU Production (cl_eu_prod); INCOMING_RELATED_TO Application Billing Worker (app_billing); INCOMING_RELATED_TO Application Event Collector (app_events); INCOMING_RELATED_TO Application Identity Service (app_auth); INCOMING_RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Search Gateway (app_search); USES_TECHNOLOGY Technology Java (tech_java8); USES_TECHNOLOGY Technology Kafka (tech_kafka28); USES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
+        "production_domain_manager": "contact_alice",
+        "production_manager": "contact_daniel",
+        "retrieval_text": "Application. apm_cluster: cl_eu_prod. apm_spoc: contact_elena. application_manager: contact_boris. business_owner: payments. criticality: tier_1. domain_manager: contact_chloe. id: app_payments. name: Payments API. production_domain_manager: contact_alice. production_manager: contact_daniel. runtime_tier: api. source_table: apm_applications. Relationships: DEPLOYED_ON Host pay-api-01.eu.prod; DEPLOYED_ON Host pay-db-01.eu.prod; DEPLOYED_ON Host shared-kafka-01.global; EXPOSES_DAP Dap Auth Context (dap_auth_context); EXPOSES_DAP Dap Payment Events (dap_payment_events); HAS_APM_SPOC Contact Elena Rossi (contact_elena); HAS_APPLICATION_MANAGER Contact Boris Martin (contact_boris); HAS_DAP_BINDING ApplicationDap adap_001; HAS_DAP_BINDING ApplicationDap adap_002; HAS_DOMAIN_MANAGER Contact Chloe Dubois (contact_chloe); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_001; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_002; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_003; HAS_PRODUCTION_DOMAIN_MANAGER Contact Alice Laurent (contact_alice); HAS_PRODUCTION_MANAGER Contact Daniel Moreau (contact_daniel); INCOMING_HAS_APPLICATION Cluster EU Production (cl_eu_prod); INCOMING_RELATED_TO Application Billing Worker (app_billing); INCOMING_RELATED_TO Application Event Collector (app_events); INCOMING_RELATED_TO Application Identity Service (app_auth); INCOMING_RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Search Gateway (app_search); USES_TECHNOLOGY Technology Java (tech_java8); USES_TECHNOLOGY Technology Kafka (tech_kafka28); USES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
         "runtime_tier": "api",
         "source_table": "apm_applications"
       }
@@ -1756,11 +2096,16 @@
       "label": "Application",
       "properties": {
         "apm_cluster": "cl_eu_prod",
+        "apm_spoc": "contact_elena",
+        "application_manager": "contact_farah",
         "business_owner": "commerce",
         "criticality": "tier_2",
+        "domain_manager": "contact_chloe",
         "id": "app_search",
         "name": "Search Gateway",
-        "retrieval_text": "Application. apm_cluster: cl_eu_prod. business_owner: commerce. criticality: tier_2. id: app_search. name: Search Gateway. runtime_tier: edge. source_table: apm_applications. Relationships: DEPLOYED_ON Host edge-01.eu.prod; EXPOSES_DAP Dap Product Index (dap_product_index); HAS_DAP_BINDING ApplicationDap adap_004; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_006; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_007; INCOMING_HAS_APPLICATION Cluster EU Production (cl_eu_prod); INCOMING_RELATED_TO Application Identity Service (app_auth); INCOMING_RELATED_TO Application Payments API (app_payments); USES_TECHNOLOGY Technology Nginx (tech_nginx117); USES_TECHNOLOGY Technology Node.js (tech_node16)",
+        "production_domain_manager": "contact_alice",
+        "production_manager": "contact_daniel",
+        "retrieval_text": "Application. apm_cluster: cl_eu_prod. apm_spoc: contact_elena. application_manager: contact_farah. business_owner: commerce. criticality: tier_2. domain_manager: contact_chloe. id: app_search. name: Search Gateway. production_domain_manager: contact_alice. production_manager: contact_daniel. runtime_tier: edge. source_table: apm_applications. Relationships: DEPLOYED_ON Host edge-01.eu.prod; EXPOSES_DAP Dap Product Index (dap_product_index); HAS_APM_SPOC Contact Elena Rossi (contact_elena); HAS_APPLICATION_MANAGER Contact Farah Haddad (contact_farah); HAS_DAP_BINDING ApplicationDap adap_004; HAS_DOMAIN_MANAGER Contact Chloe Dubois (contact_chloe); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_006; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_007; HAS_PRODUCTION_DOMAIN_MANAGER Contact Alice Laurent (contact_alice); HAS_PRODUCTION_MANAGER Contact Daniel Moreau (contact_daniel); INCOMING_HAS_APPLICATION Cluster EU Production (cl_eu_prod); INCOMING_RELATED_TO Application Identity Service (app_auth); INCOMING_RELATED_TO Application Payments API (app_payments); USES_TECHNOLOGY Technology Nginx (tech_nginx117); USES_TECHNOLOGY Technology Node.js (tech_node16)",
         "runtime_tier": "edge",
         "source_table": "apm_applications"
       }
@@ -1771,11 +2116,16 @@
       "label": "Application",
       "properties": {
         "apm_cluster": "cl_data_platform",
+        "apm_spoc": "contact_elena",
+        "application_manager": "contact_chloe",
         "business_owner": "analytics",
         "criticality": "tier_2",
+        "domain_manager": "contact_chloe",
         "id": "app_warehouse",
         "name": "Warehouse Loader",
-        "retrieval_text": "Application. apm_cluster: cl_data_platform. business_owner: analytics. criticality: tier_2. id: app_warehouse. name: Warehouse Loader. runtime_tier: batch. source_table: apm_applications. Relationships: DEPLOYED_ON Host warehouse-loader-01.global; EXPOSES_DAP Dap Curated Metrics (dap_curated_metrics); EXPOSES_DAP Dap Inventory Snapshot (dap_inventory_snapshot); HAS_DAP_BINDING ApplicationDap adap_009; HAS_DAP_BINDING ApplicationDap adap_010; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_014; INCOMING_HAS_APPLICATION Cluster Data Platform (cl_data_platform); INCOMING_RELATED_TO Application Event Collector (app_events); INCOMING_RELATED_TO Application Inventory Service (app_inventory); USES_TECHNOLOGY Technology Python (tech_python39)",
+        "production_domain_manager": "contact_farah",
+        "production_manager": "contact_daniel",
+        "retrieval_text": "Application. apm_cluster: cl_data_platform. apm_spoc: contact_elena. application_manager: contact_chloe. business_owner: analytics. criticality: tier_2. domain_manager: contact_chloe. id: app_warehouse. name: Warehouse Loader. production_domain_manager: contact_farah. production_manager: contact_daniel. runtime_tier: batch. source_table: apm_applications. Relationships: DEPLOYED_ON Host warehouse-loader-01.global; EXPOSES_DAP Dap Curated Metrics (dap_curated_metrics); EXPOSES_DAP Dap Inventory Snapshot (dap_inventory_snapshot); HAS_APM_SPOC Contact Elena Rossi (contact_elena); HAS_APPLICATION_MANAGER Contact Chloe Dubois (contact_chloe); HAS_DAP_BINDING ApplicationDap adap_009; HAS_DAP_BINDING ApplicationDap adap_010; HAS_DOMAIN_MANAGER Contact Chloe Dubois (contact_chloe); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_014; HAS_PRODUCTION_DOMAIN_MANAGER Contact Farah Haddad (contact_farah); HAS_PRODUCTION_MANAGER Contact Daniel Moreau (contact_daniel); INCOMING_HAS_APPLICATION Cluster Data Platform (cl_data_platform); INCOMING_RELATED_TO Application Event Collector (app_events); INCOMING_RELATED_TO Application Inventory Service (app_inventory); USES_TECHNOLOGY Technology Python (tech_python39)",
         "runtime_tier": "batch",
         "source_table": "apm_applications"
       }
@@ -1970,6 +2320,78 @@
         "region": "us-east",
         "retrieval_text": "Cluster. environment: prod. id: cl_us_prod. name: US Production. owner_team: platform-us. region: us-east. source_table: apm_cluster. Relationships: HAS_APPLICATION Application Billing Worker (app_billing); HAS_APPLICATION Application Inventory Service (app_inventory); HAS_SUBCLUSTER Subcluster US Batch (sub_us_batch); HAS_SUBCLUSTER Subcluster US Core Services (sub_us_core)",
         "source_table": "apm_cluster"
+      }
+    },
+    {
+      "identity": "contact_alice",
+      "key": "Contact:contact_alice",
+      "label": "Contact",
+      "properties": {
+        "id": "contact_alice",
+        "name": "Alice Laurent",
+        "refog": "u1001",
+        "retrieval_text": "Contact. id: contact_alice. name: Alice Laurent. refog: u1001. source_table: apm_contacts. Relationships: INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Identity Service (app_auth); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Payments API (app_payments); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Search Gateway (app_search); INCOMING_HAS_PRODUCTION_MANAGER Application Inventory Service (app_inventory)",
+        "source_table": "apm_contacts"
+      }
+    },
+    {
+      "identity": "contact_boris",
+      "key": "Contact:contact_boris",
+      "label": "Contact",
+      "properties": {
+        "id": "contact_boris",
+        "name": "Boris Martin",
+        "refog": "u1002",
+        "retrieval_text": "Contact. id: contact_boris. name: Boris Martin. refog: u1002. source_table: apm_contacts. Relationships: INCOMING_HAS_APM_SPOC Application Identity Service (app_auth); INCOMING_HAS_APPLICATION_MANAGER Application Billing Worker (app_billing); INCOMING_HAS_APPLICATION_MANAGER Application Identity Service (app_auth); INCOMING_HAS_APPLICATION_MANAGER Application Inventory Service (app_inventory); INCOMING_HAS_APPLICATION_MANAGER Application Payments API (app_payments)",
+        "source_table": "apm_contacts"
+      }
+    },
+    {
+      "identity": "contact_chloe",
+      "key": "Contact:contact_chloe",
+      "label": "Contact",
+      "properties": {
+        "id": "contact_chloe",
+        "name": "Chloe Dubois",
+        "refog": "u1003",
+        "retrieval_text": "Contact. id: contact_chloe. name: Chloe Dubois. refog: u1003. source_table: apm_contacts. Relationships: INCOMING_HAS_APPLICATION_MANAGER Application Event Collector (app_events); INCOMING_HAS_APPLICATION_MANAGER Application Warehouse Loader (app_warehouse); INCOMING_HAS_DOMAIN_MANAGER Application Billing Worker (app_billing); INCOMING_HAS_DOMAIN_MANAGER Application Event Collector (app_events); INCOMING_HAS_DOMAIN_MANAGER Application Identity Service (app_auth); INCOMING_HAS_DOMAIN_MANAGER Application Inventory Service (app_inventory); INCOMING_HAS_DOMAIN_MANAGER Application Payments API (app_payments); INCOMING_HAS_DOMAIN_MANAGER Application Search Gateway (app_search); INCOMING_HAS_DOMAIN_MANAGER Application Warehouse Loader (app_warehouse)",
+        "source_table": "apm_contacts"
+      }
+    },
+    {
+      "identity": "contact_daniel",
+      "key": "Contact:contact_daniel",
+      "label": "Contact",
+      "properties": {
+        "id": "contact_daniel",
+        "name": "Daniel Moreau",
+        "refog": "u1004",
+        "retrieval_text": "Contact. id: contact_daniel. name: Daniel Moreau. refog: u1004. source_table: apm_contacts. Relationships: INCOMING_HAS_PRODUCTION_MANAGER Application Billing Worker (app_billing); INCOMING_HAS_PRODUCTION_MANAGER Application Event Collector (app_events); INCOMING_HAS_PRODUCTION_MANAGER Application Identity Service (app_auth); INCOMING_HAS_PRODUCTION_MANAGER Application Payments API (app_payments); INCOMING_HAS_PRODUCTION_MANAGER Application Search Gateway (app_search); INCOMING_HAS_PRODUCTION_MANAGER Application Warehouse Loader (app_warehouse)",
+        "source_table": "apm_contacts"
+      }
+    },
+    {
+      "identity": "contact_elena",
+      "key": "Contact:contact_elena",
+      "label": "Contact",
+      "properties": {
+        "id": "contact_elena",
+        "name": "Elena Rossi",
+        "refog": "u1005",
+        "retrieval_text": "Contact. id: contact_elena. name: Elena Rossi. refog: u1005. source_table: apm_contacts. Relationships: INCOMING_HAS_APM_SPOC Application Billing Worker (app_billing); INCOMING_HAS_APM_SPOC Application Event Collector (app_events); INCOMING_HAS_APM_SPOC Application Inventory Service (app_inventory); INCOMING_HAS_APM_SPOC Application Payments API (app_payments); INCOMING_HAS_APM_SPOC Application Search Gateway (app_search); INCOMING_HAS_APM_SPOC Application Warehouse Loader (app_warehouse)",
+        "source_table": "apm_contacts"
+      }
+    },
+    {
+      "identity": "contact_farah",
+      "key": "Contact:contact_farah",
+      "label": "Contact",
+      "properties": {
+        "id": "contact_farah",
+        "name": "Farah Haddad",
+        "refog": "u1006",
+        "retrieval_text": "Contact. id: contact_farah. name: Farah Haddad. refog: u1006. source_table: apm_contacts. Relationships: INCOMING_HAS_APPLICATION_MANAGER Application Search Gateway (app_search); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Billing Worker (app_billing); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Event Collector (app_events); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Inventory Service (app_inventory); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Warehouse Loader (app_warehouse)",
+        "source_table": "apm_contacts"
       }
     },
     {

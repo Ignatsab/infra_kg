@@ -27,6 +27,17 @@ RETURN properties(a) AS application_source_properties;
 MATCH p=(a:Application {id: "app_payments"})-[:HAS_DAP_BINDING]->(binding:ApplicationDap)-[:TARGETS_DAP]->(dap:Dap)
 RETURN p, properties(binding) AS binding_source_properties;
 
+// Inspect application contact roles.
+MATCH p=(a:Application {id: "app_payments"})-[r]->(contact:Contact)
+WHERE type(r) IN [
+  "HAS_PRODUCTION_DOMAIN_MANAGER",
+  "HAS_APPLICATION_MANAGER",
+  "HAS_DOMAIN_MANAGER",
+  "HAS_PRODUCTION_MANAGER",
+  "HAS_APM_SPOC"
+]
+RETURN p, type(r) AS role_edge, properties(contact) AS contact_properties;
+
 // Hosts with multiple applications.
 MATCH (h:Host)<-[:DEPLOYED_ON]-(a:Application)
 WITH h, collect(a.name) AS applications

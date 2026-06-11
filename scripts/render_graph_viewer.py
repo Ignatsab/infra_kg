@@ -390,6 +390,7 @@ def render_html(graph: dict) -> str:
       Application: "#2563eb",
       ApplicationDap: "#0891b2",
       Cluster: "#16a34a",
+      Contact: "#be123c",
       Dap: "#7c3aed",
       Host: "#ea580c",
       ObsolescenceRecord: "#dc2626",

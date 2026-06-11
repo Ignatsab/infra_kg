@@ -18,14 +18,25 @@ REQUIRED_TABLES = [
     "apm_cluster",
     "apm_subclusters",
     "apm_applications",
+    "apm_contacts",
     "apm_application_daps",
     "apm_obso",
     "apm_technologies",
 ]
+TABLE_ALIASES = {
+    "apm_cluster": ["apm_cluster", "apm_clusters"],
+}
 
 RISK_ORDER = {"low": 1, "medium": 2, "high": 3, "critical": 4}
 STATUS_ORDER = {"supported": 1, "aging": 2, "obsolete": 3}
 PROPERTY_KEY_PATTERN = re.compile(r"[^0-9A-Za-z_]+")
+CONTACT_ROLE_FIELDS = {
+    "production_domain_manager": "HAS_PRODUCTION_DOMAIN_MANAGER",
+    "application_manager": "HAS_APPLICATION_MANAGER",
+    "domain_manager": "HAS_DOMAIN_MANAGER",
+    "production_manager": "HAS_PRODUCTION_MANAGER",
+    "apm_spoc": "HAS_APM_SPOC",
+}
 
 
 @dataclass
@@ -150,12 +161,14 @@ def build_graph_from_tables(
     env_path: Path | str = ".env",
     max_related_group_size: int = 200,
 ) -> KnowledgeGraph:
+    tables = normalize_table_aliases(tables)
     graph = KnowledgeGraph()
     validate_required_tables(tables, graph)
 
     clusters = by_id(tables.get("apm_cluster", []))
     subclusters = by_id(tables.get("apm_subclusters", []))
     applications = by_id(tables.get("apm_applications", []))
+    contacts = by_id(tables.get("apm_contacts", []))
     technologies = by_id(tables.get("apm_technologies", []))
     obso_records = by_id(tables.get("apm_obso", []))
 
@@ -179,6 +192,13 @@ def build_graph_from_tables(
         else:
             graph.warnings.append(f"Subcluster {row['id']} references missing cluster {cluster_id}")
 
+    for row in contacts.values():
+        graph.add_node(
+            "Contact",
+            row["id"],
+            row_properties(row, "apm_contacts"),
+        )
+
     app_context: dict[str, dict[str, Any]] = {}
     for row in applications.values():
         cluster_id = row.get("apm_cluster", "")
@@ -193,6 +213,33 @@ def build_graph_from_tables(
             graph.add_edge(cluster_key, "HAS_APPLICATION", app_key, {"source_fk": "apm_cluster"})
         else:
             graph.warnings.append(f"Application {row['id']} references missing cluster {cluster_id}")
+        for source_field, edge_type in CONTACT_ROLE_FIELDS.items():
+            contact_id = row.get(source_field, "")
+            if not contact_id:
+                continue
+            if contact_id in contacts:
+                contact_key = make_key("Contact", contact_id)
+                graph.add_edge(
+                    app_key,
+                    edge_type,
+                    contact_key,
+                    {
+                        "source_fk": source_field,
+                        "role": source_field,
+                    },
+                )
+                app_context.setdefault(row["id"], {}).setdefault("contacts", []).append(
+                    {
+                        "role": source_field,
+                        "contact_id": contact_id,
+                        "name": contacts[contact_id].get("name"),
+                        "refog": contacts[contact_id].get("refog"),
+                    }
+                )
+            else:
+                graph.warnings.append(
+                    f"Application {row['id']} references missing contact {contact_id} in {source_field}"
+                )
 
     for row in tables.get("apm_application_daps", []):
         application_id = row.get("apm_application", "")
@@ -500,7 +547,29 @@ def node_display(node: GraphNode) -> str:
 
 def load_tables(data_dir: Path | str) -> dict[str, list[dict[str, str]]]:
     base = Path(data_dir)
-    return {table_name: read_csv(base / f"{table_name}.csv") for table_name in REQUIRED_TABLES}
+    return {table_name: read_csv_with_aliases(base, table_name) for table_name in REQUIRED_TABLES}
+
+
+def read_csv_with_aliases(base: Path, table_name: str) -> list[dict[str, str]]:
+    aliases = TABLE_ALIASES.get(table_name, [table_name])
+    for alias in aliases:
+        path = base / f"{alias}.csv"
+        if path.exists():
+            return read_csv(path)
+    alias_list = ", ".join(f"{alias}.csv" for alias in aliases)
+    raise FileNotFoundError(f"Missing required table file for {table_name}. Tried: {alias_list}")
+
+
+def normalize_table_aliases(tables: dict[str, list[dict[str, str]]]) -> dict[str, list[dict[str, str]]]:
+    normalized = dict(tables)
+    for canonical_name, aliases in TABLE_ALIASES.items():
+        if canonical_name in normalized:
+            continue
+        for alias in aliases:
+            if alias in normalized:
+                normalized[canonical_name] = normalized[alias]
+                break
+    return normalized
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:

@@ -8,6 +8,11 @@ The graph builder keeps the table relationships deterministic:
 
 - `apm_cluster.id -> apm_subclusters.apm_cluster`
 - `apm_cluster.id -> apm_applications.apm_cluster`
+- `apm_contacts.id -> apm_applications.production_domain_manager`
+- `apm_contacts.id -> apm_applications.application_manager`
+- `apm_contacts.id -> apm_applications.domain_manager`
+- `apm_contacts.id -> apm_applications.production_manager`
+- `apm_contacts.id -> apm_applications.apm_spoc`
 - `apm_applications.id -> apm_application_daps.apm_application`
 - `apm_applications.id -> apm_obso.application_id`
 - `apm_obso.technology_id -> apm_technologies.id`
@@ -155,6 +160,7 @@ Primary nodes:
 - `Subcluster`
 - `Application`
 - `ApplicationDap`
+- `Contact`
 - `Dap`
 - `ObsolescenceRecord`
 - `Technology`
@@ -164,6 +170,11 @@ Source-of-truth edges:
 
 - `(:Cluster)-[:HAS_SUBCLUSTER]->(:Subcluster)`
 - `(:Cluster)-[:HAS_APPLICATION]->(:Application)`
+- `(:Application)-[:HAS_PRODUCTION_DOMAIN_MANAGER]->(:Contact)`
+- `(:Application)-[:HAS_APPLICATION_MANAGER]->(:Contact)`
+- `(:Application)-[:HAS_DOMAIN_MANAGER]->(:Contact)`
+- `(:Application)-[:HAS_PRODUCTION_MANAGER]->(:Contact)`
+- `(:Application)-[:HAS_APM_SPOC]->(:Contact)`
 - `(:Application)-[:EXPOSES_DAP]->(:Dap)`
 - `(:Application)-[:HAS_DAP_BINDING]->(:ApplicationDap)`
 - `(:ApplicationDap)-[:TARGETS_DAP]->(:Dap)`
@@ -184,12 +195,16 @@ Derived topology edges for easier agent traversal:
 The graph preserves all source columns by default:
 
 - Entity tables such as `apm_cluster`, `apm_subclusters`,
-  `apm_applications`, `apm_obso`, and `apm_technologies` become graph nodes
-  with every CSV/DB column copied as a node property.
+  `apm_applications`, `apm_contacts`, `apm_obso`, and `apm_technologies`
+  become graph nodes with every CSV/DB column copied as a node property.
 - The join-like `apm_application_daps` table is represented as row-level
   `ApplicationDap` nodes so every binding row keeps all of its columns.
 - The direct `(:Application)-[:EXPOSES_DAP]->(:Dap)` edge is still kept as a
   traversal shortcut, and it also receives the source binding row properties.
+
+CSV table aliases are supported for export convenience. In particular,
+`apm_clusters.csv` is accepted as an alias for the canonical internal table
+name `apm_cluster`.
 
 Column names are normalized into Memgraph-safe property keys. For example,
 `Owner Email` becomes `Owner_Email`.

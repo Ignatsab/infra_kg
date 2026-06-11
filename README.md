@@ -67,12 +67,30 @@ Run tests:
 PYTHONPATH=src python3 -m unittest discover -s tests
 ```
 
-If Memgraph is already running locally on Bolt port `7687`, load the graph:
+Check whether Memgraph is already running:
 
 ```bash
 python3 -m pip install -r requirements.txt
-python3 scripts/load_memgraph.py --clear
+nc -zv 127.0.0.1 7687
+docker ps | grep 7687
 ```
+
+If `nc` says the port is open, or `docker ps` shows a Memgraph container mapped
+to `7687`, reuse the running Memgraph and load the graph:
+
+```bash
+python3 scripts/load_memgraph.py --clear --uri bolt://127.0.0.1:7687
+```
+
+If nothing is running on `7687`, start Memgraph and Lab with Docker, then load
+the graph:
+
+```bash
+docker compose up -d memgraph lab
+python3 scripts/load_memgraph.py --clear --uri bolt://127.0.0.1:7687
+```
+
+Memgraph Lab will be available at <http://localhost:3000>.
 
 Then open Memgraph Lab and inspect paths with:
 
@@ -81,15 +99,6 @@ MATCH p=(c:Cluster)-[:HAS_APPLICATION]->(a:Application)-[:DEPLOYED_ON]->(h:Host)
 RETURN p
 LIMIT 50;
 ```
-
-If you want to start Memgraph with Docker:
-
-```bash
-docker compose up -d memgraph lab
-python3 scripts/load_memgraph.py --clear
-```
-
-Memgraph Lab will be available at <http://localhost:3000>.
 
 If Docker has started the containers but the loader still says connection
 refused, force IPv4 and let the loader wait:

@@ -33,11 +33,11 @@ def load_graph_to_memgraph(
     uri = uri or os.environ.get("MEMGRAPH_URI", "bolt://127.0.0.1:7687")
     username = username if username is not None else os.environ.get("MEMGRAPH_USERNAME")
     password = password if password is not None else os.environ.get("MEMGRAPH_PASSWORD")
-    connect_retries = connect_retries if connect_retries is not None else int(os.environ.get("MEMGRAPH_CONNECT_RETRIES", "30"))
+    connect_retries = connect_retries if connect_retries is not None else int(os.environ.get("MEMGRAPH_CONNECT_RETRIES", "120"))
     connect_retry_delay = (
         connect_retry_delay
         if connect_retry_delay is not None
-        else float(os.environ.get("MEMGRAPH_CONNECT_RETRY_DELAY", "1"))
+        else float(os.environ.get("MEMGRAPH_CONNECT_RETRY_DELAY", "2"))
     )
     auth = (username, password) if username and password else None
 
@@ -95,7 +95,10 @@ def verify_connectivity_with_retry(driver, uri: str, retries: int, retry_delay: 
         f"Could not connect to Memgraph at {uri} after {attempts} attempts. "
         "If you started Docker Compose moments ago, check `docker compose ps` "
         "and `docker compose logs memgraph`. If your machine resolves localhost "
-        "to IPv6 first, use `--uri bolt://127.0.0.1:7687`."
+        "to IPv6 first, use `--uri bolt://127.0.0.1:7687`. If the error says "
+        "`incomplete handshake response`, reinstall dependencies with "
+        "`python3 -m pip install -r requirements.txt` so the Neo4j driver is "
+        "pinned to the compatible major version."
     ) from last_error
 
 

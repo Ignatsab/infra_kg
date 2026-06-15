@@ -21,8 +21,11 @@ class GraphBuilderTest(unittest.TestCase):
                 "ApplicationDap": 10,
                 "Cluster": 3,
                 "Contact": 6,
+                "Criticality": 2,
                 "Dap": 6,
+                "Environment": 1,
                 "Host": 12,
+                "LocationCountry": 4,
                 "ObsolescenceRecord": 14,
                 "Subcluster": 6,
                 "Technology": 8,
@@ -35,12 +38,15 @@ class GraphBuilderTest(unittest.TestCase):
                 "HAS_APPLICATION": 7,
                 "HAS_APPLICATION_MANAGER": 7,
                 "HAS_APM_SPOC": 7,
+                "HAS_CRITICALITY": 14,
                 "HAS_DAP_BINDING": 10,
                 "HAS_DOMAIN_MANAGER": 7,
                 "HAS_OBSOLESCENCE_RECORD": 14,
                 "HAS_PRODUCTION_DOMAIN_MANAGER": 7,
                 "HAS_PRODUCTION_MANAGER": 7,
                 "HAS_SUBCLUSTER": 6,
+                "IN_ENVIRONMENT": 14,
+                "LOCATED_IN_COUNTRY": 14,
                 "ON_HOST": 14,
                 "REFERENCES_TECHNOLOGY": 14,
                 "TARGETS_DAP": 10,
@@ -79,6 +85,28 @@ class GraphBuilderTest(unittest.TestCase):
             },
             role_edges,
         )
+
+    def test_obsolescence_dimension_edges_are_created(self) -> None:
+        graph = build_graph_from_tables(mock_tables(), include_derived=False)
+
+        dimension_edges = {
+            edge.type: edge.end_key
+            for edge in graph.edges
+            if edge.start_key == "ObsolescenceRecord:obso_001"
+            and edge.type in {"HAS_CRITICALITY", "IN_ENVIRONMENT", "LOCATED_IN_COUNTRY"}
+        }
+
+        self.assertEqual(
+            {
+                "HAS_CRITICALITY": "Criticality:tier_1",
+                "IN_ENVIRONMENT": "Environment:prod",
+                "LOCATED_IN_COUNTRY": "LocationCountry:DE",
+            },
+            dimension_edges,
+        )
+        self.assertEqual("tier_1", graph.nodes["ObsolescenceRecord:obso_001"].properties["criticality"])
+        self.assertEqual("prod", graph.nodes["ObsolescenceRecord:obso_001"].properties["env"])
+        self.assertEqual("DE", graph.nodes["ObsolescenceRecord:obso_001"].properties["location_country"])
 
     def test_apm_clusters_alias_is_supported_for_table_dicts(self) -> None:
         tables = mock_tables()

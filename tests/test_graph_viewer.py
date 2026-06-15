@@ -19,7 +19,7 @@ class GraphViewerTest(unittest.TestCase):
     def test_sample_keeps_all_labels_and_relationship_types_when_possible(self) -> None:
         graph = build_graph_from_tables(mock_tables()).to_dict()
 
-        sampled = render_graph_viewer.sample_graph(graph, max_nodes=20, max_edges=30)
+        sampled = render_graph_viewer.sample_graph(graph, max_nodes=40, max_edges=80)
 
         self.assertEqual(
             sorted({node["label"] for node in graph["nodes"]}),

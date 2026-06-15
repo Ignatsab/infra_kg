@@ -37,6 +37,11 @@ CONTACT_ROLE_FIELDS = {
     "production_manager": "HAS_PRODUCTION_MANAGER",
     "apm_spoc": "HAS_APM_SPOC",
 }
+OBSO_DIMENSION_FIELDS = {
+    "criticality": ("Criticality", "HAS_CRITICALITY"),
+    "env": ("Environment", "IN_ENVIRONMENT"),
+    "location_country": ("LocationCountry", "LOCATED_IN_COUNTRY"),
+}
 
 
 @dataclass
@@ -311,6 +316,8 @@ def build_graph_from_tables(
         host_key = graph.add_node("Host", host, {"name": host, "source_table": "apm_obso"})
         graph.add_edge(obso_key, "ON_HOST", host_key, {"source_field": "host"})
 
+        add_obso_dimension_edges(graph, obso_key, row)
+
         application_id = row.get("application_id", "")
         technology_id = row.get("technology_id", "")
         if application_id in applications:
@@ -352,6 +359,24 @@ def build_graph_from_tables(
         add_embeddings(graph, embedding_provider)
 
     return graph
+
+
+def add_obso_dimension_edges(graph: KnowledgeGraph, obso_key: str, row: dict[str, str]) -> None:
+    for source_field, (label, edge_type) in OBSO_DIMENSION_FIELDS.items():
+        value = row.get(source_field, "").strip()
+        if not value:
+            continue
+        dimension_key = graph.add_node(
+            label,
+            value,
+            {
+                "name": value,
+                "source_table": "apm_obso",
+                "source_field": source_field,
+                "dimension": source_field,
+            },
+        )
+        graph.add_edge(obso_key, edge_type, dimension_key, {"source_field": source_field})
 
 
 def add_derived_topology_edges(

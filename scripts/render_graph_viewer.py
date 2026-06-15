@@ -391,8 +391,11 @@ def render_html(graph: dict) -> str:
       ApplicationDap: "#0891b2",
       Cluster: "#16a34a",
       Contact: "#be123c",
+      Criticality: "#b45309",
       Dap: "#7c3aed",
+      Environment: "#0f766e",
       Host: "#ea580c",
+      LocationCountry: "#0369a1",
       ObsolescenceRecord: "#dc2626",
       Subcluster: "#65a30d",
       Technology: "#9333ea"

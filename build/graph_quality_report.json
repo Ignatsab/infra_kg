@@ -9,8 +9,11 @@
           "ApplicationDap": 10,
           "Cluster": 3,
           "Contact": 6,
+          "Criticality": 2,
           "Dap": 6,
+          "Environment": 1,
           "Host": 12,
+          "LocationCountry": 4,
           "ObsolescenceRecord": 14,
           "Subcluster": 6,
           "Technology": 8
@@ -25,13 +28,13 @@
           "Application:app_warehouse",
           "ApplicationDap:adap_001"
         ],
-        "size": 72
+        "size": 79
       }
     ],
     "isolated_node_count": 0,
     "isolated_node_samples": [],
     "largest_component_ratio": 1.0,
-    "largest_component_size": 72,
+    "largest_component_size": 79,
     "unreachable_from_clusters_count": 0,
     "unreachable_from_clusters_samples": []
   },
@@ -163,6 +166,84 @@
     },
     {
       "coverage_ratio": 1.0,
+      "description": "obsolescence rows point to a criticality",
+      "direction": "outgoing",
+      "label": "ObsolescenceRecord",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 14,
+      "relationship_types": [
+        "HAS_CRITICALITY"
+      ],
+      "total": 14
+    },
+    {
+      "coverage_ratio": 1.0,
+      "description": "obsolescence rows point to an environment",
+      "direction": "outgoing",
+      "label": "ObsolescenceRecord",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 14,
+      "relationship_types": [
+        "IN_ENVIRONMENT"
+      ],
+      "total": 14
+    },
+    {
+      "coverage_ratio": 1.0,
+      "description": "obsolescence rows point to a country",
+      "direction": "outgoing",
+      "label": "ObsolescenceRecord",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 14,
+      "relationship_types": [
+        "LOCATED_IN_COUNTRY"
+      ],
+      "total": 14
+    },
+    {
+      "coverage_ratio": 1.0,
+      "description": "criticality values are referenced by obsolescence rows",
+      "direction": "incoming",
+      "label": "Criticality",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 2,
+      "relationship_types": [
+        "HAS_CRITICALITY"
+      ],
+      "total": 2
+    },
+    {
+      "coverage_ratio": 1.0,
+      "description": "environment values are referenced by obsolescence rows",
+      "direction": "incoming",
+      "label": "Environment",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 1,
+      "relationship_types": [
+        "IN_ENVIRONMENT"
+      ],
+      "total": 1
+    },
+    {
+      "coverage_ratio": 1.0,
+      "description": "country values are referenced by obsolescence rows",
+      "direction": "incoming",
+      "label": "LocationCountry",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 4,
+      "relationship_types": [
+        "LOCATED_IN_COUNTRY"
+      ],
+      "total": 4
+    },
+    {
+      "coverage_ratio": 1.0,
       "description": "DAPs referenced by an application or binding row",
       "direction": "incoming",
       "label": "Dap",
@@ -206,7 +287,7 @@
     }
   ],
   "degree": {
-    "average": 4.778,
+    "average": 5.418,
     "max": 24,
     "min": 1,
     "top_hubs": [
@@ -267,6 +348,14 @@
         "out_degree": 12
       },
       {
+        "degree": 14,
+        "in_degree": 14,
+        "key": "Environment:prod",
+        "label": "Environment",
+        "name": "prod",
+        "out_degree": 0
+      },
+      {
         "degree": 9,
         "in_degree": 9,
         "key": "Technology:tech_python39",
@@ -281,14 +370,6 @@
         "label": "Technology",
         "name": "PostgreSQL",
         "out_degree": 0
-      },
-      {
-        "degree": 9,
-        "in_degree": 9,
-        "key": "Contact:contact_chloe",
-        "label": "Contact",
-        "name": "Chloe Dubois",
-        "out_degree": 0
       }
     ]
   },
@@ -297,8 +378,11 @@
     "ApplicationDap": 10,
     "Cluster": 3,
     "Contact": 6,
+    "Criticality": 2,
     "Dap": 6,
+    "Environment": 1,
     "Host": 12,
+    "LocationCountry": 4,
     "ObsolescenceRecord": 14,
     "Subcluster": 6,
     "Technology": 8
@@ -350,6 +434,17 @@
     },
     {
       "coverage_ratio": 1.0,
+      "label": "Criticality",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 2,
+      "required_properties": [
+        "id"
+      ],
+      "total": 2
+    },
+    {
+      "coverage_ratio": 1.0,
       "label": "Dap",
       "missing_count": 0,
       "missing_samples": [],
@@ -361,6 +456,17 @@
     },
     {
       "coverage_ratio": 1.0,
+      "label": "Environment",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 1,
+      "required_properties": [
+        "id"
+      ],
+      "total": 1
+    },
+    {
+      "coverage_ratio": 1.0,
       "label": "Host",
       "missing_count": 0,
       "missing_samples": [],
@@ -369,6 +475,17 @@
         "id"
       ],
       "total": 12
+    },
+    {
+      "coverage_ratio": 1.0,
+      "label": "LocationCountry",
+      "missing_count": 0,
+      "missing_samples": [],
+      "ok_count": 4,
+      "required_properties": [
+        "id"
+      ],
+      "total": 4
     },
     {
       "coverage_ratio": 1.0,
@@ -414,6 +531,7 @@
     "HAS_APM_SPOC": 7,
     "HAS_APPLICATION": 7,
     "HAS_APPLICATION_MANAGER": 7,
+    "HAS_CRITICALITY": 14,
     "HAS_DAP_BINDING": 10,
     "HAS_DOMAIN_MANAGER": 7,
     "HAS_OBSOLESCENCE_RECORD": 14,
@@ -421,6 +539,8 @@
     "HAS_PRODUCTION_MANAGER": 7,
     "HAS_SUBCLUSTER": 6,
     "HAS_TECHNOLOGY": 13,
+    "IN_ENVIRONMENT": 14,
+    "LOCATED_IN_COUNTRY": 14,
     "ON_HOST": 14,
     "REFERENCES_TECHNOLOGY": 14,
     "RELATED_TO": 12,
@@ -441,8 +561,8 @@
   "score_note": "Heuristic score. Use concrete issue counts for decisions.",
   "status": "PASS",
   "totals": {
-    "edge_to_node_ratio": 2.389,
-    "edges": 172,
-    "nodes": 72
+    "edge_to_node_ratio": 2.709,
+    "edges": 214,
+    "nodes": 79
   }
 }

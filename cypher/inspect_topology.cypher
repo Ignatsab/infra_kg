@@ -38,6 +38,23 @@ WHERE type(r) IN [
 ]
 RETURN p, type(r) AS role_edge, properties(contact) AS contact_properties;
 
+// Inspect obsolescence row dimensions.
+MATCH (a:Application {id: "app_payments"})-[:HAS_OBSOLESCENCE_RECORD]->(o:ObsolescenceRecord)
+OPTIONAL MATCH (o)-[:ON_HOST]->(h:Host)
+OPTIONAL MATCH (o)-[:REFERENCES_TECHNOLOGY]->(t:Technology)
+OPTIONAL MATCH (o)-[:HAS_CRITICALITY]->(c:Criticality)
+OPTIONAL MATCH (o)-[:IN_ENVIRONMENT]->(e:Environment)
+OPTIONAL MATCH (o)-[:LOCATED_IN_COUNTRY]->(country:LocationCountry)
+RETURN
+  o.id AS obso_record,
+  h.name AS host,
+  t.name AS technology,
+  c.name AS criticality,
+  e.name AS environment,
+  country.name AS country,
+  properties(o) AS obso_source_properties
+ORDER BY obso_record;
+
 // Hosts with multiple applications.
 MATCH (h:Host)<-[:DEPLOYED_ON]-(a:Application)
 WITH h, collect(a.name) AS applications

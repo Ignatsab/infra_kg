@@ -37,8 +37,8 @@ def main() -> None:
     parser.add_argument("--embedding-dimensions", type=int, default=64, help="Hash embedding dimensions.")
     parser.add_argument("--enrich-with-llm", action="store_true", help="Add optional LLM summaries/tags.")
     parser.add_argument("--env-path", default=".env", help="Path to .env file for LLM/embedding settings.")
-    parser.add_argument("--connect-retries", type=int, default=30, help="Memgraph connection attempts before failing.")
-    parser.add_argument("--connect-retry-delay", type=float, default=1.0, help="Seconds between Memgraph connection attempts.")
+    parser.add_argument("--connect-retries", type=int, default=120, help="Memgraph connection attempts before failing.")
+    parser.add_argument("--connect-retry-delay", type=float, default=2.0, help="Seconds between Memgraph connection attempts.")
     args = parser.parse_args()
 
     embedding_provider = embedding_provider_from_choice(

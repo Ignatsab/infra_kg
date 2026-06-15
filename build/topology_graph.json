@@ -1765,6 +1765,30 @@
       "type": "HAS_TECHNOLOGY"
     },
     {
+      "end_key": "Criticality:tier_1",
+      "properties": {
+        "source_field": "criticality"
+      },
+      "start_key": "ObsolescenceRecord:obso_001",
+      "type": "HAS_CRITICALITY"
+    },
+    {
+      "end_key": "Environment:prod",
+      "properties": {
+        "source_field": "env"
+      },
+      "start_key": "ObsolescenceRecord:obso_001",
+      "type": "IN_ENVIRONMENT"
+    },
+    {
+      "end_key": "LocationCountry:DE",
+      "properties": {
+        "source_field": "location_country"
+      },
+      "start_key": "ObsolescenceRecord:obso_001",
+      "type": "LOCATED_IN_COUNTRY"
+    },
+    {
       "end_key": "Host:pay-api-01.eu.prod",
       "properties": {
         "source_field": "host"
@@ -1779,6 +1803,30 @@
       },
       "start_key": "ObsolescenceRecord:obso_001",
       "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Criticality:tier_1",
+      "properties": {
+        "source_field": "criticality"
+      },
+      "start_key": "ObsolescenceRecord:obso_002",
+      "type": "HAS_CRITICALITY"
+    },
+    {
+      "end_key": "Environment:prod",
+      "properties": {
+        "source_field": "env"
+      },
+      "start_key": "ObsolescenceRecord:obso_002",
+      "type": "IN_ENVIRONMENT"
+    },
+    {
+      "end_key": "LocationCountry:DE",
+      "properties": {
+        "source_field": "location_country"
+      },
+      "start_key": "ObsolescenceRecord:obso_002",
+      "type": "LOCATED_IN_COUNTRY"
     },
     {
       "end_key": "Host:pay-db-01.eu.prod",
@@ -1797,6 +1845,30 @@
       "type": "REFERENCES_TECHNOLOGY"
     },
     {
+      "end_key": "Criticality:tier_1",
+      "properties": {
+        "source_field": "criticality"
+      },
+      "start_key": "ObsolescenceRecord:obso_003",
+      "type": "HAS_CRITICALITY"
+    },
+    {
+      "end_key": "Environment:prod",
+      "properties": {
+        "source_field": "env"
+      },
+      "start_key": "ObsolescenceRecord:obso_003",
+      "type": "IN_ENVIRONMENT"
+    },
+    {
+      "end_key": "LocationCountry:IE",
+      "properties": {
+        "source_field": "location_country"
+      },
+      "start_key": "ObsolescenceRecord:obso_003",
+      "type": "LOCATED_IN_COUNTRY"
+    },
+    {
       "end_key": "Host:shared-kafka-01.global",
       "properties": {
         "source_field": "host"
@@ -1811,6 +1883,30 @@
       },
       "start_key": "ObsolescenceRecord:obso_003",
       "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Criticality:tier_1",
+      "properties": {
+        "source_field": "criticality"
+      },
+      "start_key": "ObsolescenceRecord:obso_004",
+      "type": "HAS_CRITICALITY"
+    },
+    {
+      "end_key": "Environment:prod",
+      "properties": {
+        "source_field": "env"
+      },
+      "start_key": "ObsolescenceRecord:obso_004",
+      "type": "IN_ENVIRONMENT"
+    },
+    {
+      "end_key": "LocationCountry:DE",
+      "properties": {
+        "source_field": "location_country"
+      },
+      "start_key": "ObsolescenceRecord:obso_004",
+      "type": "LOCATED_IN_COUNTRY"
     },
     {
       "end_key": "Host:auth-api-01.eu.prod",
@@ -1829,6 +1925,30 @@
       "type": "REFERENCES_TECHNOLOGY"
     },
     {
+      "end_key": "Criticality:tier_1",
+      "properties": {
+        "source_field": "criticality"
+      },
+      "start_key": "ObsolescenceRecord:obso_005",
+      "type": "HAS_CRITICALITY"
+    },
+    {
+      "end_key": "Environment:prod",
+      "properties": {
+        "source_field": "env"
+      },
+      "start_key": "ObsolescenceRecord:obso_005",
+      "type": "IN_ENVIRONMENT"
+    },
+    {
+      "end_key": "LocationCountry:DE",
+      "properties": {
+        "source_field": "location_country"
+      },
+      "start_key": "ObsolescenceRecord:obso_005",
+      "type": "LOCATED_IN_COUNTRY"
+    },
+    {
       "end_key": "Host:auth-db-01.eu.prod",
       "properties": {
         "source_field": "host"
@@ -1843,6 +1963,30 @@
       },
       "start_key": "ObsolescenceRecord:obso_005",
       "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Criticality:tier_2",
+      "properties": {
+        "source_field": "criticality"
+      },
+      "start_key": "ObsolescenceRecord:obso_006",
+      "type": "HAS_CRITICALITY"
+    },
+    {
+      "end_key": "Environment:prod",
+      "properties": {
+        "source_field": "env"
+      },
+      "start_key": "ObsolescenceRecord:obso_006",
+      "type": "IN_ENVIRONMENT"
+    },
+    {
+      "end_key": "LocationCountry:FR",
+      "properties": {
+        "source_field": "location_country"
+      },
+      "start_key": "ObsolescenceRecord:obso_006",
+      "type": "LOCATED_IN_COUNTRY"
     },
     {
       "end_key": "Host:edge-01.eu.prod",
@@ -1861,6 +2005,30 @@
       "type": "REFERENCES_TECHNOLOGY"
     },
     {
+      "end_key": "Criticality:tier_2",
+      "properties": {
+        "source_field": "criticality"
+      },
+      "start_key": "ObsolescenceRecord:obso_007",
+      "type": "HAS_CRITICALITY"
+    },
+    {
+      "end_key": "Environment:prod",
+      "properties": {
+        "source_field": "env"
+      },
+      "start_key": "ObsolescenceRecord:obso_007",
+      "type": "IN_ENVIRONMENT"
+    },
+    {
+      "end_key": "LocationCountry:FR",
+      "properties": {
+        "source_field": "location_country"
+      },
+      "start_key": "ObsolescenceRecord:obso_007",
+      "type": "LOCATED_IN_COUNTRY"
+    },
+    {
       "end_key": "Host:edge-01.eu.prod",
       "properties": {
         "source_field": "host"
@@ -1875,6 +2043,30 @@
       },
       "start_key": "ObsolescenceRecord:obso_007",
       "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Criticality:tier_1",
+      "properties": {
+        "source_field": "criticality"
+      },
+      "start_key": "ObsolescenceRecord:obso_008",
+      "type": "HAS_CRITICALITY"
+    },
+    {
+      "end_key": "Environment:prod",
+      "properties": {
+        "source_field": "env"
+      },
+      "start_key": "ObsolescenceRecord:obso_008",
+      "type": "IN_ENVIRONMENT"
+    },
+    {
+      "end_key": "LocationCountry:US",
+      "properties": {
+        "source_field": "location_country"
+      },
+      "start_key": "ObsolescenceRecord:obso_008",
+      "type": "LOCATED_IN_COUNTRY"
     },
     {
       "end_key": "Host:billing-worker-01.us.prod",
@@ -1893,6 +2085,30 @@
       "type": "REFERENCES_TECHNOLOGY"
     },
     {
+      "end_key": "Criticality:tier_1",
+      "properties": {
+        "source_field": "criticality"
+      },
+      "start_key": "ObsolescenceRecord:obso_009",
+      "type": "HAS_CRITICALITY"
+    },
+    {
+      "end_key": "Environment:prod",
+      "properties": {
+        "source_field": "env"
+      },
+      "start_key": "ObsolescenceRecord:obso_009",
+      "type": "IN_ENVIRONMENT"
+    },
+    {
+      "end_key": "LocationCountry:US",
+      "properties": {
+        "source_field": "location_country"
+      },
+      "start_key": "ObsolescenceRecord:obso_009",
+      "type": "LOCATED_IN_COUNTRY"
+    },
+    {
       "end_key": "Host:billing-db-01.us.prod",
       "properties": {
         "source_field": "host"
@@ -1907,6 +2123,30 @@
       },
       "start_key": "ObsolescenceRecord:obso_009",
       "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Criticality:tier_2",
+      "properties": {
+        "source_field": "criticality"
+      },
+      "start_key": "ObsolescenceRecord:obso_010",
+      "type": "HAS_CRITICALITY"
+    },
+    {
+      "end_key": "Environment:prod",
+      "properties": {
+        "source_field": "env"
+      },
+      "start_key": "ObsolescenceRecord:obso_010",
+      "type": "IN_ENVIRONMENT"
+    },
+    {
+      "end_key": "LocationCountry:US",
+      "properties": {
+        "source_field": "location_country"
+      },
+      "start_key": "ObsolescenceRecord:obso_010",
+      "type": "LOCATED_IN_COUNTRY"
     },
     {
       "end_key": "Host:inventory-api-01.us.prod",
@@ -1925,6 +2165,30 @@
       "type": "REFERENCES_TECHNOLOGY"
     },
     {
+      "end_key": "Criticality:tier_2",
+      "properties": {
+        "source_field": "criticality"
+      },
+      "start_key": "ObsolescenceRecord:obso_011",
+      "type": "HAS_CRITICALITY"
+    },
+    {
+      "end_key": "Environment:prod",
+      "properties": {
+        "source_field": "env"
+      },
+      "start_key": "ObsolescenceRecord:obso_011",
+      "type": "IN_ENVIRONMENT"
+    },
+    {
+      "end_key": "LocationCountry:US",
+      "properties": {
+        "source_field": "location_country"
+      },
+      "start_key": "ObsolescenceRecord:obso_011",
+      "type": "LOCATED_IN_COUNTRY"
+    },
+    {
       "end_key": "Host:inventory-db-01.us.prod",
       "properties": {
         "source_field": "host"
@@ -1939,6 +2203,30 @@
       },
       "start_key": "ObsolescenceRecord:obso_011",
       "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Criticality:tier_1",
+      "properties": {
+        "source_field": "criticality"
+      },
+      "start_key": "ObsolescenceRecord:obso_012",
+      "type": "HAS_CRITICALITY"
+    },
+    {
+      "end_key": "Environment:prod",
+      "properties": {
+        "source_field": "env"
+      },
+      "start_key": "ObsolescenceRecord:obso_012",
+      "type": "IN_ENVIRONMENT"
+    },
+    {
+      "end_key": "LocationCountry:IE",
+      "properties": {
+        "source_field": "location_country"
+      },
+      "start_key": "ObsolescenceRecord:obso_012",
+      "type": "LOCATED_IN_COUNTRY"
     },
     {
       "end_key": "Host:shared-kafka-01.global",
@@ -1957,6 +2245,30 @@
       "type": "REFERENCES_TECHNOLOGY"
     },
     {
+      "end_key": "Criticality:tier_1",
+      "properties": {
+        "source_field": "criticality"
+      },
+      "start_key": "ObsolescenceRecord:obso_013",
+      "type": "HAS_CRITICALITY"
+    },
+    {
+      "end_key": "Environment:prod",
+      "properties": {
+        "source_field": "env"
+      },
+      "start_key": "ObsolescenceRecord:obso_013",
+      "type": "IN_ENVIRONMENT"
+    },
+    {
+      "end_key": "LocationCountry:IE",
+      "properties": {
+        "source_field": "location_country"
+      },
+      "start_key": "ObsolescenceRecord:obso_013",
+      "type": "LOCATED_IN_COUNTRY"
+    },
+    {
       "end_key": "Host:event-collector-01.global",
       "properties": {
         "source_field": "host"
@@ -1971,6 +2283,30 @@
       },
       "start_key": "ObsolescenceRecord:obso_013",
       "type": "REFERENCES_TECHNOLOGY"
+    },
+    {
+      "end_key": "Criticality:tier_2",
+      "properties": {
+        "source_field": "criticality"
+      },
+      "start_key": "ObsolescenceRecord:obso_014",
+      "type": "HAS_CRITICALITY"
+    },
+    {
+      "end_key": "Environment:prod",
+      "properties": {
+        "source_field": "env"
+      },
+      "start_key": "ObsolescenceRecord:obso_014",
+      "type": "IN_ENVIRONMENT"
+    },
+    {
+      "end_key": "LocationCountry:IE",
+      "properties": {
+        "source_field": "location_country"
+      },
+      "start_key": "ObsolescenceRecord:obso_014",
+      "type": "LOCATED_IN_COUNTRY"
     },
     {
       "end_key": "Host:warehouse-loader-01.global",
@@ -2395,6 +2731,32 @@
       }
     },
     {
+      "identity": "tier_1",
+      "key": "Criticality:tier_1",
+      "label": "Criticality",
+      "properties": {
+        "dimension": "criticality",
+        "id": "tier_1",
+        "name": "tier_1",
+        "retrieval_text": "Criticality. dimension: criticality. id: tier_1. name: tier_1. source_field: criticality. source_table: apm_obso. Relationships: INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_001; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_002; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_003; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_004; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_005; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_008; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_009; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_012; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_013",
+        "source_field": "criticality",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "tier_2",
+      "key": "Criticality:tier_2",
+      "label": "Criticality",
+      "properties": {
+        "dimension": "criticality",
+        "id": "tier_2",
+        "name": "tier_2",
+        "retrieval_text": "Criticality. dimension: criticality. id: tier_2. name: tier_2. source_field: criticality. source_table: apm_obso. Relationships: INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_006; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_007; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_010; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_011; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_014",
+        "source_field": "criticality",
+        "source_table": "apm_obso"
+      }
+    },
+    {
       "identity": "dap_auth_context",
       "key": "Dap:dap_auth_context",
       "label": "Dap",
@@ -2458,6 +2820,19 @@
         "name": "Raw Clickstream",
         "retrieval_text": "Dap. id: dap_raw_clickstream. name: Raw Clickstream. source_table: apm_application_daps. Relationships: INCOMING_EXPOSES_DAP Application Event Collector (app_events); INCOMING_TARGETS_DAP ApplicationDap adap_008",
         "source_table": "apm_application_daps"
+      }
+    },
+    {
+      "identity": "prod",
+      "key": "Environment:prod",
+      "label": "Environment",
+      "properties": {
+        "dimension": "env",
+        "id": "prod",
+        "name": "prod",
+        "retrieval_text": "Environment. dimension: env. id: prod. name: prod. source_field: env. source_table: apm_obso. Relationships: INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_001; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_002; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_003; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_004; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_005; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_006; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_007; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_008; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_009; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_010; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_011; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_012; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_013; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_014",
+        "source_field": "env",
+        "source_table": "apm_obso"
       }
     },
     {
@@ -2593,17 +2968,72 @@
       }
     },
     {
+      "identity": "DE",
+      "key": "LocationCountry:DE",
+      "label": "LocationCountry",
+      "properties": {
+        "dimension": "location_country",
+        "id": "DE",
+        "name": "DE",
+        "retrieval_text": "LocationCountry. dimension: location_country. id: DE. name: DE. source_field: location_country. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_001; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_002; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_004; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_005",
+        "source_field": "location_country",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "FR",
+      "key": "LocationCountry:FR",
+      "label": "LocationCountry",
+      "properties": {
+        "dimension": "location_country",
+        "id": "FR",
+        "name": "FR",
+        "retrieval_text": "LocationCountry. dimension: location_country. id: FR. name: FR. source_field: location_country. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_006; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_007",
+        "source_field": "location_country",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "IE",
+      "key": "LocationCountry:IE",
+      "label": "LocationCountry",
+      "properties": {
+        "dimension": "location_country",
+        "id": "IE",
+        "name": "IE",
+        "retrieval_text": "LocationCountry. dimension: location_country. id: IE. name: IE. source_field: location_country. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_003; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_012; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_013; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_014",
+        "source_field": "location_country",
+        "source_table": "apm_obso"
+      }
+    },
+    {
+      "identity": "US",
+      "key": "LocationCountry:US",
+      "label": "LocationCountry",
+      "properties": {
+        "dimension": "location_country",
+        "id": "US",
+        "name": "US",
+        "retrieval_text": "LocationCountry. dimension: location_country. id: US. name: US. source_field: location_country. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_008; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_009; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_010; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_011",
+        "source_field": "location_country",
+        "source_table": "apm_obso"
+      }
+    },
+    {
       "identity": "obso_001",
       "key": "ObsolescenceRecord:obso_001",
       "label": "ObsolescenceRecord",
       "properties": {
         "application_id": "app_payments",
+        "criticality": "tier_1",
         "detected_at": "2026-05-18",
+        "env": "prod",
         "evidence": "runtime scan",
         "host": "pay-api-01.eu.prod",
         "id": "obso_001",
+        "location_country": "DE",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_payments. detected_at: 2026-05-18. evidence: runtime scan. host: pay-api-01.eu.prod. id: obso_001. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_java8. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); ON_HOST Host pay-api-01.eu.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java8)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_payments. criticality: tier_1. detected_at: 2026-05-18. env: prod. evidence: runtime scan. host: pay-api-01.eu.prod. id: obso_001. location_country: DE. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_java8. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry DE; ON_HOST Host pay-api-01.eu.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java8)",
         "risk_level": "high",
         "source_table": "apm_obso",
         "technology_id": "tech_java8"
@@ -2615,12 +3045,15 @@
       "label": "ObsolescenceRecord",
       "properties": {
         "application_id": "app_payments",
+        "criticality": "tier_1",
         "detected_at": "2026-05-18",
+        "env": "prod",
         "evidence": "cmdb",
         "host": "pay-db-01.eu.prod",
         "id": "obso_002",
+        "location_country": "DE",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_payments. detected_at: 2026-05-18. evidence: cmdb. host: pay-db-01.eu.prod. id: obso_002. obsolescence_status: obsolete. risk_level: critical. source_table: apm_obso. technology_id: tech_postgres12. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); ON_HOST Host pay-db-01.eu.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_payments. criticality: tier_1. detected_at: 2026-05-18. env: prod. evidence: cmdb. host: pay-db-01.eu.prod. id: obso_002. location_country: DE. obsolescence_status: obsolete. risk_level: critical. source_table: apm_obso. technology_id: tech_postgres12. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry DE; ON_HOST Host pay-db-01.eu.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
         "risk_level": "critical",
         "source_table": "apm_obso",
         "technology_id": "tech_postgres12"
@@ -2632,12 +3065,15 @@
       "label": "ObsolescenceRecord",
       "properties": {
         "application_id": "app_payments",
+        "criticality": "tier_1",
         "detected_at": "2026-05-20",
+        "env": "prod",
         "evidence": "runtime scan",
         "host": "shared-kafka-01.global",
         "id": "obso_003",
+        "location_country": "IE",
         "obsolescence_status": "aging",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_payments. detected_at: 2026-05-20. evidence: runtime scan. host: shared-kafka-01.global. id: obso_003. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_kafka28. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); ON_HOST Host shared-kafka-01.global; REFERENCES_TECHNOLOGY Technology Kafka (tech_kafka28)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_payments. criticality: tier_1. detected_at: 2026-05-20. env: prod. evidence: runtime scan. host: shared-kafka-01.global. id: obso_003. location_country: IE. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_kafka28. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry IE; ON_HOST Host shared-kafka-01.global; REFERENCES_TECHNOLOGY Technology Kafka (tech_kafka28)",
         "risk_level": "medium",
         "source_table": "apm_obso",
         "technology_id": "tech_kafka28"
@@ -2649,12 +3085,15 @@
       "label": "ObsolescenceRecord",
       "properties": {
         "application_id": "app_auth",
+        "criticality": "tier_1",
         "detected_at": "2026-05-21",
+        "env": "prod",
         "evidence": "runtime scan",
         "host": "auth-api-01.eu.prod",
         "id": "obso_004",
+        "location_country": "DE",
         "obsolescence_status": "supported",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_auth. detected_at: 2026-05-21. evidence: runtime scan. host: auth-api-01.eu.prod. id: obso_004. obsolescence_status: supported. risk_level: low. source_table: apm_obso. technology_id: tech_java17. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Identity Service (app_auth); ON_HOST Host auth-api-01.eu.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java17)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_auth. criticality: tier_1. detected_at: 2026-05-21. env: prod. evidence: runtime scan. host: auth-api-01.eu.prod. id: obso_004. location_country: DE. obsolescence_status: supported. risk_level: low. source_table: apm_obso. technology_id: tech_java17. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Identity Service (app_auth); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry DE; ON_HOST Host auth-api-01.eu.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java17)",
         "risk_level": "low",
         "source_table": "apm_obso",
         "technology_id": "tech_java17"
@@ -2666,12 +3105,15 @@
       "label": "ObsolescenceRecord",
       "properties": {
         "application_id": "app_auth",
+        "criticality": "tier_1",
         "detected_at": "2026-05-21",
+        "env": "prod",
         "evidence": "cmdb",
         "host": "auth-db-01.eu.prod",
         "id": "obso_005",
+        "location_country": "DE",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_auth. detected_at: 2026-05-21. evidence: cmdb. host: auth-db-01.eu.prod. id: obso_005. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_postgres12. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Identity Service (app_auth); ON_HOST Host auth-db-01.eu.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_auth. criticality: tier_1. detected_at: 2026-05-21. env: prod. evidence: cmdb. host: auth-db-01.eu.prod. id: obso_005. location_country: DE. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_postgres12. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Identity Service (app_auth); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry DE; ON_HOST Host auth-db-01.eu.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
         "risk_level": "high",
         "source_table": "apm_obso",
         "technology_id": "tech_postgres12"
@@ -2683,12 +3125,15 @@
       "label": "ObsolescenceRecord",
       "properties": {
         "application_id": "app_search",
+        "criticality": "tier_2",
         "detected_at": "2026-05-22",
+        "env": "prod",
         "evidence": "container image",
         "host": "edge-01.eu.prod",
         "id": "obso_006",
+        "location_country": "FR",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_search. detected_at: 2026-05-22. evidence: container image. host: edge-01.eu.prod. id: obso_006. obsolescence_status: obsolete. risk_level: medium. source_table: apm_obso. technology_id: tech_node16. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Search Gateway (app_search); ON_HOST Host edge-01.eu.prod; REFERENCES_TECHNOLOGY Technology Node.js (tech_node16)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_search. criticality: tier_2. detected_at: 2026-05-22. env: prod. evidence: container image. host: edge-01.eu.prod. id: obso_006. location_country: FR. obsolescence_status: obsolete. risk_level: medium. source_table: apm_obso. technology_id: tech_node16. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Search Gateway (app_search); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry FR; ON_HOST Host edge-01.eu.prod; REFERENCES_TECHNOLOGY Technology Node.js (tech_node16)",
         "risk_level": "medium",
         "source_table": "apm_obso",
         "technology_id": "tech_node16"
@@ -2700,12 +3145,15 @@
       "label": "ObsolescenceRecord",
       "properties": {
         "application_id": "app_search",
+        "criticality": "tier_2",
         "detected_at": "2026-05-22",
+        "env": "prod",
         "evidence": "package scan",
         "host": "edge-01.eu.prod",
         "id": "obso_007",
+        "location_country": "FR",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_search. detected_at: 2026-05-22. evidence: package scan. host: edge-01.eu.prod. id: obso_007. obsolescence_status: obsolete. risk_level: medium. source_table: apm_obso. technology_id: tech_nginx117. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Search Gateway (app_search); ON_HOST Host edge-01.eu.prod; REFERENCES_TECHNOLOGY Technology Nginx (tech_nginx117)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_search. criticality: tier_2. detected_at: 2026-05-22. env: prod. evidence: package scan. host: edge-01.eu.prod. id: obso_007. location_country: FR. obsolescence_status: obsolete. risk_level: medium. source_table: apm_obso. technology_id: tech_nginx117. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Search Gateway (app_search); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry FR; ON_HOST Host edge-01.eu.prod; REFERENCES_TECHNOLOGY Technology Nginx (tech_nginx117)",
         "risk_level": "medium",
         "source_table": "apm_obso",
         "technology_id": "tech_nginx117"
@@ -2717,12 +3165,15 @@
       "label": "ObsolescenceRecord",
       "properties": {
         "application_id": "app_billing",
+        "criticality": "tier_1",
         "detected_at": "2026-05-23",
+        "env": "prod",
         "evidence": "runtime scan",
         "host": "billing-worker-01.us.prod",
         "id": "obso_008",
+        "location_country": "US",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_billing. detected_at: 2026-05-23. evidence: runtime scan. host: billing-worker-01.us.prod. id: obso_008. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_java8. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Billing Worker (app_billing); ON_HOST Host billing-worker-01.us.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java8)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_billing. criticality: tier_1. detected_at: 2026-05-23. env: prod. evidence: runtime scan. host: billing-worker-01.us.prod. id: obso_008. location_country: US. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_java8. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Billing Worker (app_billing); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry US; ON_HOST Host billing-worker-01.us.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java8)",
         "risk_level": "high",
         "source_table": "apm_obso",
         "technology_id": "tech_java8"
@@ -2734,12 +3185,15 @@
       "label": "ObsolescenceRecord",
       "properties": {
         "application_id": "app_billing",
+        "criticality": "tier_1",
         "detected_at": "2026-05-23",
+        "env": "prod",
         "evidence": "cmdb",
         "host": "billing-db-01.us.prod",
         "id": "obso_009",
+        "location_country": "US",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_billing. detected_at: 2026-05-23. evidence: cmdb. host: billing-db-01.us.prod. id: obso_009. obsolescence_status: obsolete. risk_level: critical. source_table: apm_obso. technology_id: tech_oracle11g. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Billing Worker (app_billing); ON_HOST Host billing-db-01.us.prod; REFERENCES_TECHNOLOGY Technology Oracle Database (tech_oracle11g)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_billing. criticality: tier_1. detected_at: 2026-05-23. env: prod. evidence: cmdb. host: billing-db-01.us.prod. id: obso_009. location_country: US. obsolescence_status: obsolete. risk_level: critical. source_table: apm_obso. technology_id: tech_oracle11g. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Billing Worker (app_billing); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry US; ON_HOST Host billing-db-01.us.prod; REFERENCES_TECHNOLOGY Technology Oracle Database (tech_oracle11g)",
         "risk_level": "critical",
         "source_table": "apm_obso",
         "technology_id": "tech_oracle11g"
@@ -2751,12 +3205,15 @@
       "label": "ObsolescenceRecord",
       "properties": {
         "application_id": "app_inventory",
+        "criticality": "tier_2",
         "detected_at": "2026-05-24",
+        "env": "prod",
         "evidence": "runtime scan",
         "host": "inventory-api-01.us.prod",
         "id": "obso_010",
+        "location_country": "US",
         "obsolescence_status": "aging",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_inventory. detected_at: 2026-05-24. evidence: runtime scan. host: inventory-api-01.us.prod. id: obso_010. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Inventory Service (app_inventory); ON_HOST Host inventory-api-01.us.prod; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_inventory. criticality: tier_2. detected_at: 2026-05-24. env: prod. evidence: runtime scan. host: inventory-api-01.us.prod. id: obso_010. location_country: US. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Inventory Service (app_inventory); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry US; ON_HOST Host inventory-api-01.us.prod; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
         "risk_level": "medium",
         "source_table": "apm_obso",
         "technology_id": "tech_python39"
@@ -2768,12 +3225,15 @@
       "label": "ObsolescenceRecord",
       "properties": {
         "application_id": "app_inventory",
+        "criticality": "tier_2",
         "detected_at": "2026-05-24",
+        "env": "prod",
         "evidence": "cmdb",
         "host": "inventory-db-01.us.prod",
         "id": "obso_011",
+        "location_country": "US",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_inventory. detected_at: 2026-05-24. evidence: cmdb. host: inventory-db-01.us.prod. id: obso_011. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_postgres12. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Inventory Service (app_inventory); ON_HOST Host inventory-db-01.us.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_inventory. criticality: tier_2. detected_at: 2026-05-24. env: prod. evidence: cmdb. host: inventory-db-01.us.prod. id: obso_011. location_country: US. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_postgres12. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Inventory Service (app_inventory); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry US; ON_HOST Host inventory-db-01.us.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
         "risk_level": "high",
         "source_table": "apm_obso",
         "technology_id": "tech_postgres12"
@@ -2785,12 +3245,15 @@
       "label": "ObsolescenceRecord",
       "properties": {
         "application_id": "app_events",
+        "criticality": "tier_1",
         "detected_at": "2026-05-25",
+        "env": "prod",
         "evidence": "runtime scan",
         "host": "shared-kafka-01.global",
         "id": "obso_012",
+        "location_country": "IE",
         "obsolescence_status": "aging",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_events. detected_at: 2026-05-25. evidence: runtime scan. host: shared-kafka-01.global. id: obso_012. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_kafka28. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Event Collector (app_events); ON_HOST Host shared-kafka-01.global; REFERENCES_TECHNOLOGY Technology Kafka (tech_kafka28)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_events. criticality: tier_1. detected_at: 2026-05-25. env: prod. evidence: runtime scan. host: shared-kafka-01.global. id: obso_012. location_country: IE. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_kafka28. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Event Collector (app_events); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry IE; ON_HOST Host shared-kafka-01.global; REFERENCES_TECHNOLOGY Technology Kafka (tech_kafka28)",
         "risk_level": "medium",
         "source_table": "apm_obso",
         "technology_id": "tech_kafka28"
@@ -2802,12 +3265,15 @@
       "label": "ObsolescenceRecord",
       "properties": {
         "application_id": "app_events",
+        "criticality": "tier_1",
         "detected_at": "2026-05-25",
+        "env": "prod",
         "evidence": "container image",
         "host": "event-collector-01.global",
         "id": "obso_013",
+        "location_country": "IE",
         "obsolescence_status": "aging",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_events. detected_at: 2026-05-25. evidence: container image. host: event-collector-01.global. id: obso_013. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Event Collector (app_events); ON_HOST Host event-collector-01.global; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_events. criticality: tier_1. detected_at: 2026-05-25. env: prod. evidence: container image. host: event-collector-01.global. id: obso_013. location_country: IE. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Event Collector (app_events); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry IE; ON_HOST Host event-collector-01.global; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
         "risk_level": "medium",
         "source_table": "apm_obso",
         "technology_id": "tech_python39"
@@ -2819,12 +3285,15 @@
       "label": "ObsolescenceRecord",
       "properties": {
         "application_id": "app_warehouse",
+        "criticality": "tier_2",
         "detected_at": "2026-05-26",
+        "env": "prod",
         "evidence": "runtime scan",
         "host": "warehouse-loader-01.global",
         "id": "obso_014",
+        "location_country": "IE",
         "obsolescence_status": "aging",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_warehouse. detected_at: 2026-05-26. evidence: runtime scan. host: warehouse-loader-01.global. id: obso_014. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: INCOMING_HAS_OBSOLESCENCE_RECORD Application Warehouse Loader (app_warehouse); ON_HOST Host warehouse-loader-01.global; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_warehouse. criticality: tier_2. detected_at: 2026-05-26. env: prod. evidence: runtime scan. host: warehouse-loader-01.global. id: obso_014. location_country: IE. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Warehouse Loader (app_warehouse); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry IE; ON_HOST Host warehouse-loader-01.global; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
         "risk_level": "medium",
         "source_table": "apm_obso",
         "technology_id": "tech_python39"

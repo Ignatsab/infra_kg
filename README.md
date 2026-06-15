@@ -17,6 +17,8 @@ The graph builder keeps the table relationships deterministic:
 - `apm_applications.id -> apm_obso.application_id`
 - `apm_obso.technology_id -> apm_technologies.id`
 - `apm_obso.host` becomes a `Host` node
+- `apm_obso.criticality`, `apm_obso.env`, and
+  `apm_obso.location_country` become reusable dimension nodes
 
 LLM usage is optional. The core topology edges are built from IDs and foreign
 keys so repeated runs are stable. An OpenAI-compatible local LLM can be used to
@@ -86,8 +88,10 @@ If nothing is running on `7687`, start Memgraph and Lab with Docker, then load
 the graph:
 
 ```bash
-docker compose up -d memgraph lab
+docker compose up -d memgraph
+docker compose ps
 python3 scripts/load_memgraph.py --clear --uri bolt://127.0.0.1:7687
+docker compose up -d lab
 ```
 
 Memgraph Lab will be available at <http://localhost:3000>.
@@ -101,10 +105,10 @@ LIMIT 50;
 ```
 
 If Docker has started the containers but the loader still says connection
-refused, force IPv4 and let the loader wait:
+refused or `ServiceUnavailable`, force IPv4 and let the loader wait:
 
 ```bash
-python3 scripts/load_memgraph.py --clear --uri bolt://127.0.0.1:7687 --connect-retries 60
+python3 scripts/load_memgraph.py --clear --uri bolt://127.0.0.1:7687 --connect-retries 120 --connect-retry-delay 2
 ```
 
 Useful checks:
@@ -115,6 +119,24 @@ docker compose logs memgraph
 nc -zv 127.0.0.1 7687
 python3 scripts/check_memgraph.py
 ```
+
+Troubleshooting notes:
+
+- `dependency failed to start: container ... is unhealthy` means Docker started
+  the Memgraph container, but Docker's health check did not pass yet. Start only
+  `memgraph`, wait until `docker compose ps` says `healthy`, then load the graph
+  and start `lab`.
+- `Connection refused` means nothing is accepting Bolt connections on port
+  `7687` yet.
+- `incomplete handshake response` means the port opened, but the Bolt driver
+  could not complete the Memgraph protocol handshake. Reinstall dependencies
+  with `python3 -m pip install -r requirements.txt` so the Neo4j driver is
+  pinned to the compatible major version.
+- `vm.max_map_count ... is too low` is a host/VM setting warning from Memgraph.
+  If Memgraph keeps restarting or staying unhealthy and you have sudo access,
+  run `sudo sysctl -w vm.max_map_count=524288`, then restart Memgraph.
+- LiteLLM and `pkg_resources` warnings in Memgraph logs are not blockers for
+  loading this graph.
 
 If Memgraph Lab is hard to open through a Cloud IDE port proxy, render the
 generated graph directly:
@@ -170,8 +192,11 @@ Primary nodes:
 - `Application`
 - `ApplicationDap`
 - `Contact`
+- `Criticality`
 - `Dap`
+- `Environment`
 - `ObsolescenceRecord`
+- `LocationCountry`
 - `Technology`
 - `Host`
 
@@ -190,6 +215,9 @@ Source-of-truth edges:
 - `(:Application)-[:HAS_OBSOLESCENCE_RECORD]->(:ObsolescenceRecord)`
 - `(:ObsolescenceRecord)-[:ON_HOST]->(:Host)`
 - `(:ObsolescenceRecord)-[:REFERENCES_TECHNOLOGY]->(:Technology)`
+- `(:ObsolescenceRecord)-[:HAS_CRITICALITY]->(:Criticality)`
+- `(:ObsolescenceRecord)-[:IN_ENVIRONMENT]->(:Environment)`
+- `(:ObsolescenceRecord)-[:LOCATED_IN_COUNTRY]->(:LocationCountry)`
 
 Derived topology edges for easier agent traversal:
 
@@ -206,6 +234,10 @@ The graph preserves all source columns by default:
 - Entity tables such as `apm_cluster`, `apm_subclusters`,
   `apm_applications`, `apm_contacts`, `apm_obso`, and `apm_technologies`
   become graph nodes with every CSV/DB column copied as a node property.
+- `apm_obso.criticality`, `apm_obso.env`, and
+  `apm_obso.location_country` are also promoted into reusable dimension nodes
+  so agents can traverse/filter by those values without losing the raw
+  properties on each `ObsolescenceRecord`.
 - The join-like `apm_application_daps` table is represented as row-level
   `ApplicationDap` nodes so every binding row keeps all of its columns.
 - The direct `(:Application)-[:EXPOSES_DAP]->(:Dap)` edge is still kept as a

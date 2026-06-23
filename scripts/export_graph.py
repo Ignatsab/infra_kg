@@ -24,6 +24,11 @@ def main() -> None:
         default=200,
         help="Skip derived RELATED_TO all-to-all expansion for groups larger than this. Use 0 for no cap.",
     )
+    parser.add_argument(
+        "--no-related-to",
+        action="store_true",
+        help="Keep derived shortcuts but skip Application RELATED_TO edges.",
+    )
     parser.add_argument("--no-retrieval-text", action="store_true", help="Do not add retrieval_text to graph nodes.")
     parser.add_argument(
         "--embed",
@@ -44,6 +49,7 @@ def main() -> None:
     graph = build_graph(
         Path(args.data_dir),
         include_derived=not args.no_derived,
+        include_related=not args.no_related_to,
         include_retrieval_text=not args.no_retrieval_text,
         embedding_provider=embedding_provider,
         enrich_with_llm=args.enrich_with_llm,

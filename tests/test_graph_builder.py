@@ -67,6 +67,15 @@ class GraphBuilderTest(unittest.TestCase):
         self.assertEqual("Payments API", app_payments.properties["name"])
         self.assertIn("retrieval_text", app_payments.properties)
 
+    def test_related_edges_can_be_skipped_without_disabling_other_shortcuts(self) -> None:
+        graph = build_graph_from_tables(mock_tables(), include_related=False)
+
+        edge_counts = graph.edge_counts()
+        self.assertGreater(edge_counts["DEPLOYED_ON"], 0)
+        self.assertGreater(edge_counts["USES_TECHNOLOGY"], 0)
+        self.assertGreater(edge_counts["HAS_TECHNOLOGY"], 0)
+        self.assertNotIn("RELATED_TO", edge_counts)
+
     def test_application_contact_role_edges_are_created(self) -> None:
         graph = build_graph_from_tables(mock_tables(), include_derived=False)
 

@@ -61,11 +61,14 @@ def main() -> None:
                 """
                 MATCH (n)
                 WITH count(n) AS nodes
-                MATCH ()-[r]->()
+                OPTIONAL MATCH ()-[r]->()
                 RETURN nodes, count(r) AS edges
                 """
             ).single()
-            print(f"\nTotal: {total['nodes']} nodes / {total['edges']} edges")
+            if total:
+                print(f"\nTotal: {total['nodes']} nodes / {total['edges']} edges")
+            else:
+                print("\nTotal: 0 nodes / 0 edges")
 
 
 if __name__ == "__main__":

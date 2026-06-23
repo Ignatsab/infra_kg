@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Infrastructure Topology Graph</title>
+  <style>
+    :root {
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --ink: #16202a;
+      --muted: #5d6975;
+      --line: #d7dce2;
+      --accent: #0f766e;
+      --selected: #c2410c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--bg);
+      font: 14px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .app {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      grid-template-rows: auto minmax(0, 1fr);
+      min-height: 100vh;
+    }
+    header {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--line);
+      background: var(--panel);
+    }
+    h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+    .counts {
+      display: flex;
+      gap: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+    input, select, button {
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      padding: 0 10px;
+      font: inherit;
+    }
+    input { width: 260px; }
+    button {
+      cursor: pointer;
+      background: #eef6f5;
+      border-color: #b9d9d5;
+      color: #0f5f58;
+      font-weight: 600;
+    }
+    main {
+      min-width: 0;
+      min-height: 0;
+      position: relative;
+    }
+    svg {
+      width: 100%;
+      height: calc(100vh - 59px);
+      display: block;
+      background: #fbfcfd;
+    }
+    aside {
+      min-height: 0;
+      overflow: auto;
+      border-left: 1px solid var(--line);
+      background: var(--panel);
+      padding: 16px;
+    }
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      min-width: 0;
+    }
+    .swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex: 0 0 auto;
+    }
+    .node circle {
+      stroke: #fff;
+      stroke-width: 2;
+      cursor: pointer;
+    }
+    .node.selected circle {
+      stroke: var(--selected);
+      stroke-width: 4;
+    }
+    .node text {
+      pointer-events: none;
+      font-size: 11px;
+      paint-order: stroke;
+      stroke: #fff;
+      stroke-width: 3px;
+      fill: #16202a;
+    }
+    .edge {
+      stroke: #8f9aa7;
+      stroke-opacity: 0.58;
+      stroke-width: 1.5;
+      marker-end: url(#arrow);
+    }
+    .edge.highlight {
+      stroke: var(--selected);
+      stroke-opacity: 0.9;
+      stroke-width: 2.5;
+    }
+    .edge-label {
+      pointer-events: none;
+      font-size: 9px;
+      font-weight: 650;
+      letter-spacing: 0;
+      fill: #334155;
+      paint-order: stroke;
+      stroke: #fbfcfd;
+      stroke-width: 4px;
+      stroke-linejoin: round;
+    }
+    .edge-label.highlight {
+      fill: var(--selected);
+    }
+    .details h2 {
+      margin: 0 0 4px;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+    .details .sub {
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .property {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 10px;
+      padding: 7px 0;
+      border-top: 1px solid #edf0f3;
+    }
+    .property b {
+      color: var(--muted);
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+    .property span {
+      overflow-wrap: anywhere;
+    }
+    .empty {
+      color: var(--muted);
+    }
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(420px, 1fr) auto;
+      }
+      aside { border-left: 0; border-top: 1px solid var(--line); }
+      header { align-items: stretch; flex-direction: column; }
+      .controls { margin-left: 0; flex-wrap: wrap; }
+      input { width: min(100%, 320px); }
+      svg { height: 60vh; min-height: 420px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Infrastructure Topology Graph</h1>
+      <div class="counts" id="counts"></div>
+      <div class="controls">
+        <input id="search" type="search" placeholder="Search id, name, host, technology">
+        <select id="labelFilter"></select>
+        <button id="reset">Reset</button>
+      </div>
+    </header>
+    <main>
+      <svg id="graph" role="img" aria-label="Topology graph"></svg>
+    </main>
+    <aside>
+      <div class="legend" id="legend"></div>
+      <section class="details" id="details">
+        <h2>Select a node</h2>
+        <div class="sub">Click any node to inspect all source properties.</div>
+      </section>
+    </aside>
+  </div>
+  <script>
+    const graph = {"nodes":[{"identity":"app_auth","key":"Application:app_auth","label":"Application","properties":{"apm_cluster":"cl_eu_prod","apm_spoc":"contact_boris","application_manager":"contact_boris","business_owner":"platform","criticality":"tier_1","domain_manager":"contact_chloe","id":"app_auth","name":"Identity Service","production_domain_manager":"contact_alice","production_manager":"contact_daniel","retrieval_text":"Application. apm_cluster: cl_eu_prod. apm_spoc: contact_boris. application_manager: contact_boris. business_owner: platform. criticality: tier_1. domain_manager: contact_chloe. id: app_auth. name: Identity Service. production_domain_manager: contact_alice. production_manager: contact_daniel. runtime_tier: service. source_table: apm_applications. Relationships: DEPLOYED_ON Host auth-api-01.eu.prod; DEPLOYED_ON Host auth-db-01.eu.prod; EXPOSES_DAP Dap Auth Context (dap_auth_context); HAS_APM_SPOC Contact Boris Martin (contact_boris); HAS_APPLICATION_MANAGER Contact Boris Martin (contact_boris); HAS_DAP_BINDING ApplicationDap adap_003; HAS_DOMAIN_MANAGER Contact Chloe Dubois (contact_chloe); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_004; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_005; HAS_PRODUCTION_DOMAIN_MANAGER Contact Alice Laurent (contact_alice); HAS_PRODUCTION_MANAGER Contact Daniel Moreau (contact_daniel); INCOMING_HAS_APPLICATION Cluster EU Production (cl_eu_prod); RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Payments API (app_payments); RELATED_TO Application Search Gateway (app_search); USES_TECHNOLOGY Technology Java (tech_java17); USES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)","runtime_tier":"service","source_table":"apm_applications"}},{"identity":"app_billing","key":"Application:app_billing","label":"Application","properties":{"apm_cluster":"cl_us_prod","apm_spoc":"contact_elena","application_manager":"contact_boris","business_owner":"finance","criticality":"tier_1","domain_manager":"contact_chloe","id":"app_billing","name":"Billing Worker","production_domain_manager":"contact_farah","production_manager":"contact_daniel","retrieval_text":"Application. apm_cluster: cl_us_prod. apm_spoc: contact_elena. application_manager: contact_boris. business_owner: finance. criticality: tier_1. domain_manager: contact_chloe. id: app_billing. name: Billing Worker. production_domain_manager: contact_farah. production_manager: contact_daniel. runtime_tier: worker. source_table: apm_applications. Relationships: DEPLOYED_ON Host billing-db-01.us.prod; DEPLOYED_ON Host billing-worker-01.us.prod; EXPOSES_DAP Dap Payment Events (dap_payment_events); HAS_APM_SPOC Contact Elena Rossi (contact_elena); HAS_APPLICATION_MANAGER Contact Boris Martin (contact_boris); HAS_DAP_BINDING ApplicationDap adap_005; HAS_DOMAIN_MANAGER Contact Chloe Dubois (contact_chloe); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_008; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_009; HAS_PRODUCTION_DOMAIN_MANAGER Contact Farah Haddad (contact_farah); HAS_PRODUCTION_MANAGER Contact Daniel Moreau (contact_daniel); INCOMING_HAS_APPLICATION Cluster US Production (cl_us_prod); RELATED_TO Application Event Collector (app_events); RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Payments API (app_payments); USES_TECHNOLOGY Technology Java (tech_java8); USES_TECHNOLOGY Technology Oracle Database (tech_oracle11g)","runtime_tier":"worker","source_table":"apm_applications"}},{"identity":"app_events","key":"Application:app_events","label":"Application","properties":{"apm_cluster":"cl_data_platform","apm_spoc":"contact_elena","application_manager":"contact_chloe","business_owner":"data-platform","criticality":"tier_1","domain_manager":"contact_chloe","id":"app_events","name":"Event Collector","production_domain_manager":"contact_farah","production_manager":"contact_daniel","retrieval_text":"Application. apm_cluster: cl_data_platform. apm_spoc: contact_elena. application_manager: contact_chloe. business_owner: data-platform. criticality: tier_1. domain_manager: contact_chloe. id: app_events. name: Event Collector. production_domain_manager: contact_farah. production_manager: contact_daniel. runtime_tier: streaming. source_table: apm_applications. Relationships: DEPLOYED_ON Host event-collector-01.global; DEPLOYED_ON Host shared-kafka-01.global; EXPOSES_DAP Dap Payment Events (dap_payment_events); EXPOSES_DAP Dap Raw Clickstream (dap_raw_clickstream); HAS_APM_SPOC Contact Elena Rossi (contact_elena); HAS_APPLICATION_MANAGER Contact Chloe Dubois (contact_chloe); HAS_DAP_BINDING ApplicationDap adap_007; HAS_DAP_BINDING ApplicationDap adap_008; HAS_DOMAIN_MANAGER Contact Chloe Dubois (contact_chloe); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_012; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_013; HAS_PRODUCTION_DOMAIN_MANAGER Contact Farah Haddad (contact_farah); HAS_PRODUCTION_MANAGER Contact Daniel Moreau (contact_daniel); INCOMING_HAS_APPLICATION Cluster Data Platform (cl_data_platform); INCOMING_RELATED_TO Application Billing Worker (app_billing); RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Payments API (app_payments); RELATED_TO Application Warehouse Loader (app_warehouse); USES_TECHNOLOGY Technology Kafka (tech_kafka28); USES_TECHNOLOGY Technology Python (tech_python39)","runtime_tier":"streaming","source_table":"apm_applications"}},{"identity":"app_inventory","key":"Application:app_inventory","label":"Application","properties":{"apm_cluster":"cl_us_prod","apm_spoc":"contact_elena","application_manager":"contact_boris","business_owner":"supply-chain","criticality":"tier_2","domain_manager":"contact_chloe","id":"app_inventory","name":"Inventory Service","production_domain_manager":"contact_farah","production_manager":"contact_alice","retrieval_text":"Application. apm_cluster: cl_us_prod. apm_spoc: contact_elena. application_manager: contact_boris. business_owner: supply-chain. criticality: tier_2. domain_manager: contact_chloe. id: app_inventory. name: Inventory Service. production_domain_manager: contact_farah. production_manager: contact_alice. runtime_tier: service. source_table: apm_applications. Relationships: DEPLOYED_ON Host inventory-api-01.us.prod; DEPLOYED_ON Host inventory-db-01.us.prod; EXPOSES_DAP Dap Inventory Snapshot (dap_inventory_snapshot); HAS_APM_SPOC Contact Elena Rossi (contact_elena); HAS_APPLICATION_MANAGER Contact Boris Martin (contact_boris); HAS_DAP_BINDING ApplicationDap adap_006; HAS_DOMAIN_MANAGER Contact Chloe Dubois (contact_chloe); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_010; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_011; HAS_PRODUCTION_DOMAIN_MANAGER Contact Farah Haddad (contact_farah); HAS_PRODUCTION_MANAGER Contact Alice Laurent (contact_alice); INCOMING_HAS_APPLICATION Cluster US Production (cl_us_prod); INCOMING_RELATED_TO Application Billing Worker (app_billing); INCOMING_RELATED_TO Application Event Collector (app_events); INCOMING_RELATED_TO Application Identity Service (app_auth); RELATED_TO Application Payments API (app_payments); RELATED_TO Application Warehouse Loader (app_warehouse); USES_TECHNOLOGY Technology PostgreSQL (tech_postgres12); USES_TECHNOLOGY Technology Python (tech_python39)","runtime_tier":"service","source_table":"apm_applications"}},{"identity":"app_payments","key":"Application:app_payments","label":"Application","properties":{"apm_cluster":"cl_eu_prod","apm_spoc":"contact_elena","application_manager":"contact_boris","business_owner":"payments","criticality":"tier_1","domain_manager":"contact_chloe","id":"app_payments","name":"Payments API","production_domain_manager":"contact_alice","production_manager":"contact_daniel","retrieval_text":"Application. apm_cluster: cl_eu_prod. apm_spoc: contact_elena. application_manager: contact_boris. business_owner: payments. criticality: tier_1. domain_manager: contact_chloe. id: app_payments. name: Payments API. production_domain_manager: contact_alice. production_manager: contact_daniel. runtime_tier: api. source_table: apm_applications. Relationships: DEPLOYED_ON Host pay-api-01.eu.prod; DEPLOYED_ON Host pay-db-01.eu.prod; DEPLOYED_ON Host shared-kafka-01.global; EXPOSES_DAP Dap Auth Context (dap_auth_context); EXPOSES_DAP Dap Payment Events (dap_payment_events); HAS_APM_SPOC Contact Elena Rossi (contact_elena); HAS_APPLICATION_MANAGER Contact Boris Martin (contact_boris); HAS_DAP_BINDING ApplicationDap adap_001; HAS_DAP_BINDING ApplicationDap adap_002; HAS_DOMAIN_MANAGER Contact Chloe Dubois (contact_chloe); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_001; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_002; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_003; HAS_PRODUCTION_DOMAIN_MANAGER Contact Alice Laurent (contact_alice); HAS_PRODUCTION_MANAGER Contact Daniel Moreau (contact_daniel); INCOMING_HAS_APPLICATION Cluster EU Production (cl_eu_prod); INCOMING_RELATED_TO Application Billing Worker (app_billing); INCOMING_RELATED_TO Application Event Collector (app_events); INCOMING_RELATED_TO Application Identity Service (app_auth); INCOMING_RELATED_TO Application Inventory Service (app_inventory); RELATED_TO Application Search Gateway (app_search); USES_TECHNOLOGY Technology Java (tech_java8); USES_TECHNOLOGY Technology Kafka (tech_kafka28); USES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)","runtime_tier":"api","source_table":"apm_applications"}},{"identity":"app_search","key":"Application:app_search","label":"Application","properties":{"apm_cluster":"cl_eu_prod","apm_spoc":"contact_elena","application_manager":"contact_farah","business_owner":"commerce","criticality":"tier_2","domain_manager":"contact_chloe","id":"app_search","name":"Search Gateway","production_domain_manager":"contact_alice","production_manager":"contact_daniel","retrieval_text":"Application. apm_cluster: cl_eu_prod. apm_spoc: contact_elena. application_manager: contact_farah. business_owner: commerce. criticality: tier_2. domain_manager: contact_chloe. id: app_search. name: Search Gateway. production_domain_manager: contact_alice. production_manager: contact_daniel. runtime_tier: edge. source_table: apm_applications. Relationships: DEPLOYED_ON Host edge-01.eu.prod; EXPOSES_DAP Dap Product Index (dap_product_index); HAS_APM_SPOC Contact Elena Rossi (contact_elena); HAS_APPLICATION_MANAGER Contact Farah Haddad (contact_farah); HAS_DAP_BINDING ApplicationDap adap_004; HAS_DOMAIN_MANAGER Contact Chloe Dubois (contact_chloe); HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_006; HAS_OBSOLESCENCE_RECORD ObsolescenceRecord obso_007; HAS_PRODUCTION_DOMAIN_MANAGER Contact Alice Laurent (contact_alice); HAS_PRODUCTION_MANAGER Contact Daniel Moreau (contact_daniel); INCOMING_HAS_APPLICATION Cluster EU Production (cl_eu_prod); INCOMING_RELATED_TO Application Identity Service (app_auth); INCOMING_RELATED_TO Application Payments API (app_payments); USES_TECHNOLOGY Technology Nginx (tech_nginx117); USES_TECHNOLOGY Technology Node.js (tech_node16)","runtime_tier":"edge","source_table":"apm_applications"}},{"identity":"adap_001","key":"ApplicationDap:adap_001","label":"ApplicationDap","properties":{"apm_application":"app_payments","dap_id":"dap_payment_events","dap_name":"Payment Events","direction":"producer","id":"adap_001","protocol":"kafka","retrieval_text":"ApplicationDap. apm_application: app_payments. dap_id: dap_payment_events. dap_name: Payment Events. direction: producer. id: adap_001. protocol: kafka. source_table: apm_application_daps. Relationships: INCOMING_HAS_DAP_BINDING Application Payments API (app_payments); TARGETS_DAP Dap Payment Events (dap_payment_events)","source_table":"apm_application_daps"}},{"identity":"adap_002","key":"ApplicationDap:adap_002","label":"ApplicationDap","properties":{"apm_application":"app_payments","dap_id":"dap_auth_context","dap_name":"Auth Context","direction":"consumer","id":"adap_002","protocol":"https","retrieval_text":"ApplicationDap. apm_application: app_payments. dap_id: dap_auth_context. dap_name: Auth Context. direction: consumer. id: adap_002. protocol: https. source_table: apm_application_daps. Relationships: INCOMING_HAS_DAP_BINDING Application Payments API (app_payments); TARGETS_DAP Dap Auth Context (dap_auth_context)","source_table":"apm_application_daps"}},{"identity":"cl_eu_prod","key":"Cluster:cl_eu_prod","label":"Cluster","properties":{"environment":"prod","id":"cl_eu_prod","name":"EU Production","owner_team":"platform-eu","region":"eu-west","retrieval_text":"Cluster. environment: prod. id: cl_eu_prod. name: EU Production. owner_team: platform-eu. region: eu-west. source_table: apm_cluster. Relationships: HAS_APPLICATION Application Identity Service (app_auth); HAS_APPLICATION Application Payments API (app_payments); HAS_APPLICATION Application Search Gateway (app_search); HAS_SUBCLUSTER Subcluster EU Core Services (sub_eu_core); HAS_SUBCLUSTER Subcluster EU Edge (sub_eu_edge)","source_table":"apm_cluster"}},{"identity":"contact_alice","key":"Contact:contact_alice","label":"Contact","properties":{"id":"contact_alice","name":"Alice Laurent","refog":"u1001","retrieval_text":"Contact. id: contact_alice. name: Alice Laurent. refog: u1001. source_table: apm_contacts. Relationships: INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Identity Service (app_auth); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Payments API (app_payments); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Search Gateway (app_search); INCOMING_HAS_PRODUCTION_MANAGER Application Inventory Service (app_inventory)","source_table":"apm_contacts"}},{"identity":"contact_boris","key":"Contact:contact_boris","label":"Contact","properties":{"id":"contact_boris","name":"Boris Martin","refog":"u1002","retrieval_text":"Contact. id: contact_boris. name: Boris Martin. refog: u1002. source_table: apm_contacts. Relationships: INCOMING_HAS_APM_SPOC Application Identity Service (app_auth); INCOMING_HAS_APPLICATION_MANAGER Application Billing Worker (app_billing); INCOMING_HAS_APPLICATION_MANAGER Application Identity Service (app_auth); INCOMING_HAS_APPLICATION_MANAGER Application Inventory Service (app_inventory); INCOMING_HAS_APPLICATION_MANAGER Application Payments API (app_payments)","source_table":"apm_contacts"}},{"identity":"contact_chloe","key":"Contact:contact_chloe","label":"Contact","properties":{"id":"contact_chloe","name":"Chloe Dubois","refog":"u1003","retrieval_text":"Contact. id: contact_chloe. name: Chloe Dubois. refog: u1003. source_table: apm_contacts. Relationships: INCOMING_HAS_APPLICATION_MANAGER Application Event Collector (app_events); INCOMING_HAS_APPLICATION_MANAGER Application Warehouse Loader (app_warehouse); INCOMING_HAS_DOMAIN_MANAGER Application Billing Worker (app_billing); INCOMING_HAS_DOMAIN_MANAGER Application Event Collector (app_events); INCOMING_HAS_DOMAIN_MANAGER Application Identity Service (app_auth); INCOMING_HAS_DOMAIN_MANAGER Application Inventory Service (app_inventory); INCOMING_HAS_DOMAIN_MANAGER Application Payments API (app_payments); INCOMING_HAS_DOMAIN_MANAGER Application Search Gateway (app_search); INCOMING_HAS_DOMAIN_MANAGER Application Warehouse Loader (app_warehouse)","source_table":"apm_contacts"}},{"identity":"contact_daniel","key":"Contact:contact_daniel","label":"Contact","properties":{"id":"contact_daniel","name":"Daniel Moreau","refog":"u1004","retrieval_text":"Contact. id: contact_daniel. name: Daniel Moreau. refog: u1004. source_table: apm_contacts. Relationships: INCOMING_HAS_PRODUCTION_MANAGER Application Billing Worker (app_billing); INCOMING_HAS_PRODUCTION_MANAGER Application Event Collector (app_events); INCOMING_HAS_PRODUCTION_MANAGER Application Identity Service (app_auth); INCOMING_HAS_PRODUCTION_MANAGER Application Payments API (app_payments); INCOMING_HAS_PRODUCTION_MANAGER Application Search Gateway (app_search); INCOMING_HAS_PRODUCTION_MANAGER Application Warehouse Loader (app_warehouse)","source_table":"apm_contacts"}},{"identity":"contact_elena","key":"Contact:contact_elena","label":"Contact","properties":{"id":"contact_elena","name":"Elena Rossi","refog":"u1005","retrieval_text":"Contact. id: contact_elena. name: Elena Rossi. refog: u1005. source_table: apm_contacts. Relationships: INCOMING_HAS_APM_SPOC Application Billing Worker (app_billing); INCOMING_HAS_APM_SPOC Application Event Collector (app_events); INCOMING_HAS_APM_SPOC Application Inventory Service (app_inventory); INCOMING_HAS_APM_SPOC Application Payments API (app_payments); INCOMING_HAS_APM_SPOC Application Search Gateway (app_search); INCOMING_HAS_APM_SPOC Application Warehouse Loader (app_warehouse)","source_table":"apm_contacts"}},{"identity":"tier_1","key":"Criticality:tier_1","label":"Criticality","properties":{"dimension":"criticality","id":"tier_1","name":"tier_1","retrieval_text":"Criticality. dimension: criticality. id: tier_1. name: tier_1. source_field: criticality. source_table: apm_obso. Relationships: INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_001; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_002; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_003; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_004; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_005; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_008; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_009; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_012; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_013","source_field":"criticality","source_table":"apm_obso"}},{"identity":"dap_auth_context","key":"Dap:dap_auth_context","label":"Dap","properties":{"id":"dap_auth_context","name":"Auth Context","retrieval_text":"Dap. id: dap_auth_context. name: Auth Context. source_table: apm_application_daps. Relationships: INCOMING_EXPOSES_DAP Application Identity Service (app_auth); INCOMING_EXPOSES_DAP Application Payments API (app_payments); INCOMING_TARGETS_DAP ApplicationDap adap_002; INCOMING_TARGETS_DAP ApplicationDap adap_003","source_table":"apm_application_daps"}},{"identity":"dap_payment_events","key":"Dap:dap_payment_events","label":"Dap","properties":{"id":"dap_payment_events","name":"Payment Events","retrieval_text":"Dap. id: dap_payment_events. name: Payment Events. source_table: apm_application_daps. Relationships: INCOMING_EXPOSES_DAP Application Billing Worker (app_billing); INCOMING_EXPOSES_DAP Application Event Collector (app_events); INCOMING_EXPOSES_DAP Application Payments API (app_payments); INCOMING_TARGETS_DAP ApplicationDap adap_001; INCOMING_TARGETS_DAP ApplicationDap adap_005; INCOMING_TARGETS_DAP ApplicationDap adap_007","source_table":"apm_application_daps"}},{"identity":"prod","key":"Environment:prod","label":"Environment","properties":{"dimension":"env","id":"prod","name":"prod","retrieval_text":"Environment. dimension: env. id: prod. name: prod. source_field: env. source_table: apm_obso. Relationships: INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_001; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_002; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_003; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_004; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_005; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_006; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_007; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_008; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_009; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_010; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_011; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_012; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_013; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_014","source_field":"env","source_table":"apm_obso"}},{"identity":"auth-api-01.eu.prod","key":"Host:auth-api-01.eu.prod","label":"Host","properties":{"id":"auth-api-01.eu.prod","name":"auth-api-01.eu.prod","retrieval_text":"Host. id: auth-api-01.eu.prod. name: auth-api-01.eu.prod. source_table: apm_obso. Relationships: HAS_TECHNOLOGY Technology Java (tech_java17); INCOMING_DEPLOYED_ON Application Identity Service (app_auth); INCOMING_ON_HOST ObsolescenceRecord obso_004","source_table":"apm_obso"}},{"identity":"pay-api-01.eu.prod","key":"Host:pay-api-01.eu.prod","label":"Host","properties":{"id":"pay-api-01.eu.prod","name":"pay-api-01.eu.prod","retrieval_text":"Host. id: pay-api-01.eu.prod. name: pay-api-01.eu.prod. source_table: apm_obso. Relationships: HAS_TECHNOLOGY Technology Java (tech_java8); INCOMING_DEPLOYED_ON Application Payments API (app_payments); INCOMING_ON_HOST ObsolescenceRecord obso_001","source_table":"apm_obso"}},{"identity":"pay-db-01.eu.prod","key":"Host:pay-db-01.eu.prod","label":"Host","properties":{"id":"pay-db-01.eu.prod","name":"pay-db-01.eu.prod","retrieval_text":"Host. id: pay-db-01.eu.prod. name: pay-db-01.eu.prod. source_table: apm_obso. Relationships: HAS_TECHNOLOGY Technology PostgreSQL (tech_postgres12); INCOMING_DEPLOYED_ON Application Payments API (app_payments); INCOMING_ON_HOST ObsolescenceRecord obso_002","source_table":"apm_obso"}},{"identity":"shared-kafka-01.global","key":"Host:shared-kafka-01.global","label":"Host","properties":{"id":"shared-kafka-01.global","name":"shared-kafka-01.global","retrieval_text":"Host. id: shared-kafka-01.global. name: shared-kafka-01.global. source_table: apm_obso. Relationships: HAS_TECHNOLOGY Technology Kafka (tech_kafka28); INCOMING_DEPLOYED_ON Application Event Collector (app_events); INCOMING_DEPLOYED_ON Application Payments API (app_payments); INCOMING_ON_HOST ObsolescenceRecord obso_003; INCOMING_ON_HOST ObsolescenceRecord obso_012","source_table":"apm_obso"}},{"identity":"DE","key":"LocationCountry:DE","label":"LocationCountry","properties":{"dimension":"location_country","id":"DE","name":"DE","retrieval_text":"LocationCountry. dimension: location_country. id: DE. name: DE. source_field: location_country. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_001; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_002; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_004; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_005","source_field":"location_country","source_table":"apm_obso"}},{"identity":"IE","key":"LocationCountry:IE","label":"LocationCountry","properties":{"dimension":"location_country","id":"IE","name":"IE","retrieval_text":"LocationCountry. dimension: location_country. id: IE. name: IE. source_field: location_country. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_003; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_012; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_013; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_014","source_field":"location_country","source_table":"apm_obso"}},{"identity":"obso_001","key":"ObsolescenceRecord:obso_001","label":"ObsolescenceRecord","properties":{"application_id":"app_payments","criticality":"tier_1","detected_at":"2026-05-18","env":"prod","evidence":"runtime scan","host":"pay-api-01.eu.prod","id":"obso_001","location_country":"DE","obsolescence_status":"obsolete","retrieval_text":"ObsolescenceRecord. application_id: app_payments. criticality: tier_1. detected_at: 2026-05-18. env: prod. evidence: runtime scan. host: pay-api-01.eu.prod. id: obso_001. location_country: DE. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_java8. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry DE; ON_HOST Host pay-api-01.eu.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java8)","risk_level":"high","source_table":"apm_obso","technology_id":"tech_java8"}},{"identity":"obso_002","key":"ObsolescenceRecord:obso_002","label":"ObsolescenceRecord","properties":{"application_id":"app_payments","criticality":"tier_1","detected_at":"2026-05-18","env":"prod","evidence":"cmdb","host":"pay-db-01.eu.prod","id":"obso_002","location_country":"DE","obsolescence_status":"obsolete","retrieval_text":"ObsolescenceRecord. application_id: app_payments. criticality: tier_1. detected_at: 2026-05-18. env: prod. evidence: cmdb. host: pay-db-01.eu.prod. id: obso_002. location_country: DE. obsolescence_status: obsolete. risk_level: critical. source_table: apm_obso. technology_id: tech_postgres12. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry DE; ON_HOST Host pay-db-01.eu.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)","risk_level":"critical","source_table":"apm_obso","technology_id":"tech_postgres12"}},{"identity":"obso_003","key":"ObsolescenceRecord:obso_003","label":"ObsolescenceRecord","properties":{"application_id":"app_payments","criticality":"tier_1","detected_at":"2026-05-20","env":"prod","evidence":"runtime scan","host":"shared-kafka-01.global","id":"obso_003","location_country":"IE","obsolescence_status":"aging","retrieval_text":"ObsolescenceRecord. application_id: app_payments. criticality: tier_1. detected_at: 2026-05-20. env: prod. evidence: runtime scan. host: shared-kafka-01.global. id: obso_003. location_country: IE. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_kafka28. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry IE; ON_HOST Host shared-kafka-01.global; REFERENCES_TECHNOLOGY Technology Kafka (tech_kafka28)","risk_level":"medium","source_table":"apm_obso","technology_id":"tech_kafka28"}},{"identity":"obso_004","key":"ObsolescenceRecord:obso_004","label":"ObsolescenceRecord","properties":{"application_id":"app_auth","criticality":"tier_1","detected_at":"2026-05-21","env":"prod","evidence":"runtime scan","host":"auth-api-01.eu.prod","id":"obso_004","location_country":"DE","obsolescence_status":"supported","retrieval_text":"ObsolescenceRecord. application_id: app_auth. criticality: tier_1. detected_at: 2026-05-21. env: prod. evidence: runtime scan. host: auth-api-01.eu.prod. id: obso_004. location_country: DE. obsolescence_status: supported. risk_level: low. source_table: apm_obso. technology_id: tech_java17. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Identity Service (app_auth); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry DE; ON_HOST Host auth-api-01.eu.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java17)","risk_level":"low","source_table":"apm_obso","technology_id":"tech_java17"}},{"identity":"obso_005","key":"ObsolescenceRecord:obso_005","label":"ObsolescenceRecord","properties":{"application_id":"app_auth","criticality":"tier_1","detected_at":"2026-05-21","env":"prod","evidence":"cmdb","host":"auth-db-01.eu.prod","id":"obso_005","location_country":"DE","obsolescence_status":"obsolete","retrieval_text":"ObsolescenceRecord. application_id: app_auth. criticality: tier_1. detected_at: 2026-05-21. env: prod. evidence: cmdb. host: auth-db-01.eu.prod. id: obso_005. location_country: DE. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_postgres12. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Identity Service (app_auth); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry DE; ON_HOST Host auth-db-01.eu.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)","risk_level":"high","source_table":"apm_obso","technology_id":"tech_postgres12"}},{"identity":"obso_006","key":"ObsolescenceRecord:obso_006","label":"ObsolescenceRecord","properties":{"application_id":"app_search","criticality":"tier_2","detected_at":"2026-05-22","env":"prod","evidence":"container image","host":"edge-01.eu.prod","id":"obso_006","location_country":"FR","obsolescence_status":"obsolete","retrieval_text":"ObsolescenceRecord. application_id: app_search. criticality: tier_2. detected_at: 2026-05-22. env: prod. evidence: container image. host: edge-01.eu.prod. id: obso_006. location_country: FR. obsolescence_status: obsolete. risk_level: medium. source_table: apm_obso. technology_id: tech_node16. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Search Gateway (app_search); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry FR; ON_HOST Host edge-01.eu.prod; REFERENCES_TECHNOLOGY Technology Node.js (tech_node16)","risk_level":"medium","source_table":"apm_obso","technology_id":"tech_node16"}},{"identity":"obso_007","key":"ObsolescenceRecord:obso_007","label":"ObsolescenceRecord","properties":{"application_id":"app_search","criticality":"tier_2","detected_at":"2026-05-22","env":"prod","evidence":"package scan","host":"edge-01.eu.prod","id":"obso_007","location_country":"FR","obsolescence_status":"obsolete","retrieval_text":"ObsolescenceRecord. application_id: app_search. criticality: tier_2. detected_at: 2026-05-22. env: prod. evidence: package scan. host: edge-01.eu.prod. id: obso_007. location_country: FR. obsolescence_status: obsolete. risk_level: medium. source_table: apm_obso. technology_id: tech_nginx117. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Search Gateway (app_search); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry FR; ON_HOST Host edge-01.eu.prod; REFERENCES_TECHNOLOGY Technology Nginx (tech_nginx117)","risk_level":"medium","source_table":"apm_obso","technology_id":"tech_nginx117"}},{"identity":"obso_008","key":"ObsolescenceRecord:obso_008","label":"ObsolescenceRecord","properties":{"application_id":"app_billing","criticality":"tier_1","detected_at":"2026-05-23","env":"prod","evidence":"runtime scan","host":"billing-worker-01.us.prod","id":"obso_008","location_country":"US","obsolescence_status":"obsolete","retrieval_text":"ObsolescenceRecord. application_id: app_billing. criticality: tier_1. detected_at: 2026-05-23. env: prod. evidence: runtime scan. host: billing-worker-01.us.prod. id: obso_008. location_country: US. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_java8. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Billing Worker (app_billing); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry US; ON_HOST Host billing-worker-01.us.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java8)","risk_level":"high","source_table":"apm_obso","technology_id":"tech_java8"}},{"identity":"obso_009","key":"ObsolescenceRecord:obso_009","label":"ObsolescenceRecord","properties":{"application_id":"app_billing","criticality":"tier_1","detected_at":"2026-05-23","env":"prod","evidence":"cmdb","host":"billing-db-01.us.prod","id":"obso_009","location_country":"US","obsolescence_status":"obsolete","retrieval_text":"ObsolescenceRecord. application_id: app_billing. criticality: tier_1. detected_at: 2026-05-23. env: prod. evidence: cmdb. host: billing-db-01.us.prod. id: obso_009. location_country: US. obsolescence_status: obsolete. risk_level: critical. source_table: apm_obso. technology_id: tech_oracle11g. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Billing Worker (app_billing); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry US; ON_HOST Host billing-db-01.us.prod; REFERENCES_TECHNOLOGY Technology Oracle Database (tech_oracle11g)","risk_level":"critical","source_table":"apm_obso","technology_id":"tech_oracle11g"}},{"identity":"obso_010","key":"ObsolescenceRecord:obso_010","label":"ObsolescenceRecord","properties":{"application_id":"app_inventory","criticality":"tier_2","detected_at":"2026-05-24","env":"prod","evidence":"runtime scan","host":"inventory-api-01.us.prod","id":"obso_010","location_country":"US","obsolescence_status":"aging","retrieval_text":"ObsolescenceRecord. application_id: app_inventory. criticality: tier_2. detected_at: 2026-05-24. env: prod. evidence: runtime scan. host: inventory-api-01.us.prod. id: obso_010. location_country: US. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Inventory Service (app_inventory); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry US; ON_HOST Host inventory-api-01.us.prod; REFERENCES_TECHNOLOGY Technology Python (tech_python39)","risk_level":"medium","source_table":"apm_obso","technology_id":"tech_python39"}},{"identity":"obso_011","key":"ObsolescenceRecord:obso_011","label":"ObsolescenceRecord","properties":{"application_id":"app_inventory","criticality":"tier_2","detected_at":"2026-05-24","env":"prod","evidence":"cmdb","host":"inventory-db-01.us.prod","id":"obso_011","location_country":"US","obsolescence_status":"obsolete","retrieval_text":"ObsolescenceRecord. application_id: app_inventory. criticality: tier_2. detected_at: 2026-05-24. env: prod. evidence: cmdb. host: inventory-db-01.us.prod. id: obso_011. location_country: US. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_postgres12. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Inventory Service (app_inventory); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry US; ON_HOST Host inventory-db-01.us.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)","risk_level":"high","source_table":"apm_obso","technology_id":"tech_postgres12"}},{"identity":"obso_012","key":"ObsolescenceRecord:obso_012","label":"ObsolescenceRecord","properties":{"application_id":"app_events","criticality":"tier_1","detected_at":"2026-05-25","env":"prod","evidence":"runtime scan","host":"shared-kafka-01.global","id":"obso_012","location_country":"IE","obsolescence_status":"aging","retrieval_text":"ObsolescenceRecord. application_id: app_events. criticality: tier_1. detected_at: 2026-05-25. env: prod. evidence: runtime scan. host: shared-kafka-01.global. id: obso_012. location_country: IE. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_kafka28. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Event Collector (app_events); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry IE; ON_HOST Host shared-kafka-01.global; REFERENCES_TECHNOLOGY Technology Kafka (tech_kafka28)","risk_level":"medium","source_table":"apm_obso","technology_id":"tech_kafka28"}},{"identity":"obso_013","key":"ObsolescenceRecord:obso_013","label":"ObsolescenceRecord","properties":{"application_id":"app_events","criticality":"tier_1","detected_at":"2026-05-25","env":"prod","evidence":"container image","host":"event-collector-01.global","id":"obso_013","location_country":"IE","obsolescence_status":"aging","retrieval_text":"ObsolescenceRecord. application_id: app_events. criticality: tier_1. detected_at: 2026-05-25. env: prod. evidence: container image. host: event-collector-01.global. id: obso_013. location_country: IE. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Event Collector (app_events); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry IE; ON_HOST Host event-collector-01.global; REFERENCES_TECHNOLOGY Technology Python (tech_python39)","risk_level":"medium","source_table":"apm_obso","technology_id":"tech_python39"}},{"identity":"tech_java8","key":"Technology:tech_java8","label":"Technology","properties":{"category":"runtime","id":"tech_java8","lifecycle":"obsolete","name":"Java","retrieval_text":"Technology. category: runtime. id: tech_java8. lifecycle: obsolete. name: Java. source_table: apm_technologies. vendor: Oracle. version: 8. Relationships: INCOMING_HAS_TECHNOLOGY Host billing-worker-01.us.prod; INCOMING_HAS_TECHNOLOGY Host pay-api-01.eu.prod; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_001; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_008; INCOMING_USES_TECHNOLOGY Application Billing Worker (app_billing); INCOMING_USES_TECHNOLOGY Application Payments API (app_payments)","source_table":"apm_technologies","vendor":"Oracle","version":"8"}},{"identity":"tech_kafka28","key":"Technology:tech_kafka28","label":"Technology","properties":{"category":"messaging","id":"tech_kafka28","lifecycle":"aging","name":"Kafka","retrieval_text":"Technology. category: messaging. id: tech_kafka28. lifecycle: aging. name: Kafka. source_table: apm_technologies. vendor: Apache. version: 2.8. Relationships: INCOMING_HAS_TECHNOLOGY Host shared-kafka-01.global; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_003; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_012; INCOMING_USES_TECHNOLOGY Application Event Collector (app_events); INCOMING_USES_TECHNOLOGY Application Payments API (app_payments)","source_table":"apm_technologies","vendor":"Apache","version":"2.8"}},{"identity":"tech_postgres12","key":"Technology:tech_postgres12","label":"Technology","properties":{"category":"database","id":"tech_postgres12","lifecycle":"obsolete","name":"PostgreSQL","retrieval_text":"Technology. category: database. id: tech_postgres12. lifecycle: obsolete. name: PostgreSQL. source_table: apm_technologies. vendor: PostgreSQL. version: 12. Relationships: INCOMING_HAS_TECHNOLOGY Host auth-db-01.eu.prod; INCOMING_HAS_TECHNOLOGY Host inventory-db-01.us.prod; INCOMING_HAS_TECHNOLOGY Host pay-db-01.eu.prod; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_002; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_005; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_011; INCOMING_USES_TECHNOLOGY Application Identity Service (app_auth); INCOMING_USES_TECHNOLOGY Application Inventory Service (app_inventory); INCOMING_USES_TECHNOLOGY Application Payments API (app_payments)","source_table":"apm_technologies","vendor":"PostgreSQL","version":"12"}}],"edges":[{"end_key":"Host:auth-api-01.eu.prod","properties":{"max_risk":"low","obso_record_count":1,"risk_levels":["low"],"source_table":"apm_obso","statuses":["supported"],"worst_status":"supported"},"start_key":"Application:app_auth","type":"DEPLOYED_ON"},{"end_key":"Dap:dap_auth_context","properties":{"apm_application":"app_auth","binding_id":"adap_003","dap_id":"dap_auth_context","dap_name":"Auth Context","direction":"producer","id":"adap_003","protocol":"https","source_fk":"apm_application","source_table":"apm_application_daps"},"start_key":"Application:app_auth","type":"EXPOSES_DAP"},{"end_key":"Contact:contact_boris","properties":{"role":"apm_spoc","source_fk":"apm_spoc"},"start_key":"Application:app_auth","type":"HAS_APM_SPOC"},{"end_key":"Contact:contact_boris","properties":{"role":"application_manager","source_fk":"application_manager"},"start_key":"Application:app_auth","type":"HAS_APPLICATION_MANAGER"},{"end_key":"Contact:contact_chloe","properties":{"role":"domain_manager","source_fk":"domain_manager"},"start_key":"Application:app_auth","type":"HAS_DOMAIN_MANAGER"},{"end_key":"ObsolescenceRecord:obso_004","properties":{"source_fk":"application_id"},"start_key":"Application:app_auth","type":"HAS_OBSOLESCENCE_RECORD"},{"end_key":"ObsolescenceRecord:obso_005","properties":{"source_fk":"application_id"},"start_key":"Application:app_auth","type":"HAS_OBSOLESCENCE_RECORD"},{"end_key":"Application:app_payments","properties":{"derived":true,"reasons":["shared_cluster:cl_eu_prod","shared_dap:dap_auth_context","shared_technology:tech_postgres12"],"strength":3},"start_key":"Application:app_auth","type":"RELATED_TO"},{"end_key":"Technology:tech_postgres12","properties":{"hosts":["auth-db-01.eu.prod"],"max_risk":"high","obso_record_count":1,"risk_levels":["high"],"source_table":"apm_obso","statuses":["obsolete"],"worst_status":"obsolete"},"start_key":"Application:app_auth","type":"USES_TECHNOLOGY"},{"end_key":"Dap:dap_payment_events","properties":{"apm_application":"app_billing","binding_id":"adap_005","dap_id":"dap_payment_events","dap_name":"Payment Events","direction":"consumer","id":"adap_005","protocol":"kafka","source_fk":"apm_application","source_table":"apm_application_daps"},"start_key":"Application:app_billing","type":"EXPOSES_DAP"},{"end_key":"Contact:contact_elena","properties":{"role":"apm_spoc","source_fk":"apm_spoc"},"start_key":"Application:app_billing","type":"HAS_APM_SPOC"},{"end_key":"Contact:contact_boris","properties":{"role":"application_manager","source_fk":"application_manager"},"start_key":"Application:app_billing","type":"HAS_APPLICATION_MANAGER"},{"end_key":"Contact:contact_chloe","properties":{"role":"domain_manager","source_fk":"domain_manager"},"start_key":"Application:app_billing","type":"HAS_DOMAIN_MANAGER"},{"end_key":"ObsolescenceRecord:obso_008","properties":{"source_fk":"application_id"},"start_key":"Application:app_billing","type":"HAS_OBSOLESCENCE_RECORD"},{"end_key":"ObsolescenceRecord:obso_009","properties":{"source_fk":"application_id"},"start_key":"Application:app_billing","type":"HAS_OBSOLESCENCE_RECORD"},{"end_key":"Application:app_payments","properties":{"derived":true,"reasons":["shared_dap:dap_payment_events","shared_technology:tech_java8"],"strength":2},"start_key":"Application:app_billing","type":"RELATED_TO"},{"end_key":"Technology:tech_java8","properties":{"hosts":["billing-worker-01.us.prod"],"max_risk":"high","obso_record_count":1,"risk_levels":["high"],"source_table":"apm_obso","statuses":["obsolete"],"worst_status":"obsolete"},"start_key":"Application:app_billing","type":"USES_TECHNOLOGY"},{"end_key":"Host:shared-kafka-01.global","properties":{"max_risk":"medium","obso_record_count":1,"risk_levels":["medium"],"source_table":"apm_obso","statuses":["aging"],"worst_status":"aging"},"start_key":"Application:app_events","type":"DEPLOYED_ON"},{"end_key":"Dap:dap_payment_events","properties":{"apm_application":"app_events","binding_id":"adap_007","dap_id":"dap_payment_events","dap_name":"Payment Events","direction":"consumer","id":"adap_007","protocol":"kafka","source_fk":"apm_application","source_table":"apm_application_daps"},"start_key":"Application:app_events","type":"EXPOSES_DAP"},{"end_key":"Contact:contact_elena","properties":{"role":"apm_spoc","source_fk":"apm_spoc"},"start_key":"Application:app_events","type":"HAS_APM_SPOC"},{"end_key":"Contact:contact_chloe","properties":{"role":"application_manager","source_fk":"application_manager"},"start_key":"Application:app_events","type":"HAS_APPLICATION_MANAGER"},{"end_key":"Contact:contact_chloe","properties":{"role":"domain_manager","source_fk":"domain_manager"},"start_key":"Application:app_events","type":"HAS_DOMAIN_MANAGER"},{"end_key":"ObsolescenceRecord:obso_012","properties":{"source_fk":"application_id"},"start_key":"Application:app_events","type":"HAS_OBSOLESCENCE_RECORD"},{"end_key":"ObsolescenceRecord:obso_013","properties":{"source_fk":"application_id"},"start_key":"Application:app_events","type":"HAS_OBSOLESCENCE_RECORD"},{"end_key":"Application:app_payments","properties":{"derived":true,"reasons":["shared_dap:dap_payment_events","shared_host:shared-kafka-01.global","shared_technology:tech_kafka28"],"strength":3},"start_key":"Application:app_events","type":"RELATED_TO"},{"end_key":"Technology:tech_kafka28","properties":{"hosts":["shared-kafka-01.global"],"max_risk":"medium","obso_record_count":1,"risk_levels":["medium"],"source_table":"apm_obso","statuses":["aging"],"worst_status":"aging"},"start_key":"Application:app_events","type":"USES_TECHNOLOGY"},{"end_key":"Contact:contact_elena","properties":{"role":"apm_spoc","source_fk":"apm_spoc"},"start_key":"Application:app_inventory","type":"HAS_APM_SPOC"},{"end_key":"Contact:contact_boris","properties":{"role":"application_manager","source_fk":"application_manager"},"start_key":"Application:app_inventory","type":"HAS_APPLICATION_MANAGER"},{"end_key":"ObsolescenceRecord:obso_010","properties":{"source_fk":"application_id"},"start_key":"Application:app_inventory","type":"HAS_OBSOLESCENCE_RECORD"},{"end_key":"ObsolescenceRecord:obso_011","properties":{"source_fk":"application_id"},"start_key":"Application:app_inventory","type":"HAS_OBSOLESCENCE_RECORD"},{"end_key":"Application:app_payments","properties":{"derived":true,"reasons":["shared_technology:tech_postgres12"],"strength":1},"start_key":"Application:app_inventory","type":"RELATED_TO"},{"end_key":"Technology:tech_postgres12","properties":{"hosts":["inventory-db-01.us.prod"],"max_risk":"high","obso_record_count":1,"risk_levels":["high"],"source_table":"apm_obso","statuses":["obsolete"],"worst_status":"obsolete"},"start_key":"Application:app_inventory","type":"USES_TECHNOLOGY"},{"end_key":"Host:pay-api-01.eu.prod","properties":{"max_risk":"high","obso_record_count":1,"risk_levels":["high"],"source_table":"apm_obso","statuses":["obsolete"],"worst_status":"obsolete"},"start_key":"Application:app_payments","type":"DEPLOYED_ON"},{"end_key":"Host:pay-db-01.eu.prod","properties":{"max_risk":"critical","obso_record_count":1,"risk_levels":["critical"],"source_table":"apm_obso","statuses":["obsolete"],"worst_status":"obsolete"},"start_key":"Application:app_payments","type":"DEPLOYED_ON"},{"end_key":"Host:shared-kafka-01.global","properties":{"max_risk":"medium","obso_record_count":1,"risk_levels":["medium"],"source_table":"apm_obso","statuses":["aging"],"worst_status":"aging"},"start_key":"Application:app_payments","type":"DEPLOYED_ON"},{"end_key":"Dap:dap_auth_context","properties":{"apm_application":"app_payments","binding_id":"adap_002","dap_id":"dap_auth_context","dap_name":"Auth Context","direction":"consumer","id":"adap_002","protocol":"https","source_fk":"apm_application","source_table":"apm_application_daps"},"start_key":"Application:app_payments","type":"EXPOSES_DAP"},{"end_key":"Dap:dap_payment_events","properties":{"apm_application":"app_payments","binding_id":"adap_001","dap_id":"dap_payment_events","dap_name":"Payment Events","direction":"producer","id":"adap_001","protocol":"kafka","source_fk":"apm_application","source_table":"apm_application_daps"},"start_key":"Application:app_payments","type":"EXPOSES_DAP"},{"end_key":"Contact:contact_elena","properties":{"role":"apm_spoc","source_fk":"apm_spoc"},"start_key":"Application:app_payments","type":"HAS_APM_SPOC"},{"end_key":"Contact:contact_boris","properties":{"role":"application_manager","source_fk":"application_manager"},"start_key":"Application:app_payments","type":"HAS_APPLICATION_MANAGER"},{"end_key":"ApplicationDap:adap_001","properties":{"source_fk":"apm_application"},"start_key":"Application:app_payments","type":"HAS_DAP_BINDING"},{"end_key":"ApplicationDap:adap_002","properties":{"source_fk":"apm_application"},"start_key":"Application:app_payments","type":"HAS_DAP_BINDING"},{"end_key":"Contact:contact_chloe","properties":{"role":"domain_manager","source_fk":"domain_manager"},"start_key":"Application:app_payments","type":"HAS_DOMAIN_MANAGER"},{"end_key":"ObsolescenceRecord:obso_001","properties":{"source_fk":"application_id"},"start_key":"Application:app_payments","type":"HAS_OBSOLESCENCE_RECORD"},{"end_key":"ObsolescenceRecord:obso_002","properties":{"source_fk":"application_id"},"start_key":"Application:app_payments","type":"HAS_OBSOLESCENCE_RECORD"},{"end_key":"ObsolescenceRecord:obso_003","properties":{"source_fk":"application_id"},"start_key":"Application:app_payments","type":"HAS_OBSOLESCENCE_RECORD"},{"end_key":"Contact:contact_alice","properties":{"role":"production_domain_manager","source_fk":"production_domain_manager"},"start_key":"Application:app_payments","type":"HAS_PRODUCTION_DOMAIN_MANAGER"},{"end_key":"Contact:contact_daniel","properties":{"role":"production_manager","source_fk":"production_manager"},"start_key":"Application:app_payments","type":"HAS_PRODUCTION_MANAGER"},{"end_key":"Application:app_search","properties":{"derived":true,"reasons":["shared_cluster:cl_eu_prod"],"strength":1},"start_key":"Application:app_payments","type":"RELATED_TO"},{"end_key":"Technology:tech_java8","properties":{"hosts":["pay-api-01.eu.prod"],"max_risk":"high","obso_record_count":1,"risk_levels":["high"],"source_table":"apm_obso","statuses":["obsolete"],"worst_status":"obsolete"},"start_key":"Application:app_payments","type":"USES_TECHNOLOGY"},{"end_key":"Technology:tech_kafka28","properties":{"hosts":["shared-kafka-01.global"],"max_risk":"medium","obso_record_count":1,"risk_levels":["medium"],"source_table":"apm_obso","statuses":["aging"],"worst_status":"aging"},"start_key":"Application:app_payments","type":"USES_TECHNOLOGY"},{"end_key":"Technology:tech_postgres12","properties":{"hosts":["pay-db-01.eu.prod"],"max_risk":"critical","obso_record_count":1,"risk_levels":["critical"],"source_table":"apm_obso","statuses":["obsolete"],"worst_status":"obsolete"},"start_key":"Application:app_payments","type":"USES_TECHNOLOGY"},{"end_key":"Contact:contact_elena","properties":{"role":"apm_spoc","source_fk":"apm_spoc"},"start_key":"Application:app_search","type":"HAS_APM_SPOC"},{"end_key":"ObsolescenceRecord:obso_006","properties":{"source_fk":"application_id"},"start_key":"Application:app_search","type":"HAS_OBSOLESCENCE_RECORD"},{"end_key":"ObsolescenceRecord:obso_007","properties":{"source_fk":"application_id"},"start_key":"Application:app_search","type":"HAS_OBSOLESCENCE_RECORD"},{"end_key":"Dap:dap_payment_events","properties":{"source_field":"dap_id"},"start_key":"ApplicationDap:adap_001","type":"TARGETS_DAP"},{"end_key":"Dap:dap_auth_context","properties":{"source_field":"dap_id"},"start_key":"ApplicationDap:adap_002","type":"TARGETS_DAP"},{"end_key":"Application:app_payments","properties":{"source_fk":"apm_cluster"},"start_key":"Cluster:cl_eu_prod","type":"HAS_APPLICATION"},{"end_key":"Technology:tech_java8","properties":{"applications":["app_payments"],"max_risk":"high","obso_record_count":1,"risk_levels":["high"],"source_table":"apm_obso","statuses":["obsolete"],"worst_status":"obsolete"},"start_key":"Host:pay-api-01.eu.prod","type":"HAS_TECHNOLOGY"},{"end_key":"Technology:tech_postgres12","properties":{"applications":["app_payments"],"max_risk":"critical","obso_record_count":1,"risk_levels":["critical"],"source_table":"apm_obso","statuses":["obsolete"],"worst_status":"obsolete"},"start_key":"Host:pay-db-01.eu.prod","type":"HAS_TECHNOLOGY"},{"end_key":"Technology:tech_kafka28","properties":{"applications":["app_events","app_payments"],"max_risk":"medium","obso_record_count":2,"risk_levels":["medium"],"source_table":"apm_obso","statuses":["aging"],"worst_status":"aging"},"start_key":"Host:shared-kafka-01.global","type":"HAS_TECHNOLOGY"},{"end_key":"Criticality:tier_1","properties":{"source_field":"criticality"},"start_key":"ObsolescenceRecord:obso_001","type":"HAS_CRITICALITY"},{"end_key":"Environment:prod","properties":{"source_field":"env"},"start_key":"ObsolescenceRecord:obso_001","type":"IN_ENVIRONMENT"},{"end_key":"LocationCountry:DE","properties":{"source_field":"location_country"},"start_key":"ObsolescenceRecord:obso_001","type":"LOCATED_IN_COUNTRY"},{"end_key":"Host:pay-api-01.eu.prod","properties":{"source_field":"host"},"start_key":"ObsolescenceRecord:obso_001","type":"ON_HOST"},{"end_key":"Technology:tech_java8","properties":{"source_fk":"technology_id"},"start_key":"ObsolescenceRecord:obso_001","type":"REFERENCES_TECHNOLOGY"},{"end_key":"Criticality:tier_1","properties":{"source_field":"criticality"},"start_key":"ObsolescenceRecord:obso_002","type":"HAS_CRITICALITY"},{"end_key":"Environment:prod","properties":{"source_field":"env"},"start_key":"ObsolescenceRecord:obso_002","type":"IN_ENVIRONMENT"},{"end_key":"LocationCountry:DE","properties":{"source_field":"location_country"},"start_key":"ObsolescenceRecord:obso_002","type":"LOCATED_IN_COUNTRY"},{"end_key":"Host:pay-db-01.eu.prod","properties":{"source_field":"host"},"start_key":"ObsolescenceRecord:obso_002","type":"ON_HOST"},{"end_key":"Technology:tech_postgres12","properties":{"source_fk":"technology_id"},"start_key":"ObsolescenceRecord:obso_002","type":"REFERENCES_TECHNOLOGY"},{"end_key":"Criticality:tier_1","properties":{"source_field":"criticality"},"start_key":"ObsolescenceRecord:obso_003","type":"HAS_CRITICALITY"},{"end_key":"Environment:prod","properties":{"source_field":"env"},"start_key":"ObsolescenceRecord:obso_003","type":"IN_ENVIRONMENT"},{"end_key":"LocationCountry:IE","properties":{"source_field":"location_country"},"start_key":"ObsolescenceRecord:obso_003","type":"LOCATED_IN_COUNTRY"},{"end_key":"Host:shared-kafka-01.global","properties":{"source_field":"host"},"start_key":"ObsolescenceRecord:obso_003","type":"ON_HOST"},{"end_key":"Technology:tech_kafka28","properties":{"source_fk":"technology_id"},"start_key":"ObsolescenceRecord:obso_003","type":"REFERENCES_TECHNOLOGY"},{"end_key":"Technology:tech_postgres12","properties":{"source_fk":"technology_id"},"start_key":"ObsolescenceRecord:obso_005","type":"REFERENCES_TECHNOLOGY"},{"end_key":"Technology:tech_java8","properties":{"source_fk":"technology_id"},"start_key":"ObsolescenceRecord:obso_008","type":"REFERENCES_TECHNOLOGY"},{"end_key":"Technology:tech_postgres12","properties":{"source_fk":"technology_id"},"start_key":"ObsolescenceRecord:obso_011","type":"REFERENCES_TECHNOLOGY"},{"end_key":"Host:shared-kafka-01.global","properties":{"source_field":"host"},"start_key":"ObsolescenceRecord:obso_012","type":"ON_HOST"},{"end_key":"Technology:tech_kafka28","properties":{"source_fk":"technology_id"},"start_key":"ObsolescenceRecord:obso_012","type":"REFERENCES_TECHNOLOGY"}],"warnings":[],"metadata":{"sampled":true,"focused":true,"focus_application_name":"Payments API","focus_application_id":null,"focus_depth":2,"focus_root_count":1,"focus_roots":["Application:app_payments"],"excluded_edge_types":[],"original_node_count":79,"original_edge_count":214,"rendered_node_count":40,"rendered_edge_count":80,"max_nodes":40,"max_edges":80,"hit_node_limit":true,"hit_edge_limit":true}};
+    const palette = {
+      Application: "#2563eb",
+      ApplicationDap: "#0891b2",
+      Cluster: "#16a34a",
+      Contact: "#be123c",
+      Criticality: "#b45309",
+      Dap: "#7c3aed",
+      Environment: "#0f766e",
+      Host: "#ea580c",
+      LocationCountry: "#0369a1",
+      ObsolescenceRecord: "#dc2626",
+      Subcluster: "#65a30d",
+      Technology: "#9333ea"
+    };
+
+    const svg = document.getElementById("graph");
+    const countsEl = document.getElementById("counts");
+    const searchEl = document.getElementById("search");
+    const labelFilterEl = document.getElementById("labelFilter");
+    const resetEl = document.getElementById("reset");
+    const legendEl = document.getElementById("legend");
+    const detailsEl = document.getElementById("details");
+
+    let selectedKey = null;
+    let renderedNodes = [];
+    let renderedEdges = [];
+
+    const nodesByKey = new Map(graph.nodes.map(node => [node.key, node]));
+    const labels = [...new Set(graph.nodes.map(node => node.label))].sort();
+    labelFilterEl.innerHTML = '<option value="">All labels</option>' + labels.map(label => (
+      `<option value="${escapeHtml(label)}">${escapeHtml(label)}</option>`
+    )).join("");
+
+    legendEl.innerHTML = labels.map(label => (
+      `<div class="legend-item"><span class="swatch" style="background:${palette[label] || "#64748b"}"></span><span>${escapeHtml(label)}</span></div>`
+    )).join("");
+
+    const metadata = graph.metadata || {};
+    if (metadata.focused) {
+      const limitText = metadata.hit_node_limit || metadata.hit_edge_limit ? " - limit reached" : "";
+      countsEl.textContent = `${graph.nodes.length}/${metadata.original_node_count} nodes - ${graph.edges.length}/${metadata.original_edge_count} edges focused on ${metadata.focus_root_count} app match(es), depth ${metadata.focus_depth}${limitText}`;
+    } else if (metadata.sampled) {
+      countsEl.textContent = `${graph.nodes.length}/${metadata.original_node_count} nodes - ${graph.edges.length}/${metadata.original_edge_count} edges sampled`;
+    } else {
+      countsEl.textContent = `${graph.nodes.length} nodes / ${graph.edges.length} edges`;
+    }
+
+    function nodeText(node) {
+      const props = node.properties || {};
+      return [
+        node.key,
+        node.label,
+        node.identity,
+        props.id,
+        props.name,
+        props.host,
+        props.dap_name,
+        props.retrieval_text
+      ].filter(Boolean).join(" ").toLowerCase();
+    }
+
+    function nodeName(node) {
+      const props = node.properties || {};
+      return props.name || props.host || props.dap_name || props.id || node.identity;
+    }
+
+    function applyFilters() {
+      const query = searchEl.value.trim().toLowerCase();
+      const label = labelFilterEl.value;
+      const visibleKeys = new Set();
+      renderedNodes = graph.nodes.filter(node => {
+        const matchesLabel = !label || node.label === label;
+        const matchesQuery = !query || nodeText(node).includes(query);
+        if (matchesLabel && matchesQuery) visibleKeys.add(node.key);
+        return matchesLabel && matchesQuery;
+      });
+      renderedEdges = graph.edges.filter(edge => visibleKeys.has(edge.start_key) && visibleKeys.has(edge.end_key));
+      layoutAndRender();
+    }
+
+    function layoutAndRender() {
+      const rect = svg.getBoundingClientRect();
+      const width = Math.max(640, rect.width || 900);
+      const height = Math.max(420, rect.height || 700);
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      svg.innerHTML = `
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L7,3 z" fill="#8f9aa7"></path>
+          </marker>
+        </defs>
+      `;
+
+      const nodes = renderedNodes.map((node, index) => {
+        const angle = (index / Math.max(1, renderedNodes.length)) * Math.PI * 2;
+        return {
+          ...node,
+          x: width / 2 + Math.cos(angle) * width * 0.28,
+          y: height / 2 + Math.sin(angle) * height * 0.28,
+          vx: 0,
+          vy: 0
+        };
+      });
+      const byKey = new Map(nodes.map(node => [node.key, node]));
+      const edges = renderedEdges
+        .map(edge => ({...edge, source: byKey.get(edge.start_key), target: byKey.get(edge.end_key)}))
+        .filter(edge => edge.source && edge.target);
+
+      for (let i = 0; i < 180; i += 1) {
+        for (const edge of edges) {
+          const dx = edge.target.x - edge.source.x;
+          const dy = edge.target.y - edge.source.y;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+          const force = (dist - 110) * 0.004;
+          const fx = (dx / dist) * force;
+          const fy = (dy / dist) * force;
+          edge.source.vx += fx;
+          edge.source.vy += fy;
+          edge.target.vx -= fx;
+          edge.target.vy -= fy;
+        }
+        for (let a = 0; a < nodes.length; a += 1) {
+          for (let b = a + 1; b < nodes.length; b += 1) {
+            const left = nodes[a];
+            const right = nodes[b];
+            const dx = right.x - left.x;
+            const dy = right.y - left.y;
+            const distSq = Math.max(100, dx * dx + dy * dy);
+            const dist = Math.sqrt(distSq);
+            const force = 650 / distSq;
+            const fx = (dx / dist) * force;
+            const fy = (dy / dist) * force;
+            left.vx -= fx;
+            left.vy -= fy;
+            right.vx += fx;
+            right.vy += fy;
+          }
+        }
+        for (const node of nodes) {
+          node.vx += (width / 2 - node.x) * 0.002;
+          node.vy += (height / 2 - node.y) * 0.002;
+          node.x = Math.min(width - 80, Math.max(80, node.x + node.vx));
+          node.y = Math.min(height - 50, Math.max(50, node.y + node.vy));
+          node.vx *= 0.84;
+          node.vy *= 0.84;
+        }
+      }
+
+      const edgeLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      const labelLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      const nodeLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      svg.appendChild(edgeLayer);
+      svg.appendChild(labelLayer);
+      svg.appendChild(nodeLayer);
+
+      for (const edge of edges) {
+        const highlighted = edgeTouchesSelection(edge);
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("class", highlighted ? "edge highlight" : "edge");
+        line.setAttribute("x1", edge.source.x);
+        line.setAttribute("y1", edge.source.y);
+        line.setAttribute("x2", edge.target.x);
+        line.setAttribute("y2", edge.target.y);
+        line.appendChild(svgTitle(`${edge.type}\n${edge.start_key} -> ${edge.end_key}`));
+        edgeLayer.appendChild(line);
+
+        const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        label.setAttribute("class", highlighted ? "edge-label highlight" : "edge-label");
+        label.setAttribute("x", (edge.source.x + edge.target.x) / 2);
+        label.setAttribute("y", (edge.source.y + edge.target.y) / 2 - 4);
+        label.setAttribute("text-anchor", "middle");
+        label.textContent = edge.type;
+        labelLayer.appendChild(label);
+      }
+
+      for (const node of nodes) {
+        const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        group.setAttribute("class", node.key === selectedKey ? "node selected" : "node");
+        group.setAttribute("transform", `translate(${node.x},${node.y})`);
+        group.addEventListener("click", () => {
+          selectedKey = node.key;
+          showDetails(node);
+          layoutAndRender();
+        });
+
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("r", nodeRadius(node.label));
+        circle.setAttribute("fill", palette[node.label] || "#64748b");
+        group.appendChild(circle);
+        group.appendChild(svgTitle(`${node.label}\n${nodeName(node)}\n${node.key}`));
+
+        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text.setAttribute("x", nodeRadius(node.label) + 6);
+        text.setAttribute("y", 4);
+        text.textContent = truncate(nodeName(node), 28);
+        group.appendChild(text);
+        nodeLayer.appendChild(group);
+      }
+
+      if (!nodes.length) {
+        const empty = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        empty.setAttribute("x", width / 2);
+        empty.setAttribute("y", height / 2);
+        empty.setAttribute("text-anchor", "middle");
+        empty.setAttribute("fill", "#5d6975");
+        empty.textContent = "No nodes match the current filters";
+        svg.appendChild(empty);
+      }
+    }
+
+    function edgeTouchesSelection(edge) {
+      return selectedKey && (edge.start_key === selectedKey || edge.end_key === selectedKey);
+    }
+
+    function nodeRadius(label) {
+      if (label === "Application") return 13;
+      if (label === "Cluster") return 15;
+      if (label === "Host") return 11;
+      return 10;
+    }
+
+    function svgTitle(text) {
+      const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+      title.textContent = text;
+      return title;
+    }
+
+    function showDetails(node) {
+      const props = node.properties || {};
+      const rows = Object.entries(props).sort(([a], [b]) => a.localeCompare(b)).map(([key, value]) => {
+        const valueText = Array.isArray(value) ? value.join(", ") : String(value);
+        return `<div class="property"><b>${escapeHtml(key)}</b><span>${escapeHtml(valueText)}</span></div>`;
+      }).join("");
+      const connected = graph.edges.filter(edge => edge.start_key === node.key || edge.end_key === node.key);
+      const edgeRows = connected.slice(0, 24).map(edge => {
+        const direction = edge.start_key === node.key ? "out" : "in";
+        const otherKey = edge.start_key === node.key ? edge.end_key : edge.start_key;
+        return `<div class="property"><b>${escapeHtml(direction)}</b><span>${escapeHtml(edge.type)} -> ${escapeHtml(otherKey)}</span></div>`;
+      }).join("");
+      detailsEl.innerHTML = `
+        <h2>${escapeHtml(nodeName(node))}</h2>
+        <div class="sub">${escapeHtml(node.label)} / ${escapeHtml(node.identity)}</div>
+        <h3>Properties</h3>
+        ${rows || '<div class="empty">No properties</div>'}
+        <h3>Relationships</h3>
+        ${edgeRows || '<div class="empty">No relationships</div>'}
+      `;
+    }
+
+    function truncate(text, limit) {
+      return text.length <= limit ? text : text.slice(0, limit - 1) + "...";
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    searchEl.addEventListener("input", applyFilters);
+    labelFilterEl.addEventListener("change", applyFilters);
+    resetEl.addEventListener("click", () => {
+      searchEl.value = "";
+      labelFilterEl.value = "";
+      selectedKey = null;
+      detailsEl.innerHTML = '<h2>Select a node</h2><div class="sub">Click any node to inspect all source properties.</div>';
+      applyFilters();
+    });
+    window.addEventListener("resize", () => layoutAndRender());
+
+    applyFilters();
+  </script>
+</body>
+</html>

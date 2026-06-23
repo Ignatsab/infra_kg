@@ -5,9 +5,12 @@ from __future__ import annotations
 import os
 import time
 from pathlib import Path
+from typing import Any, Iterable, TypeVar
 
 from infra_kg.env import load_dotenv
-from infra_kg.graph_builder import KnowledgeGraph, split_key, vector_dimensions_by_label
+from infra_kg.graph_builder import GraphEdge, GraphNode, KnowledgeGraph, split_key, vector_dimensions_by_label
+
+T = TypeVar("T")
 
 
 def load_graph_to_memgraph(
@@ -20,6 +23,7 @@ def load_graph_to_memgraph(
     env_path: Path | str = ".env",
     connect_retries: int | None = None,
     connect_retry_delay: float | None = None,
+    batch_size: int = 1000,
 ) -> dict[str, int]:
     try:
         from neo4j import GraphDatabase
@@ -39,6 +43,7 @@ def load_graph_to_memgraph(
         if connect_retry_delay is not None
         else float(os.environ.get("MEMGRAPH_CONNECT_RETRY_DELAY", "2"))
     )
+    batch_size = max(1, int(os.environ.get("MEMGRAPH_BATCH_SIZE", str(batch_size))))
     auth = (username, password) if username and password else None
 
     driver = GraphDatabase.driver(uri, auth=auth)
@@ -46,30 +51,84 @@ def load_graph_to_memgraph(
         verify_connectivity_with_retry(driver, uri, connect_retries, connect_retry_delay)
         with driver.session() as session:
             if clear:
+                print("Clearing existing Memgraph graph...")
                 session.run("MATCH (n) DETACH DELETE n").consume()
             create_indexes(session, graph)
-            for node in graph.nodes.values():
-                session.run(
-                    f"MERGE (n:{node.label} {{id: $id}}) SET n += $properties",
-                    id=node.identity,
-                    properties=node.properties,
-                ).consume()
+            load_nodes(session, graph.nodes.values(), batch_size)
             vector_indexes = create_vector_indexes(session, graph)
-            for edge in graph.edges:
-                start_label, start_id = split_key(edge.start_key)
-                end_label, end_id = split_key(edge.end_key)
-                session.run(
-                    f"""
-                    MATCH (a:{start_label} {{id: $start_id}})
-                    MATCH (b:{end_label} {{id: $end_id}})
-                    MERGE (a)-[r:{edge.type}]->(b)
-                    SET r += $properties
-                    """,
-                    start_id=start_id,
-                    end_id=end_id,
-                    properties=edge.properties,
-                ).consume()
+            load_edges(session, graph.edges, batch_size)
     return {"nodes": len(graph.nodes), "edges": len(graph.edges), "vector_indexes": vector_indexes}
+
+
+def load_nodes(session, nodes: Iterable[GraphNode], batch_size: int) -> None:
+    nodes_by_label: dict[str, list[GraphNode]] = {}
+    total = 0
+    for node in nodes:
+        nodes_by_label.setdefault(node.label, []).append(node)
+        total += 1
+
+    loaded = 0
+    print(f"Loading {total} nodes in batches of {batch_size}...")
+    for label, label_nodes in sorted(nodes_by_label.items()):
+        for batch in chunks(label_nodes, batch_size):
+            rows = [{"id": node.identity, "properties": node.properties} for node in batch]
+            session.run(
+                f"""
+                UNWIND $rows AS row
+                MERGE (n:{label} {{id: row.id}})
+                SET n += row.properties
+                """,
+                rows=rows,
+            ).consume()
+            loaded += len(batch)
+            print_progress("nodes", loaded, total)
+
+
+def load_edges(session, edges: Iterable[GraphEdge], batch_size: int) -> None:
+    edges_by_shape: dict[tuple[str, str, str], list[dict[str, Any]]] = {}
+    total = 0
+    for edge in edges:
+        start_label, start_id = split_key(edge.start_key)
+        end_label, end_id = split_key(edge.end_key)
+        shape = (start_label, edge.type, end_label)
+        edges_by_shape.setdefault(shape, []).append(
+            {
+                "start_id": start_id,
+                "end_id": end_id,
+                "properties": edge.properties,
+            }
+        )
+        total += 1
+
+    loaded = 0
+    print(f"Loading {total} edges in batches of {batch_size}...")
+    for (start_label, edge_type, end_label), shape_edges in sorted(edges_by_shape.items()):
+        for batch in chunks(shape_edges, batch_size):
+            session.run(
+                f"""
+                UNWIND $rows AS row
+                MATCH (a:{start_label} {{id: row.start_id}})
+                MATCH (b:{end_label} {{id: row.end_id}})
+                MERGE (a)-[r:{edge_type}]->(b)
+                SET r += row.properties
+                """,
+                rows=batch,
+            ).consume()
+            loaded += len(batch)
+            print_progress("edges", loaded, total)
+
+
+def chunks(items: list[T], size: int) -> Iterable[list[T]]:
+    for start in range(0, len(items), size):
+        yield items[start : start + size]
+
+
+def print_progress(label: str, loaded: int, total: int) -> None:
+    if not total:
+        return
+    if loaded == total or loaded % 10000 == 0:
+        percent = (loaded / total) * 100
+        print(f"Loaded {loaded}/{total} {label} ({percent:.1f}%)")
 
 
 def verify_connectivity_with_retry(driver, uri: str, retries: int, retry_delay: float) -> None:

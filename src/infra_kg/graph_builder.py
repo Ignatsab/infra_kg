@@ -138,6 +138,7 @@ def build_graph(
     data_dir: Path | str,
     *,
     include_derived: bool = True,
+    include_related: bool = True,
     include_retrieval_text: bool = True,
     embedding_provider: EmbeddingProvider | None = None,
     enrich_with_llm: bool = False,
@@ -148,6 +149,7 @@ def build_graph(
     return build_graph_from_tables(
         tables,
         include_derived=include_derived,
+        include_related=include_related,
         include_retrieval_text=include_retrieval_text,
         embedding_provider=embedding_provider,
         enrich_with_llm=enrich_with_llm,
@@ -160,6 +162,7 @@ def build_graph_from_tables(
     tables: dict[str, list[dict[str, str]]],
     *,
     include_derived: bool = True,
+    include_related: bool = True,
     include_retrieval_text: bool = True,
     embedding_provider: EmbeddingProvider | None = None,
     enrich_with_llm: bool = False,
@@ -347,6 +350,7 @@ def build_graph_from_tables(
             obso_records,
             tables.get("apm_application_daps", []),
             max_related_group_size=max_related_group_size,
+            include_related=include_related,
         )
 
     if enrich_with_llm:
@@ -386,6 +390,7 @@ def add_derived_topology_edges(
     obso_records: dict[str, dict[str, str]],
     dap_rows: Iterable[dict[str, str]],
     max_related_group_size: int = 200,
+    include_related: bool = True,
 ) -> None:
     app_host_records: dict[tuple[str, str], list[dict[str, str]]] = defaultdict(list)
     app_technology_records: dict[tuple[str, str], list[dict[str, str]]] = defaultdict(list)
@@ -429,6 +434,9 @@ def add_derived_topology_edges(
             make_key("Technology", technology_id),
             props,
         )
+
+    if not include_related:
+        return
 
     app_reasons = application_relationship_reasons(
         applications,

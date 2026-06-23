@@ -13,22 +13,223 @@ def main() -> None:
     parser.add_argument("--max-nodes", type=int, default=120, help="Maximum nodes to render in sampled mode.")
     parser.add_argument("--max-edges", type=int, default=180, help="Maximum edges to render in sampled mode.")
     parser.add_argument("--full", action="store_true", help="Render the full graph instead of a representative sample.")
+    parser.add_argument("--application-name", "--app-name", default=None, help="Render the neighborhood for applications matching this name.")
+    parser.add_argument("--application-id", "--app-id", default=None, help="Render the neighborhood for this application id.")
+    parser.add_argument("--focus-depth", type=int, default=2, help="Relationship hops to include around the focused application.")
+    parser.add_argument(
+        "--exclude-edge-type",
+        action="append",
+        default=[],
+        help="Relationship type to skip in focused mode. Can be used more than once.",
+    )
     args = parser.parse_args()
 
     graph_path = Path(args.graph_json)
     output_path = Path(args.output)
     graph = json.loads(graph_path.read_text(encoding="utf-8"))
-    viewer_graph = graph if args.full else sample_graph(graph, max_nodes=args.max_nodes, max_edges=args.max_edges)
+    try:
+        if args.application_name or args.application_id:
+            viewer_graph = focus_application_graph(
+                graph,
+                application_name=args.application_name,
+                application_id=args.application_id,
+                depth=args.focus_depth,
+                max_nodes=args.max_nodes,
+                max_edges=args.max_edges,
+                exclude_edge_types=set(args.exclude_edge_type),
+            )
+        elif args.full:
+            viewer_graph = with_metadata(graph, sampled=False)
+        else:
+            viewer_graph = sample_graph(graph, max_nodes=args.max_nodes, max_edges=args.max_edges)
+    except ValueError as exc:
+        parser.error(str(exc))
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(render_html(viewer_graph), encoding="utf-8")
     print(f"Wrote graph viewer to {output_path}")
-    if viewer_graph.get("metadata", {}).get("sampled"):
-        metadata = viewer_graph["metadata"]
+    metadata = viewer_graph.get("metadata", {})
+    if metadata.get("focused"):
+        print(
+            "Rendered focused graph: "
+            f"{len(viewer_graph['nodes'])}/{metadata['original_node_count']} nodes, "
+            f"{len(viewer_graph['edges'])}/{metadata['original_edge_count']} edges, "
+            f"{metadata['focus_root_count']} matching application(s), "
+            f"depth {metadata['focus_depth']}"
+        )
+    elif metadata.get("sampled"):
         print(
             "Rendered sample: "
             f"{len(viewer_graph['nodes'])}/{metadata['original_node_count']} nodes, "
             f"{len(viewer_graph['edges'])}/{metadata['original_edge_count']} edges"
         )
+
+
+EDGE_PRIORITY = {
+    "HAS_OBSOLESCENCE_RECORD": 0,
+    "ON_HOST": 1,
+    "REFERENCES_TECHNOLOGY": 1,
+    "HAS_CRITICALITY": 2,
+    "IN_ENVIRONMENT": 2,
+    "LOCATED_IN_COUNTRY": 2,
+    "DEPLOYED_ON": 3,
+    "USES_TECHNOLOGY": 3,
+    "HAS_TECHNOLOGY": 3,
+    "EXPOSES_DAP": 4,
+    "HAS_DAP_BINDING": 4,
+    "TARGETS_DAP": 4,
+    "HAS_APPLICATION_MANAGER": 5,
+    "HAS_APM_SPOC": 5,
+    "HAS_DOMAIN_MANAGER": 5,
+    "HAS_PRODUCTION_DOMAIN_MANAGER": 5,
+    "HAS_PRODUCTION_MANAGER": 5,
+    "HAS_APPLICATION": 6,
+    "HAS_SUBCLUSTER": 6,
+    "RELATED_TO": 50,
+}
+
+
+def focus_application_graph(
+    graph: dict,
+    *,
+    application_name: str | None,
+    application_id: str | None,
+    depth: int,
+    max_nodes: int,
+    max_edges: int,
+    exclude_edge_types: set[str] | None = None,
+) -> dict:
+    if depth < 0:
+        raise ValueError("--focus-depth must be 0 or greater")
+    if max_nodes < 1:
+        raise ValueError("--max-nodes must be at least 1 in focused mode")
+    if max_edges < 0:
+        raise ValueError("--max-edges must be 0 or greater in focused mode")
+
+    nodes = graph.get("nodes", [])
+    edges = graph.get("edges", [])
+    nodes_by_key = {node["key"]: node for node in nodes}
+    excluded = exclude_edge_types or set()
+    root_nodes = find_application_nodes(nodes, application_name=application_name, application_id=application_id)
+    root_nodes = root_nodes[:max_nodes]
+    if not root_nodes:
+        selector = application_id or application_name or ""
+        raise ValueError(f"No Application node matched {selector!r}")
+
+    adjacency: dict[str, list[int]] = {}
+    for index, edge in enumerate(edges):
+        if edge.get("type") in excluded:
+            continue
+        adjacency.setdefault(edge["start_key"], []).append(index)
+        adjacency.setdefault(edge["end_key"], []).append(index)
+
+    selected_node_keys = {node["key"] for node in root_nodes}
+    selected_edge_indexes: set[int] = set()
+    frontier = set(selected_node_keys)
+    hit_node_limit = False
+    hit_edge_limit = False
+
+    for _ in range(depth):
+        if not frontier or len(selected_edge_indexes) >= max_edges:
+            break
+        next_frontier: set[str] = set()
+        candidate_edge_indexes = sorted(
+            {edge_index for node_key in frontier for edge_index in adjacency.get(node_key, [])},
+            key=lambda index: edge_sort_key(edges[index]),
+        )
+        for edge_index in candidate_edge_indexes:
+            if len(selected_edge_indexes) >= max_edges:
+                hit_edge_limit = True
+                break
+            if edge_index in selected_edge_indexes:
+                continue
+            edge = edges[edge_index]
+            start_key = edge["start_key"]
+            end_key = edge["end_key"]
+            other_keys = [key for key in (start_key, end_key) if key not in selected_node_keys]
+            if len(selected_node_keys) + len(other_keys) > max_nodes:
+                hit_node_limit = True
+                continue
+            for key in other_keys:
+                if key in nodes_by_key:
+                    selected_node_keys.add(key)
+                    next_frontier.add(key)
+            if start_key in selected_node_keys and end_key in selected_node_keys:
+                selected_edge_indexes.add(edge_index)
+        frontier = next_frontier
+
+    for edge_index, edge in sorted(enumerate(edges), key=lambda item: edge_sort_key(item[1])):
+        if len(selected_edge_indexes) >= max_edges:
+            hit_edge_limit = True
+            break
+        if edge.get("type") in excluded:
+            continue
+        if edge["start_key"] in selected_node_keys and edge["end_key"] in selected_node_keys:
+            selected_edge_indexes.add(edge_index)
+
+    selected_nodes = [node for node in nodes if node["key"] in selected_node_keys]
+    selected_edges = [edge for index, edge in enumerate(edges) if index in selected_edge_indexes]
+    metadata = {
+        "sampled": len(selected_nodes) < len(nodes) or len(selected_edges) < len(edges),
+        "focused": True,
+        "focus_application_name": application_name,
+        "focus_application_id": application_id,
+        "focus_depth": depth,
+        "focus_root_count": len(root_nodes),
+        "focus_roots": [node["key"] for node in root_nodes],
+        "excluded_edge_types": sorted(excluded),
+        "original_node_count": len(nodes),
+        "original_edge_count": len(edges),
+        "rendered_node_count": len(selected_nodes),
+        "rendered_edge_count": len(selected_edges),
+        "max_nodes": max_nodes,
+        "max_edges": max_edges,
+        "hit_node_limit": hit_node_limit,
+        "hit_edge_limit": hit_edge_limit,
+    }
+    return {
+        "nodes": selected_nodes,
+        "edges": selected_edges,
+        "warnings": graph.get("warnings", []),
+        "metadata": metadata,
+    }
+
+
+def find_application_nodes(
+    nodes: list[dict],
+    *,
+    application_name: str | None,
+    application_id: str | None,
+) -> list[dict]:
+    applications = [node for node in nodes if node.get("label") == "Application"]
+    normalized_id = normalize_search(application_id) if application_id else ""
+    normalized_name = normalize_search(application_name) if application_name else ""
+
+    matches = []
+    for node in applications:
+        props = node.get("properties", {})
+        id_fields = [node.get("identity", ""), props.get("id", ""), node.get("key", "")]
+        name_fields = [props.get("name", ""), node.get("identity", ""), props.get("id", ""), node.get("key", "")]
+        id_match = normalized_id and any(normalize_search(value) == normalized_id for value in id_fields)
+        name_match = normalized_name and any(normalized_name in normalize_search(value) for value in name_fields)
+        if id_match or name_match:
+            exact_name = normalized_name and normalize_search(props.get("name", "")) == normalized_name
+            matches.append((not id_match, not exact_name, node.get("key", ""), node))
+
+    return [item[3] for item in sorted(matches)]
+
+
+def normalize_search(value: object) -> str:
+    return " ".join(str(value).casefold().split())
+
+
+def edge_sort_key(edge: dict) -> tuple[int, str, str, str]:
+    edge_type = edge.get("type", "")
+    return (
+        EDGE_PRIORITY.get(edge_type, 20),
+        edge_type,
+        edge.get("start_key", ""),
+        edge.get("end_key", ""),
+    )
 
 
 def sample_graph(graph: dict, *, max_nodes: int, max_edges: int) -> dict:
@@ -424,7 +625,10 @@ def render_html(graph: dict) -> str:
     )).join("");
 
     const metadata = graph.metadata || {{}};
-    if (metadata.sampled) {{
+    if (metadata.focused) {{
+      const limitText = metadata.hit_node_limit || metadata.hit_edge_limit ? " - limit reached" : "";
+      countsEl.textContent = `${{graph.nodes.length}}/${{metadata.original_node_count}} nodes - ${{graph.edges.length}}/${{metadata.original_edge_count}} edges focused on ${{metadata.focus_root_count}} app match(es), depth ${{metadata.focus_depth}}${{limitText}}`;
+    }} else if (metadata.sampled) {{
       countsEl.textContent = `${{graph.nodes.length}}/${{metadata.original_node_count}} nodes - ${{graph.edges.length}}/${{metadata.original_edge_count}} edges sampled`;
     }} else {{
       countsEl.textContent = `${{graph.nodes.length}} nodes / ${{graph.edges.length}} edges`;

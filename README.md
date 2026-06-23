@@ -57,6 +57,23 @@ technology, host, or DAP can become related to every other app in that group.
 The exporter skips `RELATED_TO` expansion for groups above
 `--max-related-group-size` while preserving all source FK edges.
 
+For large remote Memgraph loads, a practical first full-topology load is to keep
+the concrete derived shortcuts but skip only app-to-app `RELATED_TO`:
+
+```bash
+python3 scripts/load_memgraph.py \
+  --clear \
+  --data-dir data/real/APM_DATA \
+  --no-related-to \
+  --batch-size 1000 \
+  --uri "bolt://HOST:PORT" \
+  --username "YOUR_USERNAME" \
+  --password "YOUR_PASSWORD"
+```
+
+This still loads `DEPLOYED_ON`, `USES_TECHNOLOGY`, and `HAS_TECHNOLOGY`, while
+avoiding the densest derived relationship type.
+
 Export with local test embeddings:
 
 ```bash
@@ -154,6 +171,29 @@ all node labels and relationship types:
 
 ```bash
 python3 scripts/render_graph_viewer.py --max-nodes 120 --max-edges 180
+```
+
+To render only the neighborhood around one application, search by application
+name or id. Matching is case-insensitive and partial for names:
+
+```bash
+python3 scripts/render_graph_viewer.py \
+  --application-name "SERVICE NOW" \
+  --focus-depth 2 \
+  --max-nodes 120 \
+  --max-edges 180 \
+  --output build/service_now_viewer.html
+```
+
+Depth `1` shows direct neighbors. Depth `2` also includes the next hop, such as
+obsolescence dimensions, DAP targets, hosts, and technologies. If app-to-app
+relationships are too dense, skip them for the focused viewer:
+
+```bash
+python3 scripts/render_graph_viewer.py \
+  --application-name "SERVICE NOW" \
+  --exclude-edge-type RELATED_TO \
+  --output build/service_now_viewer.html
 ```
 
 If you intentionally want the full graph:

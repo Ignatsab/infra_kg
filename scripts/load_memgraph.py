@@ -27,6 +27,11 @@ def main() -> None:
         default=200,
         help="Skip derived RELATED_TO all-to-all expansion for groups larger than this. Use 0 for no cap.",
     )
+    parser.add_argument(
+        "--no-related-to",
+        action="store_true",
+        help="Keep derived shortcuts but skip Application RELATED_TO edges.",
+    )
     parser.add_argument("--no-retrieval-text", action="store_true", help="Do not add retrieval_text to graph nodes.")
     parser.add_argument(
         "--embed",
@@ -39,6 +44,7 @@ def main() -> None:
     parser.add_argument("--env-path", default=".env", help="Path to .env file for LLM/embedding settings.")
     parser.add_argument("--connect-retries", type=int, default=120, help="Memgraph connection attempts before failing.")
     parser.add_argument("--connect-retry-delay", type=float, default=2.0, help="Seconds between Memgraph connection attempts.")
+    parser.add_argument("--batch-size", type=int, default=1000, help="Rows per Memgraph write query.")
     args = parser.parse_args()
 
     embedding_provider = embedding_provider_from_choice(
@@ -49,6 +55,7 @@ def main() -> None:
     graph = build_graph(
         Path(args.data_dir),
         include_derived=not args.no_derived,
+        include_related=not args.no_related_to,
         include_retrieval_text=not args.no_retrieval_text,
         embedding_provider=embedding_provider,
         enrich_with_llm=args.enrich_with_llm,
@@ -63,6 +70,7 @@ def main() -> None:
         clear=args.clear,
         connect_retries=args.connect_retries,
         connect_retry_delay=args.connect_retry_delay,
+        batch_size=args.batch_size,
     )
     print(f"Loaded {result['nodes']} nodes and {result['edges']} edges into Memgraph")
     if result.get("vector_indexes"):

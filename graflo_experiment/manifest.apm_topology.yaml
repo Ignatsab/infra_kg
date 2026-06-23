@@ -1,0 +1,582 @@
+schema:
+  metadata:
+    name: "apm_topology"
+    description: "Experimental GraFlo manifest for APM infrastructure topology."
+  db_profile:
+    type: "MEMGRAPH"
+  core_schema:
+    vertices:
+      - name: "Cluster"
+        fields:
+          - "id"
+          - "name"
+          - "environment"
+          - "region"
+          - "owner_team"
+          - "source_table"
+        indexes:
+          - fields:
+              - "id"
+        identity:
+          id: "id"
+        source_table: "apm_cluster"
+      - name: "Subcluster"
+        fields:
+          - "id"
+          - "name"
+          - "apm_cluster"
+          - "role"
+          - "zone"
+          - "source_table"
+        indexes:
+          - fields:
+              - "id"
+        identity:
+          id: "id"
+        source_table: "apm_subclusters"
+      - name: "Application"
+        fields:
+          - "id"
+          - "name"
+          - "apm_cluster"
+          - "production_domain_manager"
+          - "application_manager"
+          - "domain_manager"
+          - "production_manager"
+          - "apm_spoc"
+          - "criticality"
+          - "business_owner"
+          - "runtime_tier"
+          - "source_table"
+        indexes:
+          - fields:
+              - "id"
+        identity:
+          id: "id"
+        source_table: "apm_applications"
+      - name: "Contact"
+        fields:
+          - "id"
+          - "name"
+          - "refog"
+          - "source_table"
+        indexes:
+          - fields:
+              - "id"
+        identity:
+          id: "id"
+        source_table: "apm_contacts"
+      - name: "ApplicationDap"
+        fields:
+          - "id"
+          - "apm_application"
+          - "dap_id"
+          - "dap_name"
+          - "direction"
+          - "protocol"
+          - "source_table"
+        indexes:
+          - fields:
+              - "id"
+        identity:
+          id: "id"
+        source_table: "apm_application_daps"
+      - name: "Dap"
+        fields:
+          - "id"
+          - "name"
+          - "source_table"
+        indexes:
+          - fields:
+              - "id"
+        identity:
+          id: "dap_id"
+        source_table: "apm_application_daps"
+      - name: "Technology"
+        fields:
+          - "id"
+          - "name"
+          - "category"
+          - "vendor"
+          - "version"
+          - "lifecycle"
+          - "source_table"
+        indexes:
+          - fields:
+              - "id"
+        identity:
+          id: "id"
+        source_table: "apm_technologies"
+      - name: "ObsolescenceRecord"
+        fields:
+          - "id"
+          - "application_id"
+          - "technology_id"
+          - "host"
+          - "criticality"
+          - "env"
+          - "location_country"
+          - "obsolescence_status"
+          - "risk_level"
+          - "detected_at"
+          - "evidence"
+          - "source_table"
+        indexes:
+          - fields:
+              - "id"
+        identity:
+          id: "id"
+        source_table: "apm_obso"
+      - name: "Host"
+        fields:
+          - "id"
+          - "name"
+          - "source_table"
+        indexes:
+          - fields:
+              - "id"
+        identity:
+          id: "host"
+        source_table: "apm_obso"
+      - name: "Criticality"
+        fields:
+          - "id"
+          - "name"
+          - "source_table"
+        indexes:
+          - fields:
+              - "id"
+        identity:
+          id: "criticality"
+        source_table: "apm_obso"
+      - name: "Environment"
+        fields:
+          - "id"
+          - "name"
+          - "source_table"
+        indexes:
+          - fields:
+              - "id"
+        identity:
+          id: "env"
+        source_table: "apm_obso"
+      - name: "LocationCountry"
+        fields:
+          - "id"
+          - "name"
+          - "source_table"
+        indexes:
+          - fields:
+              - "id"
+        identity:
+          id: "location_country"
+        source_table: "apm_obso"
+    edges:
+      - name: "HAS_SUBCLUSTER"
+        source: "Cluster"
+        target: "Subcluster"
+        source_table: "apm_subclusters"
+        source_key:
+          vertex_field: "id"
+          column: "apm_cluster"
+        target_key:
+          vertex_field: "id"
+          column: "id"
+      - name: "HAS_APPLICATION"
+        source: "Cluster"
+        target: "Application"
+        source_table: "apm_applications"
+        source_key:
+          vertex_field: "id"
+          column: "apm_cluster"
+        target_key:
+          vertex_field: "id"
+          column: "id"
+      - name: "HAS_PRODUCTION_DOMAIN_MANAGER"
+        source: "Application"
+        target: "Contact"
+        source_table: "apm_applications"
+        source_key:
+          vertex_field: "id"
+          column: "id"
+        target_key:
+          vertex_field: "id"
+          column: "production_domain_manager"
+      - name: "HAS_APPLICATION_MANAGER"
+        source: "Application"
+        target: "Contact"
+        source_table: "apm_applications"
+        source_key:
+          vertex_field: "id"
+          column: "id"
+        target_key:
+          vertex_field: "id"
+          column: "application_manager"
+      - name: "HAS_DOMAIN_MANAGER"
+        source: "Application"
+        target: "Contact"
+        source_table: "apm_applications"
+        source_key:
+          vertex_field: "id"
+          column: "id"
+        target_key:
+          vertex_field: "id"
+          column: "domain_manager"
+      - name: "HAS_PRODUCTION_MANAGER"
+        source: "Application"
+        target: "Contact"
+        source_table: "apm_applications"
+        source_key:
+          vertex_field: "id"
+          column: "id"
+        target_key:
+          vertex_field: "id"
+          column: "production_manager"
+      - name: "HAS_APM_SPOC"
+        source: "Application"
+        target: "Contact"
+        source_table: "apm_applications"
+        source_key:
+          vertex_field: "id"
+          column: "id"
+        target_key:
+          vertex_field: "id"
+          column: "apm_spoc"
+      - name: "HAS_DAP_BINDING"
+        source: "Application"
+        target: "ApplicationDap"
+        source_table: "apm_application_daps"
+        source_key:
+          vertex_field: "id"
+          column: "apm_application"
+        target_key:
+          vertex_field: "id"
+          column: "id"
+      - name: "TARGETS_DAP"
+        source: "ApplicationDap"
+        target: "Dap"
+        source_table: "apm_application_daps"
+        source_key:
+          vertex_field: "id"
+          column: "id"
+        target_key:
+          vertex_field: "id"
+          column: "dap_id"
+      - name: "EXPOSES_DAP"
+        source: "Application"
+        target: "Dap"
+        source_table: "apm_application_daps"
+        source_key:
+          vertex_field: "id"
+          column: "apm_application"
+        target_key:
+          vertex_field: "id"
+          column: "dap_id"
+        properties:
+          source_columns: "all"
+      - name: "HAS_OBSOLESCENCE_RECORD"
+        source: "Application"
+        target: "ObsolescenceRecord"
+        source_table: "apm_obso"
+        source_key:
+          vertex_field: "id"
+          column: "application_id"
+        target_key:
+          vertex_field: "id"
+          column: "id"
+      - name: "ON_HOST"
+        source: "ObsolescenceRecord"
+        target: "Host"
+        source_table: "apm_obso"
+        source_key:
+          vertex_field: "id"
+          column: "id"
+        target_key:
+          vertex_field: "id"
+          column: "host"
+      - name: "REFERENCES_TECHNOLOGY"
+        source: "ObsolescenceRecord"
+        target: "Technology"
+        source_table: "apm_obso"
+        source_key:
+          vertex_field: "id"
+          column: "id"
+        target_key:
+          vertex_field: "id"
+          column: "technology_id"
+      - name: "HAS_CRITICALITY"
+        source: "ObsolescenceRecord"
+        target: "Criticality"
+        source_table: "apm_obso"
+        source_key:
+          vertex_field: "id"
+          column: "id"
+        target_key:
+          vertex_field: "id"
+          column: "criticality"
+      - name: "IN_ENVIRONMENT"
+        source: "ObsolescenceRecord"
+        target: "Environment"
+        source_table: "apm_obso"
+        source_key:
+          vertex_field: "id"
+          column: "id"
+        target_key:
+          vertex_field: "id"
+          column: "env"
+      - name: "LOCATED_IN_COUNTRY"
+        source: "ObsolescenceRecord"
+        target: "LocationCountry"
+        source_table: "apm_obso"
+        source_key:
+          vertex_field: "id"
+          column: "id"
+        target_key:
+          vertex_field: "id"
+          column: "location_country"
+ingestion_model:
+  resources:
+    - name: "apm_application_daps"
+      apply:
+        - vertex: "ApplicationDap"
+          from:
+            id: "id"
+        - vertex: "Dap"
+          from:
+            id: "dap_id"
+            name: "dap_name"
+        - edge: "HAS_DAP_BINDING"
+          source: "Application"
+          target: "ApplicationDap"
+          source_key:
+            vertex_field: "id"
+            column: "apm_application"
+          target_key:
+            vertex_field: "id"
+            column: "id"
+        - edge: "TARGETS_DAP"
+          source: "ApplicationDap"
+          target: "Dap"
+          source_key:
+            vertex_field: "id"
+            column: "id"
+          target_key:
+            vertex_field: "id"
+            column: "dap_id"
+        - edge: "EXPOSES_DAP"
+          source: "Application"
+          target: "Dap"
+          source_key:
+            vertex_field: "id"
+            column: "apm_application"
+          target_key:
+            vertex_field: "id"
+            column: "dap_id"
+    - name: "apm_applications"
+      apply:
+        - vertex: "Application"
+          from:
+            id: "id"
+        - edge: "HAS_APPLICATION"
+          source: "Cluster"
+          target: "Application"
+          source_key:
+            vertex_field: "id"
+            column: "apm_cluster"
+          target_key:
+            vertex_field: "id"
+            column: "id"
+        - edge: "HAS_PRODUCTION_DOMAIN_MANAGER"
+          source: "Application"
+          target: "Contact"
+          source_key:
+            vertex_field: "id"
+            column: "id"
+          target_key:
+            vertex_field: "id"
+            column: "production_domain_manager"
+        - edge: "HAS_APPLICATION_MANAGER"
+          source: "Application"
+          target: "Contact"
+          source_key:
+            vertex_field: "id"
+            column: "id"
+          target_key:
+            vertex_field: "id"
+            column: "application_manager"
+        - edge: "HAS_DOMAIN_MANAGER"
+          source: "Application"
+          target: "Contact"
+          source_key:
+            vertex_field: "id"
+            column: "id"
+          target_key:
+            vertex_field: "id"
+            column: "domain_manager"
+        - edge: "HAS_PRODUCTION_MANAGER"
+          source: "Application"
+          target: "Contact"
+          source_key:
+            vertex_field: "id"
+            column: "id"
+          target_key:
+            vertex_field: "id"
+            column: "production_manager"
+        - edge: "HAS_APM_SPOC"
+          source: "Application"
+          target: "Contact"
+          source_key:
+            vertex_field: "id"
+            column: "id"
+          target_key:
+            vertex_field: "id"
+            column: "apm_spoc"
+    - name: "apm_cluster"
+      apply:
+        - vertex: "Cluster"
+          from:
+            id: "id"
+    - name: "apm_contacts"
+      apply:
+        - vertex: "Contact"
+          from:
+            id: "id"
+    - name: "apm_obso"
+      apply:
+        - vertex: "ObsolescenceRecord"
+          from:
+            id: "id"
+        - vertex: "Host"
+          from:
+            id: "host"
+            name: "host"
+        - vertex: "Criticality"
+          from:
+            id: "criticality"
+            name: "criticality"
+        - vertex: "Environment"
+          from:
+            id: "env"
+            name: "env"
+        - vertex: "LocationCountry"
+          from:
+            id: "location_country"
+            name: "location_country"
+        - edge: "HAS_OBSOLESCENCE_RECORD"
+          source: "Application"
+          target: "ObsolescenceRecord"
+          source_key:
+            vertex_field: "id"
+            column: "application_id"
+          target_key:
+            vertex_field: "id"
+            column: "id"
+        - edge: "ON_HOST"
+          source: "ObsolescenceRecord"
+          target: "Host"
+          source_key:
+            vertex_field: "id"
+            column: "id"
+          target_key:
+            vertex_field: "id"
+            column: "host"
+        - edge: "REFERENCES_TECHNOLOGY"
+          source: "ObsolescenceRecord"
+          target: "Technology"
+          source_key:
+            vertex_field: "id"
+            column: "id"
+          target_key:
+            vertex_field: "id"
+            column: "technology_id"
+        - edge: "HAS_CRITICALITY"
+          source: "ObsolescenceRecord"
+          target: "Criticality"
+          source_key:
+            vertex_field: "id"
+            column: "id"
+          target_key:
+            vertex_field: "id"
+            column: "criticality"
+        - edge: "IN_ENVIRONMENT"
+          source: "ObsolescenceRecord"
+          target: "Environment"
+          source_key:
+            vertex_field: "id"
+            column: "id"
+          target_key:
+            vertex_field: "id"
+            column: "env"
+        - edge: "LOCATED_IN_COUNTRY"
+          source: "ObsolescenceRecord"
+          target: "LocationCountry"
+          source_key:
+            vertex_field: "id"
+            column: "id"
+          target_key:
+            vertex_field: "id"
+            column: "location_country"
+    - name: "apm_subclusters"
+      apply:
+        - vertex: "Subcluster"
+          from:
+            id: "id"
+        - edge: "HAS_SUBCLUSTER"
+          source: "Cluster"
+          target: "Subcluster"
+          source_key:
+            vertex_field: "id"
+            column: "apm_cluster"
+          target_key:
+            vertex_field: "id"
+            column: "id"
+    - name: "apm_technologies"
+      apply:
+        - vertex: "Technology"
+          from:
+            id: "id"
+bindings:
+  connectors:
+    - name: "apm_application_daps_csv"
+      type: "FileConnector"
+      regex: "^(apm_application_daps)\\.csv$"
+      sub_path: "data/mock"
+    - name: "apm_applications_csv"
+      type: "FileConnector"
+      regex: "^(apm_applications)\\.csv$"
+      sub_path: "data/mock"
+    - name: "apm_cluster_csv"
+      type: "FileConnector"
+      regex: "^(apm_cluster|apm_clusters)\\.csv$"
+      sub_path: "data/mock"
+    - name: "apm_contacts_csv"
+      type: "FileConnector"
+      regex: "^(apm_contacts)\\.csv$"
+      sub_path: "data/mock"
+    - name: "apm_obso_csv"
+      type: "FileConnector"
+      regex: "^(apm_obso)\\.csv$"
+      sub_path: "data/mock"
+    - name: "apm_subclusters_csv"
+      type: "FileConnector"
+      regex: "^(apm_subclusters)\\.csv$"
+      sub_path: "data/mock"
+    - name: "apm_technologies_csv"
+      type: "FileConnector"
+      regex: "^(apm_technologies)\\.csv$"
+      sub_path: "data/mock"
+  resource_connector:
+    - resource: "apm_application_daps"
+      connector: "apm_application_daps_csv"
+    - resource: "apm_applications"
+      connector: "apm_applications_csv"
+    - resource: "apm_cluster"
+      connector: "apm_cluster_csv"
+    - resource: "apm_contacts"
+      connector: "apm_contacts_csv"
+    - resource: "apm_obso"
+      connector: "apm_obso_csv"
+    - resource: "apm_subclusters"
+      connector: "apm_subclusters_csv"
+    - resource: "apm_technologies"
+      connector: "apm_technologies_csv"

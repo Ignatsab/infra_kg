@@ -78,15 +78,18 @@ COVERAGE_REQUIREMENTS = [
     ("ObsolescenceRecord", "incoming", {"HAS_OBSOLESCENCE_RECORD"}, "obsolescence rows attached to an application"),
     ("ObsolescenceRecord", "outgoing", {"ON_HOST"}, "obsolescence rows point to a host"),
     ("ObsolescenceRecord", "outgoing", {"REFERENCES_TECHNOLOGY"}, "obsolescence rows point to a technology"),
-    ("ObsolescenceRecord", "outgoing", {"HAS_CRITICALITY"}, "obsolescence rows point to a criticality"),
-    ("ObsolescenceRecord", "outgoing", {"IN_ENVIRONMENT"}, "obsolescence rows point to an environment"),
-    ("ObsolescenceRecord", "outgoing", {"LOCATED_IN_COUNTRY"}, "obsolescence rows point to a country"),
     ("Criticality", "incoming", {"HAS_CRITICALITY"}, "criticality values are referenced by obsolescence rows"),
     ("Environment", "incoming", {"IN_ENVIRONMENT"}, "environment values are referenced by obsolescence rows"),
     ("LocationCountry", "incoming", {"LOCATED_IN_COUNTRY"}, "country values are referenced by obsolescence rows"),
     ("Dap", "incoming", {"EXPOSES_DAP", "TARGETS_DAP"}, "DAPs referenced by an application or binding row"),
     ("Host", "incoming", {"DEPLOYED_ON", "ON_HOST"}, "hosts referenced by an application or obsolescence row"),
     ("Technology", "incoming", {"REFERENCES_TECHNOLOGY", "USES_TECHNOLOGY", "HAS_TECHNOLOGY"}, "technologies referenced by topology data"),
+]
+
+OPTIONAL_COVERAGE_REQUIREMENTS = [
+    ("ObsolescenceRecord", "outgoing", {"HAS_CRITICALITY"}, "obsolescence rows point to a criticality"),
+    ("ObsolescenceRecord", "outgoing", {"IN_ENVIRONMENT"}, "obsolescence rows point to an environment"),
+    ("ObsolescenceRecord", "outgoing", {"LOCATED_IN_COUNTRY"}, "obsolescence rows point to a country"),
 ]
 
 REQUIRED_PROPERTIES = {
@@ -192,7 +195,10 @@ def evaluate_graph(graph: dict[str, Any], *, top: int = 10) -> dict[str, Any]:
         "duplicate_edges": len(duplicate_edges),
         "isolated_nodes": len(isolated_nodes),
         "unreachable_from_clusters": len(unreachable_from_clusters),
-        "coverage_missing_nodes": sum(item["missing_count"] for item in coverage),
+        "coverage_missing_nodes": sum(item["missing_count"] for item in coverage if item.get("severity") == "required"),
+        "optional_coverage_missing_nodes": sum(
+            item["missing_count"] for item in coverage if item.get("severity") == "optional"
+        ),
         "property_missing_nodes": sum(item["missing_count"] for item in property_completeness),
         "missing_expected_labels": len(missing_labels),
         "unexpected_labels": len(unexpected_labels),
@@ -301,7 +307,14 @@ def coverage_report(
     outgoing: dict[str, list[dict[str, Any]]],
 ) -> list[dict[str, Any]]:
     rows = []
-    for label, direction, edge_types, description in COVERAGE_REQUIREMENTS:
+    requirements = [
+        *[(label, direction, edge_types, description, "required") for label, direction, edge_types, description in COVERAGE_REQUIREMENTS],
+        *[
+            (label, direction, edge_types, description, "optional")
+            for label, direction, edge_types, description in OPTIONAL_COVERAGE_REQUIREMENTS
+        ],
+    ]
+    for label, direction, edge_types, description, severity in requirements:
         label_nodes = [node for node in nodes if node.get("label") == label]
         missing = []
         for node in label_nodes:
@@ -315,6 +328,7 @@ def coverage_report(
                 "direction": direction,
                 "relationship_types": sorted(edge_types),
                 "description": description,
+                "severity": severity,
                 "total": total,
                 "ok_count": total - len(missing),
                 "missing_count": len(missing),
@@ -426,6 +440,10 @@ def recommendations(
         items.append("Review relationship endpoint labels; at least one edge does not match the expected graph schema.")
     if issue_counts["coverage_missing_nodes"]:
         items.append("Inspect coverage rows with missing_count > 0; these usually indicate missing foreign keys or filtered-out tables.")
+    if issue_counts.get("optional_coverage_missing_nodes"):
+        items.append(
+            "Optional dimension coverage is incomplete; check whether missing criticality/env/country values are expected in apm_obso."
+        )
     if issue_counts["isolated_nodes"]:
         items.append("Review isolated nodes; they preserve data but are not useful for topology traversal yet.")
     if node_count and components and components[0]["size"] / node_count < 0.8:
@@ -481,7 +499,12 @@ def print_report(report: dict[str, Any], graph_path: Path) -> None:
     for row in report["coverage"]:
         if row["total"] == 0:
             continue
-        marker = "OK" if row["missing_count"] == 0 else "WARN"
+        if row["missing_count"] == 0:
+            marker = "OK"
+        elif row.get("severity") == "optional":
+            marker = "INFO"
+        else:
+            marker = "WARN"
         print(
             f"- {marker} {row['description']}: "
             f"{row['ok_count']}/{row['total']} "

@@ -20,7 +20,7 @@ def main() -> None:
 
     data_dir = Path(args.data_dir)
     table_headers = read_table_headers(data_dir)
-    manifest = build_manifest(table_headers, data_dir)
+    manifest = build_manifest(table_headers)
 
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -50,11 +50,10 @@ def canonical_table_name(table_name: str) -> str:
     return table_name
 
 
-def build_manifest(table_headers: dict[str, list[str]], data_dir: Path) -> dict[str, Any]:
+def build_manifest(table_headers: dict[str, list[str]]) -> dict[str, Any]:
     vertices = [vertex_schema(vertex, table_headers) for vertex in VERTICES]
     edges = [edge_schema(edge) for edge in EDGES]
     resources = [resource_config(table_name) for table_name in sorted(resources_by_table())]
-    bindings = bindings_config(data_dir)
     return {
         "schema": {
             "metadata": {
@@ -72,7 +71,6 @@ def build_manifest(table_headers: dict[str, list[str]], data_dir: Path) -> dict[
         "ingestion_model": {
             "resources": resources,
         },
-        "bindings": bindings,
     }
 
 
@@ -154,33 +152,6 @@ def vertex_from_mapping(vertex: dict[str, Any]) -> dict[str, str]:
 
 def resources_by_table() -> set[str]:
     return {item["source_table"] for item in VERTICES} | {item["source_table"] for item in EDGES}
-
-
-def bindings_config(data_dir: Path) -> dict[str, Any]:
-    connectors = []
-    resource_connector = []
-    for table_name in sorted(resources_by_table()):
-        connector_name = f"{table_name}_csv"
-        aliases = TABLE_ALIASES.get(table_name, [table_name])
-        regex = "^(" + "|".join(aliases) + ")\\.csv$"
-        connectors.append(
-            {
-                "name": connector_name,
-                "type": "FileConnector",
-                "regex": regex,
-                "sub_path": str(data_dir),
-            }
-        )
-        resource_connector.append(
-            {
-                "resource": table_name,
-                "connector": connector_name,
-            }
-        )
-    return {
-        "connectors": connectors,
-        "resource_connector": resource_connector,
-    }
 
 
 def append_unique(items: list[str], value: str) -> None:

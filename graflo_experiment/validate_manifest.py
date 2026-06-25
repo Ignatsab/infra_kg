@@ -6,10 +6,13 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from make_bindings import make_bindings
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Validate the experimental GraFlo manifest.")
     parser.add_argument("--manifest", default="graflo_experiment/manifest.apm_topology.yaml")
+    parser.add_argument("--data-dir", default=None, help="Optionally also instantiate runtime FileConnector bindings.")
     args = parser.parse_args()
 
     try:
@@ -36,6 +39,10 @@ def main() -> None:
     print(f"Vertices: {len(vertices)}")
     print(f"Edges: {len(edges)}")
     print(f"Resources: {len(resources)}")
+    if args.data_dir:
+        bindings = make_bindings(args.data_dir)
+        print(f"Bindings are valid for data dir: {args.data_dir}")
+        print(f"Connectors: {len(bindings.connectors)}")
 
 
 if __name__ == "__main__":

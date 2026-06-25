@@ -14,6 +14,8 @@ and which table column points to another node id.
 - `generate_manifest.py` - generates a GraFlo-style YAML manifest from the
   mapping and current CSV headers.
 - `manifest.apm_topology.yaml` - generated manifest draft.
+- `make_bindings.py` - creates runtime Graflo `FileConnector` bindings for a
+  CSV folder.
 - `validate_manifest.py` - optional validation using Graflo, if installed.
 
 ## Generate Manifest
@@ -48,6 +50,19 @@ Then validate the generated manifest:
 python3 graflo_experiment/validate_manifest.py \
   --manifest graflo_experiment/manifest.apm_topology.yaml
 ```
+
+To also validate that the runtime file bindings can be constructed:
+
+```bash
+python3 graflo_experiment/validate_manifest.py \
+  --manifest graflo_experiment/manifest.apm_topology.yaml \
+  --data-dir data/real/APM_DATA
+```
+
+The manifest YAML intentionally does not include `FileConnector.sub_path`.
+Graflo's examples create `Bindings` and `FileConnector(..., sub_path=Path(...))`
+in Python at runtime, which avoids Pydantic `extra_forbidden` errors when
+validating the manifest itself.
 
 ## Mapped Vertices
 

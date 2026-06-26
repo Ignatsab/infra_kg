@@ -84,6 +84,73 @@ Graflo's `4-ingest-neo4j` example creates `Bindings` and
 `FileConnector(..., sub_path=Path(...))` in Python at runtime, then attaches
 bindings with `manifest.model_copy(update={"bindings": bindings})`.
 
+## Visualize The Graflo Manifest Locally
+
+If Docker or local Memgraph is unhealthy, you can still preview the graph
+described by the Graflo manifest. This command executes the simple
+vertex/edge pipelines generated in this folder and writes the same JSON format
+used by the custom HTML viewer:
+
+```bash
+python3 graflo_experiment/export_manifest_graph.py \
+  --data-dir data/mock \
+  --manifest graflo_experiment/manifest.apm_topology.yaml \
+  --output build/graflo_topology_graph.json \
+  --out-cypher build/graflo_topology_graph.cypher \
+  --viewer-output build/graflo_topology_viewer.html
+```
+
+For real CSV exports:
+
+```bash
+python3 graflo_experiment/export_manifest_graph.py \
+  --data-dir data/real/APM_DATA \
+  --manifest graflo_experiment/manifest.apm_topology.yaml \
+  --output build/graflo_topology_graph.json \
+  --out-cypher build/graflo_topology_graph.cypher \
+  --viewer-output build/graflo_topology_viewer.html
+```
+
+Then open `build/graflo_topology_viewer.html`.
+
+For a focused view around one application:
+
+```bash
+python3 graflo_experiment/export_manifest_graph.py \
+  --data-dir data/real/APM_DATA \
+  --application-name "SERVICE NOW" \
+  --focus-depth 2 \
+  --max-nodes 120 \
+  --max-edges 180
+```
+
+This preview path does not call Graflo's database ingestion runtime. It is a
+local renderer for the manifest shape we generate here, useful for checking the
+nodes and relationships before loading anything into Memgraph.
+
+## Load The Manifest-Built Graph By Bolt
+
+After the local HTML preview looks correct, load the same manifest-built graph
+into a dedicated Memgraph test instance. Use `--clear` only when that instance
+is safe to wipe:
+
+```bash
+python3 graflo_experiment/export_manifest_graph.py \
+  --data-dir data/real/APM_DATA \
+  --manifest graflo_experiment/manifest.apm_topology.yaml \
+  --no-viewer \
+  --load-memgraph \
+  --clear \
+  --uri "bolt://HOST:PORT" \
+  --username "YOUR_USERNAME" \
+  --password "YOUR_PASSWORD" \
+  --batch-size 1000
+```
+
+This is not Graflo's own ingestion engine; it uses the Graflo manifest preview
+graph and the repository's existing Bolt loader. To test Graflo's official
+ingestion runtime, use `ingest.py` after installing Graflo.
+
 ## Mapped Vertices
 
 - `Cluster` from `apm_cluster`

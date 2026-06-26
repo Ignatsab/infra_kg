@@ -407,10 +407,33 @@ the intended retrieval flow is:
 3. Traverse from those nodes through deterministic KG edges.
 4. Give the topology agent the retrieved paths as grounded context.
 
-## Why Not GraFlo In This First Pass?
+## GraFlo Experiment
 
-GraFlo is a good candidate once the model stabilizes: it provides a manifest
-layer for converting CSV/SQL/JSON/XML into labeled property graphs and lists
-Memgraph among its supported graph targets. For this proof of concept, direct
-Cypher keeps the pipeline small and easy to inspect while we validate the
-topology shape.
+There is now a separate GraFlo manifest experiment in `graflo_experiment/`.
+It keeps the original deterministic builder unchanged, but lets you describe
+the same APM topology through a Graflo-style manifest and preview that manifest
+locally:
+
+```bash
+python3 graflo_experiment/export_manifest_graph.py \
+  --data-dir data/real/APM_DATA \
+  --viewer-output build/graflo_topology_viewer.html
+```
+
+This local preview does not need Docker or Memgraph. It is useful for checking
+the Graflo-shaped nodes and relationships before using Graflo ingestion against
+a test Memgraph database.
+
+After the preview looks good, load the same manifest-built graph to a separate
+Memgraph instance by Bolt:
+
+```bash
+python3 graflo_experiment/export_manifest_graph.py \
+  --data-dir data/real/APM_DATA \
+  --no-viewer \
+  --load-memgraph \
+  --clear \
+  --uri "bolt://HOST:PORT" \
+  --username "YOUR_USERNAME" \
+  --password "YOUR_PASSWORD"
+```

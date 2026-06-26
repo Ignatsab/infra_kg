@@ -27,8 +27,8 @@ def main() -> None:
     output.write_text(dump_yaml(manifest), encoding="utf-8")
 
     print(f"Wrote GraFlo manifest draft to {output}")
-    print(f"Vertices: {len(manifest['schema']['core_schema']['vertices'])}")
-    print(f"Edges: {len(manifest['schema']['core_schema']['edges'])}")
+    print(f"Vertices: {len(manifest['schema']['graph']['vertex_config']['vertices'])}")
+    print(f"Edges: {len(manifest['schema']['graph']['edge_config']['edges'])}")
     print(f"Resources: {len(manifest['ingestion_model']['resources'])}")
 
 
@@ -53,19 +53,22 @@ def canonical_table_name(table_name: str) -> str:
 def build_manifest(table_headers: dict[str, list[str]]) -> dict[str, Any]:
     vertices = [vertex_schema(vertex, table_headers) for vertex in VERTICES]
     edges = [edge_schema(edge) for edge in EDGES]
-    resources = [resource_config(table_name) for table_name in sorted(resources_by_table())]
+    resources = resource_configs()
     return {
         "schema": {
             "metadata": {
                 "name": "apm_topology",
+                "version": "0.1.0",
                 "description": "Experimental GraFlo manifest for APM infrastructure topology.",
             },
-            "db_profile": {
-                "type": "MEMGRAPH",
-            },
-            "core_schema": {
-                "vertices": vertices,
-                "edges": edges,
+            "db_profile": {},
+            "graph": {
+                "vertex_config": {
+                    "vertices": vertices,
+                },
+                "edge_config": {
+                    "edges": edges,
+                },
             },
         },
         "ingestion_model": {
@@ -76,18 +79,11 @@ def build_manifest(table_headers: dict[str, list[str]]) -> dict[str, Any]:
 
 def vertex_schema(vertex: dict[str, Any], table_headers: dict[str, list[str]]) -> dict[str, Any]:
     fields = vertex_fields(vertex, table_headers)
-    config = {
+    return {
         "name": vertex["name"],
-        "fields": fields,
-        "indexes": [
-            {
-                "fields": list(vertex["identity"]),
-            }
-        ],
+        "properties": fields,
+        "identity": list(vertex["identity"]),
     }
-    config["identity"] = vertex["identity"]
-    config["source_table"] = vertex["source_table"]
-    return config
 
 
 def vertex_fields(vertex: dict[str, Any], table_headers: dict[str, list[str]]) -> list[str]:
@@ -99,48 +95,62 @@ def vertex_fields(vertex: dict[str, Any], table_headers: dict[str, list[str]]) -
             append_unique(fields, field)
     for field in (vertex.get("properties") or {}):
         append_unique(fields, field)
-    append_unique(fields, "source_table")
     return fields
 
 
 def edge_schema(edge: dict[str, Any]) -> dict[str, Any]:
     config = {
-        "name": edge["name"],
         "source": edge["source"],
         "target": edge["target"],
-        "source_table": edge["source_table"],
-        "source_key": edge["source_key"],
-        "target_key": edge["target_key"],
+        "relation": edge["name"],
     }
-    if edge.get("source_columns") == "all":
-        config["properties"] = {"source_columns": "all"}
     return config
 
 
-def resource_config(table_name: str) -> dict[str, Any]:
-    applies = []
+def resource_configs() -> list[dict[str, Any]]:
+    resources = []
     for vertex in VERTICES:
-        if vertex["source_table"] == table_name:
-            applies.append(
-                {
-                    "vertex": vertex["name"],
-                    "from": vertex_from_mapping(vertex),
-                }
-            )
+        resources.append(vertex_resource_config(vertex))
     for edge in EDGES:
-        if edge["source_table"] == table_name:
-            applies.append(
-                {
-                    "edge": edge["name"],
-                    "source": edge["source"],
-                    "target": edge["target"],
-                    "source_key": edge["source_key"],
-                    "target_key": edge["target_key"],
-                }
-            )
+        resources.append(edge_resource_config(edge))
+    return resources
+
+
+def vertex_resource_config(vertex: dict[str, Any]) -> dict[str, Any]:
+    pipeline_step: dict[str, Any] = {"vertex": vertex["name"]}
+    if vertex.get("source_columns") != "all":
+        mapping = vertex_from_mapping(vertex)
+        pipeline_step["from"] = mapping
     return {
-        "name": table_name,
-        "apply": applies,
+        "name": vertex_resource_name(vertex),
+        "drop_trivial_input_fields": True,
+        "fail_fast": False,
+        "pipeline": [pipeline_step],
+    }
+
+
+def edge_resource_config(edge: dict[str, Any]) -> dict[str, Any]:
+    source_vertex = vertex_by_name(edge["source"])
+    target_vertex = vertex_by_name(edge["target"])
+    return {
+        "name": edge_resource_name(edge),
+        "drop_trivial_input_fields": True,
+        "fail_fast": False,
+        "pipeline": [
+            {
+                "vertex": edge["source"],
+                "from": vertex_from_edge_key(source_vertex, edge["source_key"]),
+            },
+            {
+                "vertex": edge["target"],
+                "from": vertex_from_edge_key(target_vertex, edge["target_key"]),
+            },
+            {
+                "source": edge["source"],
+                "target": edge["target"],
+                "relation": edge["name"],
+            },
+        ],
     }
 
 
@@ -150,8 +160,38 @@ def vertex_from_mapping(vertex: dict[str, Any]) -> dict[str, str]:
     return mapping
 
 
-def resources_by_table() -> set[str]:
+def vertex_from_edge_key(vertex: dict[str, Any], edge_key: dict[str, str]) -> dict[str, str]:
+    mapping = {edge_key["vertex_field"]: edge_key["column"]}
+    mapping.update(vertex.get("edge_properties") or {})
+    return mapping
+
+
+def vertex_by_name(name: str) -> dict[str, Any]:
+    for vertex in VERTICES:
+        if vertex["name"] == name:
+            return vertex
+    raise KeyError(f"Unknown vertex {name}")
+
+
+def vertex_resource_name(vertex: dict[str, Any]) -> str:
+    return f"{vertex['source_table']}__vertex__{vertex['name']}"
+
+
+def edge_resource_name(edge: dict[str, Any]) -> str:
+    return f"{edge['source_table']}__edge__{edge['name']}"
+
+
+def source_tables() -> set[str]:
     return {item["source_table"] for item in VERTICES} | {item["source_table"] for item in EDGES}
+
+
+def resource_bindings_by_table() -> dict[str, list[str]]:
+    bindings: dict[str, list[str]] = {table_name: [] for table_name in sorted(source_tables())}
+    for vertex in VERTICES:
+        bindings[vertex["source_table"]].append(vertex_resource_name(vertex))
+    for edge in EDGES:
+        bindings[edge["source_table"]].append(edge_resource_name(edge))
+    return bindings
 
 
 def append_unique(items: list[str], value: str) -> None:
@@ -167,12 +207,21 @@ def dump_yaml(value: Any, indent: int = 0) -> str:
 def render_yaml(value: Any, indent: int = 0) -> list[str]:
     prefix = " " * indent
     if isinstance(value, dict):
+        if not value:
+            return [f"{prefix}{{}}"]
         lines: list[str] = []
         for key, item in value.items():
+            key_text = yaml_key(key)
+            if item == {}:
+                lines.append(f"{prefix}{key_text}: {{}}")
+                continue
+            if item == []:
+                lines.append(f"{prefix}{key_text}: []")
+                continue
             if is_scalar(item):
-                lines.append(f"{prefix}{key}: {scalar_yaml(item)}")
+                lines.append(f"{prefix}{key_text}: {scalar_yaml(item)}")
             else:
-                lines.append(f"{prefix}{key}:")
+                lines.append(f"{prefix}{key_text}:")
                 lines.extend(render_yaml(item, indent + 2))
         return lines
     if isinstance(value, list):
@@ -188,6 +237,13 @@ def render_yaml(value: Any, indent: int = 0) -> list[str]:
                 lines.extend(rendered[1:])
         return lines
     return [f"{prefix}{scalar_yaml(value)}"]
+
+
+def yaml_key(key: object) -> str:
+    key_text = str(key)
+    if key_text == "from":
+        return '"from"'
+    return key_text
 
 
 def is_scalar(value: Any) -> bool:

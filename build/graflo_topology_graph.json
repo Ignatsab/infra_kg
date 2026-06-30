@@ -1940,8 +1940,7 @@
       "label": "Criticality",
       "properties": {
         "id": "tier_1",
-        "name": "tier_1",
-        "retrieval_text": "Criticality. id: tier_1. name: tier_1. source_table: apm_obso. Relationships: INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_001; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_002; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_003; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_004; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_005; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_008; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_009; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_012; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_013",
+        "retrieval_text": "Criticality. id: tier_1. source_table: apm_obso. Relationships: INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_001; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_002; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_003; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_004; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_005; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_008; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_009; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_012; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_013",
         "source_table": "apm_obso"
       }
     },
@@ -1951,8 +1950,7 @@
       "label": "Criticality",
       "properties": {
         "id": "tier_2",
-        "name": "tier_2",
-        "retrieval_text": "Criticality. id: tier_2. name: tier_2. source_table: apm_obso. Relationships: INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_006; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_007; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_010; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_011; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_014",
+        "retrieval_text": "Criticality. id: tier_2. source_table: apm_obso. Relationships: INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_006; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_007; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_010; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_011; INCOMING_HAS_CRITICALITY ObsolescenceRecord obso_014",
         "source_table": "apm_obso"
       }
     },
@@ -2028,8 +2026,7 @@
       "label": "Environment",
       "properties": {
         "id": "prod",
-        "name": "prod",
-        "retrieval_text": "Environment. id: prod. name: prod. source_table: apm_obso. Relationships: INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_001; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_002; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_003; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_004; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_005; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_006; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_007; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_008; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_009; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_010; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_011; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_012; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_013; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_014",
+        "retrieval_text": "Environment. id: prod. source_table: apm_obso. Relationships: INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_001; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_002; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_003; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_004; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_005; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_006; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_007; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_008; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_009; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_010; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_011; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_012; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_013; INCOMING_IN_ENVIRONMENT ObsolescenceRecord obso_014",
         "source_table": "apm_obso"
       }
     },
@@ -2039,8 +2036,7 @@
       "label": "Host",
       "properties": {
         "id": "auth-api-01.eu.prod",
-        "name": "auth-api-01.eu.prod",
-        "retrieval_text": "Host. id: auth-api-01.eu.prod. name: auth-api-01.eu.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_004",
+        "retrieval_text": "Host. id: auth-api-01.eu.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_004",
         "source_table": "apm_obso"
       }
     },
@@ -2050,8 +2046,7 @@
       "label": "Host",
       "properties": {
         "id": "auth-db-01.eu.prod",
-        "name": "auth-db-01.eu.prod",
-        "retrieval_text": "Host. id: auth-db-01.eu.prod. name: auth-db-01.eu.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_005",
+        "retrieval_text": "Host. id: auth-db-01.eu.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_005",
         "source_table": "apm_obso"
       }
     },
@@ -2061,8 +2056,7 @@
       "label": "Host",
       "properties": {
         "id": "billing-db-01.us.prod",
-        "name": "billing-db-01.us.prod",
-        "retrieval_text": "Host. id: billing-db-01.us.prod. name: billing-db-01.us.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_009",
+        "retrieval_text": "Host. id: billing-db-01.us.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_009",
         "source_table": "apm_obso"
       }
     },
@@ -2072,8 +2066,7 @@
       "label": "Host",
       "properties": {
         "id": "billing-worker-01.us.prod",
-        "name": "billing-worker-01.us.prod",
-        "retrieval_text": "Host. id: billing-worker-01.us.prod. name: billing-worker-01.us.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_008",
+        "retrieval_text": "Host. id: billing-worker-01.us.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_008",
         "source_table": "apm_obso"
       }
     },
@@ -2083,8 +2076,7 @@
       "label": "Host",
       "properties": {
         "id": "edge-01.eu.prod",
-        "name": "edge-01.eu.prod",
-        "retrieval_text": "Host. id: edge-01.eu.prod. name: edge-01.eu.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_006; INCOMING_ON_HOST ObsolescenceRecord obso_007",
+        "retrieval_text": "Host. id: edge-01.eu.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_006; INCOMING_ON_HOST ObsolescenceRecord obso_007",
         "source_table": "apm_obso"
       }
     },
@@ -2094,8 +2086,7 @@
       "label": "Host",
       "properties": {
         "id": "event-collector-01.global",
-        "name": "event-collector-01.global",
-        "retrieval_text": "Host. id: event-collector-01.global. name: event-collector-01.global. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_013",
+        "retrieval_text": "Host. id: event-collector-01.global. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_013",
         "source_table": "apm_obso"
       }
     },
@@ -2105,8 +2096,7 @@
       "label": "Host",
       "properties": {
         "id": "inventory-api-01.us.prod",
-        "name": "inventory-api-01.us.prod",
-        "retrieval_text": "Host. id: inventory-api-01.us.prod. name: inventory-api-01.us.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_010",
+        "retrieval_text": "Host. id: inventory-api-01.us.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_010",
         "source_table": "apm_obso"
       }
     },
@@ -2116,8 +2106,7 @@
       "label": "Host",
       "properties": {
         "id": "inventory-db-01.us.prod",
-        "name": "inventory-db-01.us.prod",
-        "retrieval_text": "Host. id: inventory-db-01.us.prod. name: inventory-db-01.us.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_011",
+        "retrieval_text": "Host. id: inventory-db-01.us.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_011",
         "source_table": "apm_obso"
       }
     },
@@ -2127,8 +2116,7 @@
       "label": "Host",
       "properties": {
         "id": "pay-api-01.eu.prod",
-        "name": "pay-api-01.eu.prod",
-        "retrieval_text": "Host. id: pay-api-01.eu.prod. name: pay-api-01.eu.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_001",
+        "retrieval_text": "Host. id: pay-api-01.eu.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_001",
         "source_table": "apm_obso"
       }
     },
@@ -2138,8 +2126,7 @@
       "label": "Host",
       "properties": {
         "id": "pay-db-01.eu.prod",
-        "name": "pay-db-01.eu.prod",
-        "retrieval_text": "Host. id: pay-db-01.eu.prod. name: pay-db-01.eu.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_002",
+        "retrieval_text": "Host. id: pay-db-01.eu.prod. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_002",
         "source_table": "apm_obso"
       }
     },
@@ -2149,8 +2136,7 @@
       "label": "Host",
       "properties": {
         "id": "shared-kafka-01.global",
-        "name": "shared-kafka-01.global",
-        "retrieval_text": "Host. id: shared-kafka-01.global. name: shared-kafka-01.global. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_003; INCOMING_ON_HOST ObsolescenceRecord obso_012",
+        "retrieval_text": "Host. id: shared-kafka-01.global. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_003; INCOMING_ON_HOST ObsolescenceRecord obso_012",
         "source_table": "apm_obso"
       }
     },
@@ -2160,8 +2146,7 @@
       "label": "Host",
       "properties": {
         "id": "warehouse-loader-01.global",
-        "name": "warehouse-loader-01.global",
-        "retrieval_text": "Host. id: warehouse-loader-01.global. name: warehouse-loader-01.global. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_014",
+        "retrieval_text": "Host. id: warehouse-loader-01.global. source_table: apm_obso. Relationships: INCOMING_ON_HOST ObsolescenceRecord obso_014",
         "source_table": "apm_obso"
       }
     },
@@ -2171,8 +2156,7 @@
       "label": "LocationCountry",
       "properties": {
         "id": "DE",
-        "name": "DE",
-        "retrieval_text": "LocationCountry. id: DE. name: DE. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN ObsolescenceRecord obso_001; INCOMING_LOCATED_IN ObsolescenceRecord obso_002; INCOMING_LOCATED_IN ObsolescenceRecord obso_004; INCOMING_LOCATED_IN ObsolescenceRecord obso_005",
+        "retrieval_text": "LocationCountry. id: DE. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN ObsolescenceRecord obso_001; INCOMING_LOCATED_IN ObsolescenceRecord obso_002; INCOMING_LOCATED_IN ObsolescenceRecord obso_004; INCOMING_LOCATED_IN ObsolescenceRecord obso_005",
         "source_table": "apm_obso"
       }
     },
@@ -2182,8 +2166,7 @@
       "label": "LocationCountry",
       "properties": {
         "id": "FR",
-        "name": "FR",
-        "retrieval_text": "LocationCountry. id: FR. name: FR. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN ObsolescenceRecord obso_006; INCOMING_LOCATED_IN ObsolescenceRecord obso_007",
+        "retrieval_text": "LocationCountry. id: FR. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN ObsolescenceRecord obso_006; INCOMING_LOCATED_IN ObsolescenceRecord obso_007",
         "source_table": "apm_obso"
       }
     },
@@ -2193,8 +2176,7 @@
       "label": "LocationCountry",
       "properties": {
         "id": "IE",
-        "name": "IE",
-        "retrieval_text": "LocationCountry. id: IE. name: IE. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN ObsolescenceRecord obso_003; INCOMING_LOCATED_IN ObsolescenceRecord obso_012; INCOMING_LOCATED_IN ObsolescenceRecord obso_013; INCOMING_LOCATED_IN ObsolescenceRecord obso_014",
+        "retrieval_text": "LocationCountry. id: IE. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN ObsolescenceRecord obso_003; INCOMING_LOCATED_IN ObsolescenceRecord obso_012; INCOMING_LOCATED_IN ObsolescenceRecord obso_013; INCOMING_LOCATED_IN ObsolescenceRecord obso_014",
         "source_table": "apm_obso"
       }
     },
@@ -2204,8 +2186,7 @@
       "label": "LocationCountry",
       "properties": {
         "id": "US",
-        "name": "US",
-        "retrieval_text": "LocationCountry. id: US. name: US. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN ObsolescenceRecord obso_008; INCOMING_LOCATED_IN ObsolescenceRecord obso_009; INCOMING_LOCATED_IN ObsolescenceRecord obso_010; INCOMING_LOCATED_IN ObsolescenceRecord obso_011",
+        "retrieval_text": "LocationCountry. id: US. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN ObsolescenceRecord obso_008; INCOMING_LOCATED_IN ObsolescenceRecord obso_009; INCOMING_LOCATED_IN ObsolescenceRecord obso_010; INCOMING_LOCATED_IN ObsolescenceRecord obso_011",
         "source_table": "apm_obso"
       }
     },

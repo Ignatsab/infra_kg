@@ -12,8 +12,9 @@ another node id.
 The generated manifest is table-centric. Each CSV table becomes one resource,
 and central tables such as `apm_applications`, `apm_application_daps`, and
 `apm_obso` create their surrounding topology in the same pipeline. Foreign-key
-endpoints use scalar `from` values, for example `from: apm_cluster`, because the
-target vertex identity is `id` by convention.
+endpoints use Graflo's required `from` dictionary form, for example
+`from: {id: apm_cluster}`. This keeps the graph identity explicit enough for
+Graflo validation while avoiding one resource per relationship.
 
 This experiment follows the Graflo documentation and the official
 `examples/4-ingest-neo4j` pattern:

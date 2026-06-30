@@ -197,17 +197,18 @@ def append_endpoint_step(
 
 
 def vertex_reference_step(vertex: dict[str, Any], column: str) -> dict[str, Any]:
+    mapping = {"id": column}
+    mapping.update(
+        {
+            field: source_column
+            for field, source_column in (vertex.get("properties") or {}).items()
+            if source_column != column
+        }
+    )
     step: dict[str, Any] = {
         "vertex": vertex["name"],
-        "from": column,
+        "from": mapping,
     }
-    property_mapping = {
-        field: source_column
-        for field, source_column in (vertex.get("properties") or {}).items()
-        if source_column != column
-    }
-    if property_mapping:
-        step["properties"] = property_mapping
     return step
 
 

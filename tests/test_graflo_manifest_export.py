@@ -45,7 +45,7 @@ class GrafloManifestExportTest(unittest.TestCase):
         self.assertNotIn('"', manifest_text)
         self.assertNotIn("__edge__", manifest_text)
         self.assertNotIn("__vertex__", manifest_text)
-        self.assertNotIn("id: apm_cluster", manifest_text)
+        self.assertIn("from:\n            id: apm_cluster", manifest_text)
         self.assertNotIn("LOCATED_IN_COUNTRY", manifest_text)
         self.assertIn("relation: LOCATED_IN", manifest_text)
 

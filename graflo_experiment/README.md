@@ -9,13 +9,19 @@ physical CSV files. In our case the important part is the table relationship
 contract: which table column creates a node id, and which table column points to
 another node id.
 
+The generated manifest is table-centric. Each CSV table becomes one resource,
+and central tables such as `apm_applications`, `apm_application_daps`, and
+`apm_obso` create their surrounding topology in the same pipeline. Foreign-key
+endpoints use scalar `from` values, for example `from: apm_cluster`, because the
+target vertex identity is `id` by convention.
+
 This experiment follows the Graflo documentation and the official
 `examples/4-ingest-neo4j` pattern:
 
 - `schema.graph.vertex_config.vertices` defines logical node types.
 - `schema.graph.edge_config.edges` defines logical edge types with `relation`.
-- `ingestion_model.resources[*].pipeline` maps each source record into vertices
-  and edges.
+- `ingestion_model.resources[*].pipeline` maps each source table record into
+  vertices and edges.
 - `Bindings` and `FileConnector` objects are created in Python at runtime.
 
 ## Files
@@ -47,6 +53,9 @@ python3 graflo_experiment/generate_manifest.py \
   --data-dir data/real/APM_DATA \
   --output graflo_experiment/manifest.apm_topology.yaml
 ```
+
+The generator writes plain YAML scalars where possible, so the manifest stays
+easy to read and does not wrap every value in quotes.
 
 ## Validate With Graflo
 
@@ -183,7 +192,7 @@ ingestion runtime, use `ingest.py` after installing Graflo.
 - `ObsolescenceRecord -REFERENCES_TECHNOLOGY-> Technology`
 - `ObsolescenceRecord -HAS_CRITICALITY-> Criticality`
 - `ObsolescenceRecord -IN_ENVIRONMENT-> Environment`
-- `ObsolescenceRecord -LOCATED_IN_COUNTRY-> LocationCountry`
+- `ObsolescenceRecord -LOCATED_IN-> LocationCountry`
 
 This first manifest focuses on direct, source-table edges. The current custom
 builder still owns derived shortcuts such as `DEPLOYED_ON`, `USES_TECHNOLOGY`,
@@ -212,10 +221,21 @@ python3 graflo_experiment/ingest.py \
 
 Use `--clear` only for a dedicated test database.
 
-## Why There Are Many Resources
+## Resource Shape
 
-The manifest creates one vertex resource per source-derived vertex and one edge
-resource per relationship. This is deliberate: it avoids ambiguous same-label
-vertices in one row, especially the five different `Application -> Contact`
-roles. Every edge resource creates exactly the two endpoint vertices it needs
-and then emits one `source/target/relation` step.
+The manifest uses one resource per source table:
+
+- `apm_cluster`
+- `apm_subclusters`
+- `apm_applications`
+- `apm_contacts`
+- `apm_application_daps`
+- `apm_obso`
+- `apm_technologies`
+
+The central topology resources are `apm_applications`, `apm_application_daps`,
+and `apm_obso`. `apm_applications` creates the application, cluster, and
+contact-role edges. `apm_application_daps` creates the deployed-application
+binding and DAP edges. `apm_obso` creates obsolescence records, application
+links, host links, technology links, and operational dimensions such as
+criticality, environment, and country.

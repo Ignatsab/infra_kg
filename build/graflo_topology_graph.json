@@ -8,7 +8,7 @@
         "dap_id": "dap_auth_context",
         "dap_name": "Auth Context",
         "direction": "producer",
-        "graflo_resource": "apm_application_daps__edge__EXPOSES_DAP",
+        "graflo_resource": "apm_application_daps",
         "id": "adap_003",
         "protocol": "https",
         "source_table": "apm_application_daps"
@@ -19,7 +19,7 @@
     {
       "end_key": "Contact:contact_boris",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APM_SPOC",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_auth",
@@ -28,7 +28,7 @@
     {
       "end_key": "Contact:contact_boris",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APPLICATION_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_auth",
@@ -37,7 +37,7 @@
     {
       "end_key": "ApplicationDap:adap_003",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__HAS_DAP_BINDING",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_auth",
@@ -46,7 +46,7 @@
     {
       "end_key": "Contact:contact_chloe",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_DOMAIN_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_auth",
@@ -55,7 +55,7 @@
     {
       "end_key": "ObsolescenceRecord:obso_004",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_OBSOLESCENCE_RECORD",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "Application:app_auth",
@@ -64,7 +64,7 @@
     {
       "end_key": "ObsolescenceRecord:obso_005",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_OBSOLESCENCE_RECORD",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "Application:app_auth",
@@ -73,7 +73,7 @@
     {
       "end_key": "Contact:contact_alice",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_PRODUCTION_DOMAIN_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_auth",
@@ -82,7 +82,7 @@
     {
       "end_key": "Contact:contact_daniel",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_PRODUCTION_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_auth",
@@ -96,7 +96,7 @@
         "dap_id": "dap_payment_events",
         "dap_name": "Payment Events",
         "direction": "consumer",
-        "graflo_resource": "apm_application_daps__edge__EXPOSES_DAP",
+        "graflo_resource": "apm_application_daps",
         "id": "adap_005",
         "protocol": "kafka",
         "source_table": "apm_application_daps"
@@ -107,7 +107,7 @@
     {
       "end_key": "Contact:contact_elena",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APM_SPOC",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_billing",
@@ -116,7 +116,7 @@
     {
       "end_key": "Contact:contact_boris",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APPLICATION_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_billing",
@@ -125,7 +125,7 @@
     {
       "end_key": "ApplicationDap:adap_005",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__HAS_DAP_BINDING",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_billing",
@@ -134,7 +134,7 @@
     {
       "end_key": "Contact:contact_chloe",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_DOMAIN_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_billing",
@@ -143,7 +143,7 @@
     {
       "end_key": "ObsolescenceRecord:obso_008",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_OBSOLESCENCE_RECORD",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "Application:app_billing",
@@ -152,7 +152,7 @@
     {
       "end_key": "ObsolescenceRecord:obso_009",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_OBSOLESCENCE_RECORD",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "Application:app_billing",
@@ -161,7 +161,7 @@
     {
       "end_key": "Contact:contact_farah",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_PRODUCTION_DOMAIN_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_billing",
@@ -170,7 +170,7 @@
     {
       "end_key": "Contact:contact_daniel",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_PRODUCTION_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_billing",
@@ -184,7 +184,7 @@
         "dap_id": "dap_payment_events",
         "dap_name": "Payment Events",
         "direction": "consumer",
-        "graflo_resource": "apm_application_daps__edge__EXPOSES_DAP",
+        "graflo_resource": "apm_application_daps",
         "id": "adap_007",
         "protocol": "kafka",
         "source_table": "apm_application_daps"
@@ -200,7 +200,7 @@
         "dap_id": "dap_raw_clickstream",
         "dap_name": "Raw Clickstream",
         "direction": "producer",
-        "graflo_resource": "apm_application_daps__edge__EXPOSES_DAP",
+        "graflo_resource": "apm_application_daps",
         "id": "adap_008",
         "protocol": "kafka",
         "source_table": "apm_application_daps"
@@ -211,7 +211,7 @@
     {
       "end_key": "Contact:contact_elena",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APM_SPOC",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_events",
@@ -220,7 +220,7 @@
     {
       "end_key": "Contact:contact_chloe",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APPLICATION_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_events",
@@ -229,7 +229,7 @@
     {
       "end_key": "ApplicationDap:adap_007",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__HAS_DAP_BINDING",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_events",
@@ -238,7 +238,7 @@
     {
       "end_key": "ApplicationDap:adap_008",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__HAS_DAP_BINDING",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_events",
@@ -247,7 +247,7 @@
     {
       "end_key": "Contact:contact_chloe",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_DOMAIN_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_events",
@@ -256,7 +256,7 @@
     {
       "end_key": "ObsolescenceRecord:obso_012",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_OBSOLESCENCE_RECORD",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "Application:app_events",
@@ -265,7 +265,7 @@
     {
       "end_key": "ObsolescenceRecord:obso_013",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_OBSOLESCENCE_RECORD",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "Application:app_events",
@@ -274,7 +274,7 @@
     {
       "end_key": "Contact:contact_farah",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_PRODUCTION_DOMAIN_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_events",
@@ -283,7 +283,7 @@
     {
       "end_key": "Contact:contact_daniel",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_PRODUCTION_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_events",
@@ -297,7 +297,7 @@
         "dap_id": "dap_inventory_snapshot",
         "dap_name": "Inventory Snapshot",
         "direction": "producer",
-        "graflo_resource": "apm_application_daps__edge__EXPOSES_DAP",
+        "graflo_resource": "apm_application_daps",
         "id": "adap_006",
         "protocol": "s3",
         "source_table": "apm_application_daps"
@@ -308,7 +308,7 @@
     {
       "end_key": "Contact:contact_elena",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APM_SPOC",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_inventory",
@@ -317,7 +317,7 @@
     {
       "end_key": "Contact:contact_boris",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APPLICATION_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_inventory",
@@ -326,7 +326,7 @@
     {
       "end_key": "ApplicationDap:adap_006",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__HAS_DAP_BINDING",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_inventory",
@@ -335,7 +335,7 @@
     {
       "end_key": "Contact:contact_chloe",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_DOMAIN_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_inventory",
@@ -344,7 +344,7 @@
     {
       "end_key": "ObsolescenceRecord:obso_010",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_OBSOLESCENCE_RECORD",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "Application:app_inventory",
@@ -353,7 +353,7 @@
     {
       "end_key": "ObsolescenceRecord:obso_011",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_OBSOLESCENCE_RECORD",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "Application:app_inventory",
@@ -362,7 +362,7 @@
     {
       "end_key": "Contact:contact_farah",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_PRODUCTION_DOMAIN_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_inventory",
@@ -371,7 +371,7 @@
     {
       "end_key": "Contact:contact_alice",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_PRODUCTION_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_inventory",
@@ -385,7 +385,7 @@
         "dap_id": "dap_auth_context",
         "dap_name": "Auth Context",
         "direction": "consumer",
-        "graflo_resource": "apm_application_daps__edge__EXPOSES_DAP",
+        "graflo_resource": "apm_application_daps",
         "id": "adap_002",
         "protocol": "https",
         "source_table": "apm_application_daps"
@@ -401,7 +401,7 @@
         "dap_id": "dap_payment_events",
         "dap_name": "Payment Events",
         "direction": "producer",
-        "graflo_resource": "apm_application_daps__edge__EXPOSES_DAP",
+        "graflo_resource": "apm_application_daps",
         "id": "adap_001",
         "protocol": "kafka",
         "source_table": "apm_application_daps"
@@ -412,7 +412,7 @@
     {
       "end_key": "Contact:contact_elena",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APM_SPOC",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_payments",
@@ -421,7 +421,7 @@
     {
       "end_key": "Contact:contact_boris",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APPLICATION_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_payments",
@@ -430,7 +430,7 @@
     {
       "end_key": "ApplicationDap:adap_001",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__HAS_DAP_BINDING",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_payments",
@@ -439,7 +439,7 @@
     {
       "end_key": "ApplicationDap:adap_002",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__HAS_DAP_BINDING",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_payments",
@@ -448,7 +448,7 @@
     {
       "end_key": "Contact:contact_chloe",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_DOMAIN_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_payments",
@@ -457,7 +457,7 @@
     {
       "end_key": "ObsolescenceRecord:obso_001",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_OBSOLESCENCE_RECORD",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "Application:app_payments",
@@ -466,7 +466,7 @@
     {
       "end_key": "ObsolescenceRecord:obso_002",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_OBSOLESCENCE_RECORD",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "Application:app_payments",
@@ -475,7 +475,7 @@
     {
       "end_key": "ObsolescenceRecord:obso_003",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_OBSOLESCENCE_RECORD",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "Application:app_payments",
@@ -484,7 +484,7 @@
     {
       "end_key": "Contact:contact_alice",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_PRODUCTION_DOMAIN_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_payments",
@@ -493,7 +493,7 @@
     {
       "end_key": "Contact:contact_daniel",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_PRODUCTION_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_payments",
@@ -507,7 +507,7 @@
         "dap_id": "dap_product_index",
         "dap_name": "Product Index",
         "direction": "consumer",
-        "graflo_resource": "apm_application_daps__edge__EXPOSES_DAP",
+        "graflo_resource": "apm_application_daps",
         "id": "adap_004",
         "protocol": "https",
         "source_table": "apm_application_daps"
@@ -518,7 +518,7 @@
     {
       "end_key": "Contact:contact_elena",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APM_SPOC",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_search",
@@ -527,7 +527,7 @@
     {
       "end_key": "Contact:contact_farah",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APPLICATION_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_search",
@@ -536,7 +536,7 @@
     {
       "end_key": "ApplicationDap:adap_004",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__HAS_DAP_BINDING",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_search",
@@ -545,7 +545,7 @@
     {
       "end_key": "Contact:contact_chloe",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_DOMAIN_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_search",
@@ -554,7 +554,7 @@
     {
       "end_key": "ObsolescenceRecord:obso_006",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_OBSOLESCENCE_RECORD",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "Application:app_search",
@@ -563,7 +563,7 @@
     {
       "end_key": "ObsolescenceRecord:obso_007",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_OBSOLESCENCE_RECORD",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "Application:app_search",
@@ -572,7 +572,7 @@
     {
       "end_key": "Contact:contact_alice",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_PRODUCTION_DOMAIN_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_search",
@@ -581,7 +581,7 @@
     {
       "end_key": "Contact:contact_daniel",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_PRODUCTION_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_search",
@@ -595,7 +595,7 @@
         "dap_id": "dap_curated_metrics",
         "dap_name": "Curated Metrics",
         "direction": "producer",
-        "graflo_resource": "apm_application_daps__edge__EXPOSES_DAP",
+        "graflo_resource": "apm_application_daps",
         "id": "adap_010",
         "protocol": "snowflake",
         "source_table": "apm_application_daps"
@@ -611,7 +611,7 @@
         "dap_id": "dap_inventory_snapshot",
         "dap_name": "Inventory Snapshot",
         "direction": "consumer",
-        "graflo_resource": "apm_application_daps__edge__EXPOSES_DAP",
+        "graflo_resource": "apm_application_daps",
         "id": "adap_009",
         "protocol": "s3",
         "source_table": "apm_application_daps"
@@ -622,7 +622,7 @@
     {
       "end_key": "Contact:contact_elena",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APM_SPOC",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_warehouse",
@@ -631,7 +631,7 @@
     {
       "end_key": "Contact:contact_chloe",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APPLICATION_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_warehouse",
@@ -640,7 +640,7 @@
     {
       "end_key": "ApplicationDap:adap_009",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__HAS_DAP_BINDING",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_warehouse",
@@ -649,7 +649,7 @@
     {
       "end_key": "ApplicationDap:adap_010",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__HAS_DAP_BINDING",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "Application:app_warehouse",
@@ -658,7 +658,7 @@
     {
       "end_key": "Contact:contact_chloe",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_DOMAIN_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_warehouse",
@@ -667,7 +667,7 @@
     {
       "end_key": "ObsolescenceRecord:obso_014",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_OBSOLESCENCE_RECORD",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "Application:app_warehouse",
@@ -676,7 +676,7 @@
     {
       "end_key": "Contact:contact_farah",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_PRODUCTION_DOMAIN_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_warehouse",
@@ -685,7 +685,7 @@
     {
       "end_key": "Contact:contact_daniel",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_PRODUCTION_MANAGER",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Application:app_warehouse",
@@ -694,7 +694,7 @@
     {
       "end_key": "Dap:dap_payment_events",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__TARGETS_DAP",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "ApplicationDap:adap_001",
@@ -703,7 +703,7 @@
     {
       "end_key": "Dap:dap_auth_context",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__TARGETS_DAP",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "ApplicationDap:adap_002",
@@ -712,7 +712,7 @@
     {
       "end_key": "Dap:dap_auth_context",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__TARGETS_DAP",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "ApplicationDap:adap_003",
@@ -721,7 +721,7 @@
     {
       "end_key": "Dap:dap_product_index",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__TARGETS_DAP",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "ApplicationDap:adap_004",
@@ -730,7 +730,7 @@
     {
       "end_key": "Dap:dap_payment_events",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__TARGETS_DAP",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "ApplicationDap:adap_005",
@@ -739,7 +739,7 @@
     {
       "end_key": "Dap:dap_inventory_snapshot",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__TARGETS_DAP",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "ApplicationDap:adap_006",
@@ -748,7 +748,7 @@
     {
       "end_key": "Dap:dap_payment_events",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__TARGETS_DAP",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "ApplicationDap:adap_007",
@@ -757,7 +757,7 @@
     {
       "end_key": "Dap:dap_raw_clickstream",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__TARGETS_DAP",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "ApplicationDap:adap_008",
@@ -766,7 +766,7 @@
     {
       "end_key": "Dap:dap_inventory_snapshot",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__TARGETS_DAP",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "ApplicationDap:adap_009",
@@ -775,7 +775,7 @@
     {
       "end_key": "Dap:dap_curated_metrics",
       "properties": {
-        "graflo_resource": "apm_application_daps__edge__TARGETS_DAP",
+        "graflo_resource": "apm_application_daps",
         "source_table": "apm_application_daps"
       },
       "start_key": "ApplicationDap:adap_010",
@@ -784,7 +784,7 @@
     {
       "end_key": "Application:app_events",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APPLICATION",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Cluster:cl_data_platform",
@@ -793,7 +793,7 @@
     {
       "end_key": "Application:app_warehouse",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APPLICATION",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Cluster:cl_data_platform",
@@ -802,7 +802,7 @@
     {
       "end_key": "Subcluster:sub_data_streaming",
       "properties": {
-        "graflo_resource": "apm_subclusters__edge__HAS_SUBCLUSTER",
+        "graflo_resource": "apm_subclusters",
         "source_table": "apm_subclusters"
       },
       "start_key": "Cluster:cl_data_platform",
@@ -811,7 +811,7 @@
     {
       "end_key": "Subcluster:sub_data_warehouse",
       "properties": {
-        "graflo_resource": "apm_subclusters__edge__HAS_SUBCLUSTER",
+        "graflo_resource": "apm_subclusters",
         "source_table": "apm_subclusters"
       },
       "start_key": "Cluster:cl_data_platform",
@@ -820,7 +820,7 @@
     {
       "end_key": "Application:app_auth",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APPLICATION",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Cluster:cl_eu_prod",
@@ -829,7 +829,7 @@
     {
       "end_key": "Application:app_payments",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APPLICATION",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Cluster:cl_eu_prod",
@@ -838,7 +838,7 @@
     {
       "end_key": "Application:app_search",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APPLICATION",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Cluster:cl_eu_prod",
@@ -847,7 +847,7 @@
     {
       "end_key": "Subcluster:sub_eu_core",
       "properties": {
-        "graflo_resource": "apm_subclusters__edge__HAS_SUBCLUSTER",
+        "graflo_resource": "apm_subclusters",
         "source_table": "apm_subclusters"
       },
       "start_key": "Cluster:cl_eu_prod",
@@ -856,7 +856,7 @@
     {
       "end_key": "Subcluster:sub_eu_edge",
       "properties": {
-        "graflo_resource": "apm_subclusters__edge__HAS_SUBCLUSTER",
+        "graflo_resource": "apm_subclusters",
         "source_table": "apm_subclusters"
       },
       "start_key": "Cluster:cl_eu_prod",
@@ -865,7 +865,7 @@
     {
       "end_key": "Application:app_billing",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APPLICATION",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Cluster:cl_us_prod",
@@ -874,7 +874,7 @@
     {
       "end_key": "Application:app_inventory",
       "properties": {
-        "graflo_resource": "apm_applications__edge__HAS_APPLICATION",
+        "graflo_resource": "apm_applications",
         "source_table": "apm_applications"
       },
       "start_key": "Cluster:cl_us_prod",
@@ -883,7 +883,7 @@
     {
       "end_key": "Subcluster:sub_us_batch",
       "properties": {
-        "graflo_resource": "apm_subclusters__edge__HAS_SUBCLUSTER",
+        "graflo_resource": "apm_subclusters",
         "source_table": "apm_subclusters"
       },
       "start_key": "Cluster:cl_us_prod",
@@ -892,7 +892,7 @@
     {
       "end_key": "Subcluster:sub_us_core",
       "properties": {
-        "graflo_resource": "apm_subclusters__edge__HAS_SUBCLUSTER",
+        "graflo_resource": "apm_subclusters",
         "source_table": "apm_subclusters"
       },
       "start_key": "Cluster:cl_us_prod",
@@ -901,7 +901,7 @@
     {
       "end_key": "Criticality:tier_1",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_CRITICALITY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_001",
@@ -910,7 +910,7 @@
     {
       "end_key": "Environment:prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__IN_ENVIRONMENT",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_001",
@@ -919,16 +919,16 @@
     {
       "end_key": "LocationCountry:DE",
       "properties": {
-        "graflo_resource": "apm_obso__edge__LOCATED_IN_COUNTRY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_001",
-      "type": "LOCATED_IN_COUNTRY"
+      "type": "LOCATED_IN"
     },
     {
       "end_key": "Host:pay-api-01.eu.prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__ON_HOST",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_001",
@@ -937,7 +937,7 @@
     {
       "end_key": "Technology:tech_java8",
       "properties": {
-        "graflo_resource": "apm_obso__edge__REFERENCES_TECHNOLOGY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_001",
@@ -946,7 +946,7 @@
     {
       "end_key": "Criticality:tier_1",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_CRITICALITY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_002",
@@ -955,7 +955,7 @@
     {
       "end_key": "Environment:prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__IN_ENVIRONMENT",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_002",
@@ -964,16 +964,16 @@
     {
       "end_key": "LocationCountry:DE",
       "properties": {
-        "graflo_resource": "apm_obso__edge__LOCATED_IN_COUNTRY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_002",
-      "type": "LOCATED_IN_COUNTRY"
+      "type": "LOCATED_IN"
     },
     {
       "end_key": "Host:pay-db-01.eu.prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__ON_HOST",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_002",
@@ -982,7 +982,7 @@
     {
       "end_key": "Technology:tech_postgres12",
       "properties": {
-        "graflo_resource": "apm_obso__edge__REFERENCES_TECHNOLOGY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_002",
@@ -991,7 +991,7 @@
     {
       "end_key": "Criticality:tier_1",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_CRITICALITY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_003",
@@ -1000,7 +1000,7 @@
     {
       "end_key": "Environment:prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__IN_ENVIRONMENT",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_003",
@@ -1009,16 +1009,16 @@
     {
       "end_key": "LocationCountry:IE",
       "properties": {
-        "graflo_resource": "apm_obso__edge__LOCATED_IN_COUNTRY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_003",
-      "type": "LOCATED_IN_COUNTRY"
+      "type": "LOCATED_IN"
     },
     {
       "end_key": "Host:shared-kafka-01.global",
       "properties": {
-        "graflo_resource": "apm_obso__edge__ON_HOST",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_003",
@@ -1027,7 +1027,7 @@
     {
       "end_key": "Technology:tech_kafka28",
       "properties": {
-        "graflo_resource": "apm_obso__edge__REFERENCES_TECHNOLOGY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_003",
@@ -1036,7 +1036,7 @@
     {
       "end_key": "Criticality:tier_1",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_CRITICALITY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_004",
@@ -1045,7 +1045,7 @@
     {
       "end_key": "Environment:prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__IN_ENVIRONMENT",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_004",
@@ -1054,16 +1054,16 @@
     {
       "end_key": "LocationCountry:DE",
       "properties": {
-        "graflo_resource": "apm_obso__edge__LOCATED_IN_COUNTRY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_004",
-      "type": "LOCATED_IN_COUNTRY"
+      "type": "LOCATED_IN"
     },
     {
       "end_key": "Host:auth-api-01.eu.prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__ON_HOST",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_004",
@@ -1072,7 +1072,7 @@
     {
       "end_key": "Technology:tech_java17",
       "properties": {
-        "graflo_resource": "apm_obso__edge__REFERENCES_TECHNOLOGY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_004",
@@ -1081,7 +1081,7 @@
     {
       "end_key": "Criticality:tier_1",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_CRITICALITY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_005",
@@ -1090,7 +1090,7 @@
     {
       "end_key": "Environment:prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__IN_ENVIRONMENT",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_005",
@@ -1099,16 +1099,16 @@
     {
       "end_key": "LocationCountry:DE",
       "properties": {
-        "graflo_resource": "apm_obso__edge__LOCATED_IN_COUNTRY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_005",
-      "type": "LOCATED_IN_COUNTRY"
+      "type": "LOCATED_IN"
     },
     {
       "end_key": "Host:auth-db-01.eu.prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__ON_HOST",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_005",
@@ -1117,7 +1117,7 @@
     {
       "end_key": "Technology:tech_postgres12",
       "properties": {
-        "graflo_resource": "apm_obso__edge__REFERENCES_TECHNOLOGY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_005",
@@ -1126,7 +1126,7 @@
     {
       "end_key": "Criticality:tier_2",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_CRITICALITY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_006",
@@ -1135,7 +1135,7 @@
     {
       "end_key": "Environment:prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__IN_ENVIRONMENT",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_006",
@@ -1144,16 +1144,16 @@
     {
       "end_key": "LocationCountry:FR",
       "properties": {
-        "graflo_resource": "apm_obso__edge__LOCATED_IN_COUNTRY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_006",
-      "type": "LOCATED_IN_COUNTRY"
+      "type": "LOCATED_IN"
     },
     {
       "end_key": "Host:edge-01.eu.prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__ON_HOST",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_006",
@@ -1162,7 +1162,7 @@
     {
       "end_key": "Technology:tech_node16",
       "properties": {
-        "graflo_resource": "apm_obso__edge__REFERENCES_TECHNOLOGY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_006",
@@ -1171,7 +1171,7 @@
     {
       "end_key": "Criticality:tier_2",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_CRITICALITY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_007",
@@ -1180,7 +1180,7 @@
     {
       "end_key": "Environment:prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__IN_ENVIRONMENT",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_007",
@@ -1189,16 +1189,16 @@
     {
       "end_key": "LocationCountry:FR",
       "properties": {
-        "graflo_resource": "apm_obso__edge__LOCATED_IN_COUNTRY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_007",
-      "type": "LOCATED_IN_COUNTRY"
+      "type": "LOCATED_IN"
     },
     {
       "end_key": "Host:edge-01.eu.prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__ON_HOST",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_007",
@@ -1207,7 +1207,7 @@
     {
       "end_key": "Technology:tech_nginx117",
       "properties": {
-        "graflo_resource": "apm_obso__edge__REFERENCES_TECHNOLOGY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_007",
@@ -1216,7 +1216,7 @@
     {
       "end_key": "Criticality:tier_1",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_CRITICALITY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_008",
@@ -1225,7 +1225,7 @@
     {
       "end_key": "Environment:prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__IN_ENVIRONMENT",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_008",
@@ -1234,16 +1234,16 @@
     {
       "end_key": "LocationCountry:US",
       "properties": {
-        "graflo_resource": "apm_obso__edge__LOCATED_IN_COUNTRY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_008",
-      "type": "LOCATED_IN_COUNTRY"
+      "type": "LOCATED_IN"
     },
     {
       "end_key": "Host:billing-worker-01.us.prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__ON_HOST",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_008",
@@ -1252,7 +1252,7 @@
     {
       "end_key": "Technology:tech_java8",
       "properties": {
-        "graflo_resource": "apm_obso__edge__REFERENCES_TECHNOLOGY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_008",
@@ -1261,7 +1261,7 @@
     {
       "end_key": "Criticality:tier_1",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_CRITICALITY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_009",
@@ -1270,7 +1270,7 @@
     {
       "end_key": "Environment:prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__IN_ENVIRONMENT",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_009",
@@ -1279,16 +1279,16 @@
     {
       "end_key": "LocationCountry:US",
       "properties": {
-        "graflo_resource": "apm_obso__edge__LOCATED_IN_COUNTRY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_009",
-      "type": "LOCATED_IN_COUNTRY"
+      "type": "LOCATED_IN"
     },
     {
       "end_key": "Host:billing-db-01.us.prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__ON_HOST",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_009",
@@ -1297,7 +1297,7 @@
     {
       "end_key": "Technology:tech_oracle11g",
       "properties": {
-        "graflo_resource": "apm_obso__edge__REFERENCES_TECHNOLOGY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_009",
@@ -1306,7 +1306,7 @@
     {
       "end_key": "Criticality:tier_2",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_CRITICALITY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_010",
@@ -1315,7 +1315,7 @@
     {
       "end_key": "Environment:prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__IN_ENVIRONMENT",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_010",
@@ -1324,16 +1324,16 @@
     {
       "end_key": "LocationCountry:US",
       "properties": {
-        "graflo_resource": "apm_obso__edge__LOCATED_IN_COUNTRY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_010",
-      "type": "LOCATED_IN_COUNTRY"
+      "type": "LOCATED_IN"
     },
     {
       "end_key": "Host:inventory-api-01.us.prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__ON_HOST",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_010",
@@ -1342,7 +1342,7 @@
     {
       "end_key": "Technology:tech_python39",
       "properties": {
-        "graflo_resource": "apm_obso__edge__REFERENCES_TECHNOLOGY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_010",
@@ -1351,7 +1351,7 @@
     {
       "end_key": "Criticality:tier_2",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_CRITICALITY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_011",
@@ -1360,7 +1360,7 @@
     {
       "end_key": "Environment:prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__IN_ENVIRONMENT",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_011",
@@ -1369,16 +1369,16 @@
     {
       "end_key": "LocationCountry:US",
       "properties": {
-        "graflo_resource": "apm_obso__edge__LOCATED_IN_COUNTRY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_011",
-      "type": "LOCATED_IN_COUNTRY"
+      "type": "LOCATED_IN"
     },
     {
       "end_key": "Host:inventory-db-01.us.prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__ON_HOST",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_011",
@@ -1387,7 +1387,7 @@
     {
       "end_key": "Technology:tech_postgres12",
       "properties": {
-        "graflo_resource": "apm_obso__edge__REFERENCES_TECHNOLOGY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_011",
@@ -1396,7 +1396,7 @@
     {
       "end_key": "Criticality:tier_1",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_CRITICALITY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_012",
@@ -1405,7 +1405,7 @@
     {
       "end_key": "Environment:prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__IN_ENVIRONMENT",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_012",
@@ -1414,16 +1414,16 @@
     {
       "end_key": "LocationCountry:IE",
       "properties": {
-        "graflo_resource": "apm_obso__edge__LOCATED_IN_COUNTRY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_012",
-      "type": "LOCATED_IN_COUNTRY"
+      "type": "LOCATED_IN"
     },
     {
       "end_key": "Host:shared-kafka-01.global",
       "properties": {
-        "graflo_resource": "apm_obso__edge__ON_HOST",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_012",
@@ -1432,7 +1432,7 @@
     {
       "end_key": "Technology:tech_kafka28",
       "properties": {
-        "graflo_resource": "apm_obso__edge__REFERENCES_TECHNOLOGY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_012",
@@ -1441,7 +1441,7 @@
     {
       "end_key": "Criticality:tier_1",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_CRITICALITY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_013",
@@ -1450,7 +1450,7 @@
     {
       "end_key": "Environment:prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__IN_ENVIRONMENT",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_013",
@@ -1459,16 +1459,16 @@
     {
       "end_key": "LocationCountry:IE",
       "properties": {
-        "graflo_resource": "apm_obso__edge__LOCATED_IN_COUNTRY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_013",
-      "type": "LOCATED_IN_COUNTRY"
+      "type": "LOCATED_IN"
     },
     {
       "end_key": "Host:event-collector-01.global",
       "properties": {
-        "graflo_resource": "apm_obso__edge__ON_HOST",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_013",
@@ -1477,7 +1477,7 @@
     {
       "end_key": "Technology:tech_python39",
       "properties": {
-        "graflo_resource": "apm_obso__edge__REFERENCES_TECHNOLOGY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_013",
@@ -1486,7 +1486,7 @@
     {
       "end_key": "Criticality:tier_2",
       "properties": {
-        "graflo_resource": "apm_obso__edge__HAS_CRITICALITY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_014",
@@ -1495,7 +1495,7 @@
     {
       "end_key": "Environment:prod",
       "properties": {
-        "graflo_resource": "apm_obso__edge__IN_ENVIRONMENT",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_014",
@@ -1504,16 +1504,16 @@
     {
       "end_key": "LocationCountry:IE",
       "properties": {
-        "graflo_resource": "apm_obso__edge__LOCATED_IN_COUNTRY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_014",
-      "type": "LOCATED_IN_COUNTRY"
+      "type": "LOCATED_IN"
     },
     {
       "end_key": "Host:warehouse-loader-01.global",
       "properties": {
-        "graflo_resource": "apm_obso__edge__ON_HOST",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_014",
@@ -1522,7 +1522,7 @@
     {
       "end_key": "Technology:tech_python39",
       "properties": {
-        "graflo_resource": "apm_obso__edge__REFERENCES_TECHNOLOGY",
+        "graflo_resource": "apm_obso",
         "source_table": "apm_obso"
       },
       "start_key": "ObsolescenceRecord:obso_014",
@@ -1870,8 +1870,8 @@
         "id": "contact_alice",
         "name": "Alice Laurent",
         "refog": "u1001",
-        "retrieval_text": "Contact. id: contact_alice. name: Alice Laurent. refog: u1001. source_table: apm_applications. Relationships: INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Identity Service (app_auth); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Payments API (app_payments); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Search Gateway (app_search); INCOMING_HAS_PRODUCTION_MANAGER Application Inventory Service (app_inventory)",
-        "source_table": "apm_applications"
+        "retrieval_text": "Contact. id: contact_alice. name: Alice Laurent. refog: u1001. source_table: apm_contacts. Relationships: INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Identity Service (app_auth); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Payments API (app_payments); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Search Gateway (app_search); INCOMING_HAS_PRODUCTION_MANAGER Application Inventory Service (app_inventory)",
+        "source_table": "apm_contacts"
       }
     },
     {
@@ -1882,8 +1882,8 @@
         "id": "contact_boris",
         "name": "Boris Martin",
         "refog": "u1002",
-        "retrieval_text": "Contact. id: contact_boris. name: Boris Martin. refog: u1002. source_table: apm_applications. Relationships: INCOMING_HAS_APM_SPOC Application Identity Service (app_auth); INCOMING_HAS_APPLICATION_MANAGER Application Billing Worker (app_billing); INCOMING_HAS_APPLICATION_MANAGER Application Identity Service (app_auth); INCOMING_HAS_APPLICATION_MANAGER Application Inventory Service (app_inventory); INCOMING_HAS_APPLICATION_MANAGER Application Payments API (app_payments)",
-        "source_table": "apm_applications"
+        "retrieval_text": "Contact. id: contact_boris. name: Boris Martin. refog: u1002. source_table: apm_contacts. Relationships: INCOMING_HAS_APM_SPOC Application Identity Service (app_auth); INCOMING_HAS_APPLICATION_MANAGER Application Billing Worker (app_billing); INCOMING_HAS_APPLICATION_MANAGER Application Identity Service (app_auth); INCOMING_HAS_APPLICATION_MANAGER Application Inventory Service (app_inventory); INCOMING_HAS_APPLICATION_MANAGER Application Payments API (app_payments)",
+        "source_table": "apm_contacts"
       }
     },
     {
@@ -1894,8 +1894,8 @@
         "id": "contact_chloe",
         "name": "Chloe Dubois",
         "refog": "u1003",
-        "retrieval_text": "Contact. id: contact_chloe. name: Chloe Dubois. refog: u1003. source_table: apm_applications. Relationships: INCOMING_HAS_APPLICATION_MANAGER Application Event Collector (app_events); INCOMING_HAS_APPLICATION_MANAGER Application Warehouse Loader (app_warehouse); INCOMING_HAS_DOMAIN_MANAGER Application Billing Worker (app_billing); INCOMING_HAS_DOMAIN_MANAGER Application Event Collector (app_events); INCOMING_HAS_DOMAIN_MANAGER Application Identity Service (app_auth); INCOMING_HAS_DOMAIN_MANAGER Application Inventory Service (app_inventory); INCOMING_HAS_DOMAIN_MANAGER Application Payments API (app_payments); INCOMING_HAS_DOMAIN_MANAGER Application Search Gateway (app_search); INCOMING_HAS_DOMAIN_MANAGER Application Warehouse Loader (app_warehouse)",
-        "source_table": "apm_applications"
+        "retrieval_text": "Contact. id: contact_chloe. name: Chloe Dubois. refog: u1003. source_table: apm_contacts. Relationships: INCOMING_HAS_APPLICATION_MANAGER Application Event Collector (app_events); INCOMING_HAS_APPLICATION_MANAGER Application Warehouse Loader (app_warehouse); INCOMING_HAS_DOMAIN_MANAGER Application Billing Worker (app_billing); INCOMING_HAS_DOMAIN_MANAGER Application Event Collector (app_events); INCOMING_HAS_DOMAIN_MANAGER Application Identity Service (app_auth); INCOMING_HAS_DOMAIN_MANAGER Application Inventory Service (app_inventory); INCOMING_HAS_DOMAIN_MANAGER Application Payments API (app_payments); INCOMING_HAS_DOMAIN_MANAGER Application Search Gateway (app_search); INCOMING_HAS_DOMAIN_MANAGER Application Warehouse Loader (app_warehouse)",
+        "source_table": "apm_contacts"
       }
     },
     {
@@ -1906,8 +1906,8 @@
         "id": "contact_daniel",
         "name": "Daniel Moreau",
         "refog": "u1004",
-        "retrieval_text": "Contact. id: contact_daniel. name: Daniel Moreau. refog: u1004. source_table: apm_applications. Relationships: INCOMING_HAS_PRODUCTION_MANAGER Application Billing Worker (app_billing); INCOMING_HAS_PRODUCTION_MANAGER Application Event Collector (app_events); INCOMING_HAS_PRODUCTION_MANAGER Application Identity Service (app_auth); INCOMING_HAS_PRODUCTION_MANAGER Application Payments API (app_payments); INCOMING_HAS_PRODUCTION_MANAGER Application Search Gateway (app_search); INCOMING_HAS_PRODUCTION_MANAGER Application Warehouse Loader (app_warehouse)",
-        "source_table": "apm_applications"
+        "retrieval_text": "Contact. id: contact_daniel. name: Daniel Moreau. refog: u1004. source_table: apm_contacts. Relationships: INCOMING_HAS_PRODUCTION_MANAGER Application Billing Worker (app_billing); INCOMING_HAS_PRODUCTION_MANAGER Application Event Collector (app_events); INCOMING_HAS_PRODUCTION_MANAGER Application Identity Service (app_auth); INCOMING_HAS_PRODUCTION_MANAGER Application Payments API (app_payments); INCOMING_HAS_PRODUCTION_MANAGER Application Search Gateway (app_search); INCOMING_HAS_PRODUCTION_MANAGER Application Warehouse Loader (app_warehouse)",
+        "source_table": "apm_contacts"
       }
     },
     {
@@ -1918,8 +1918,8 @@
         "id": "contact_elena",
         "name": "Elena Rossi",
         "refog": "u1005",
-        "retrieval_text": "Contact. id: contact_elena. name: Elena Rossi. refog: u1005. source_table: apm_applications. Relationships: INCOMING_HAS_APM_SPOC Application Billing Worker (app_billing); INCOMING_HAS_APM_SPOC Application Event Collector (app_events); INCOMING_HAS_APM_SPOC Application Inventory Service (app_inventory); INCOMING_HAS_APM_SPOC Application Payments API (app_payments); INCOMING_HAS_APM_SPOC Application Search Gateway (app_search); INCOMING_HAS_APM_SPOC Application Warehouse Loader (app_warehouse)",
-        "source_table": "apm_applications"
+        "retrieval_text": "Contact. id: contact_elena. name: Elena Rossi. refog: u1005. source_table: apm_contacts. Relationships: INCOMING_HAS_APM_SPOC Application Billing Worker (app_billing); INCOMING_HAS_APM_SPOC Application Event Collector (app_events); INCOMING_HAS_APM_SPOC Application Inventory Service (app_inventory); INCOMING_HAS_APM_SPOC Application Payments API (app_payments); INCOMING_HAS_APM_SPOC Application Search Gateway (app_search); INCOMING_HAS_APM_SPOC Application Warehouse Loader (app_warehouse)",
+        "source_table": "apm_contacts"
       }
     },
     {
@@ -1930,8 +1930,8 @@
         "id": "contact_farah",
         "name": "Farah Haddad",
         "refog": "u1006",
-        "retrieval_text": "Contact. id: contact_farah. name: Farah Haddad. refog: u1006. source_table: apm_applications. Relationships: INCOMING_HAS_APPLICATION_MANAGER Application Search Gateway (app_search); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Billing Worker (app_billing); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Event Collector (app_events); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Inventory Service (app_inventory); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Warehouse Loader (app_warehouse)",
-        "source_table": "apm_applications"
+        "retrieval_text": "Contact. id: contact_farah. name: Farah Haddad. refog: u1006. source_table: apm_contacts. Relationships: INCOMING_HAS_APPLICATION_MANAGER Application Search Gateway (app_search); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Billing Worker (app_billing); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Event Collector (app_events); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Inventory Service (app_inventory); INCOMING_HAS_PRODUCTION_DOMAIN_MANAGER Application Warehouse Loader (app_warehouse)",
+        "source_table": "apm_contacts"
       }
     },
     {
@@ -2172,7 +2172,7 @@
       "properties": {
         "id": "DE",
         "name": "DE",
-        "retrieval_text": "LocationCountry. id: DE. name: DE. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_001; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_002; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_004; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_005",
+        "retrieval_text": "LocationCountry. id: DE. name: DE. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN ObsolescenceRecord obso_001; INCOMING_LOCATED_IN ObsolescenceRecord obso_002; INCOMING_LOCATED_IN ObsolescenceRecord obso_004; INCOMING_LOCATED_IN ObsolescenceRecord obso_005",
         "source_table": "apm_obso"
       }
     },
@@ -2183,7 +2183,7 @@
       "properties": {
         "id": "FR",
         "name": "FR",
-        "retrieval_text": "LocationCountry. id: FR. name: FR. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_006; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_007",
+        "retrieval_text": "LocationCountry. id: FR. name: FR. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN ObsolescenceRecord obso_006; INCOMING_LOCATED_IN ObsolescenceRecord obso_007",
         "source_table": "apm_obso"
       }
     },
@@ -2194,7 +2194,7 @@
       "properties": {
         "id": "IE",
         "name": "IE",
-        "retrieval_text": "LocationCountry. id: IE. name: IE. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_003; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_012; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_013; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_014",
+        "retrieval_text": "LocationCountry. id: IE. name: IE. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN ObsolescenceRecord obso_003; INCOMING_LOCATED_IN ObsolescenceRecord obso_012; INCOMING_LOCATED_IN ObsolescenceRecord obso_013; INCOMING_LOCATED_IN ObsolescenceRecord obso_014",
         "source_table": "apm_obso"
       }
     },
@@ -2205,7 +2205,7 @@
       "properties": {
         "id": "US",
         "name": "US",
-        "retrieval_text": "LocationCountry. id: US. name: US. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_008; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_009; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_010; INCOMING_LOCATED_IN_COUNTRY ObsolescenceRecord obso_011",
+        "retrieval_text": "LocationCountry. id: US. name: US. source_table: apm_obso. Relationships: INCOMING_LOCATED_IN ObsolescenceRecord obso_008; INCOMING_LOCATED_IN ObsolescenceRecord obso_009; INCOMING_LOCATED_IN ObsolescenceRecord obso_010; INCOMING_LOCATED_IN ObsolescenceRecord obso_011",
         "source_table": "apm_obso"
       }
     },
@@ -2223,7 +2223,7 @@
         "id": "obso_001",
         "location_country": "DE",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_payments. criticality: tier_1. detected_at: 2026-05-18. env: prod. evidence: runtime scan. host: pay-api-01.eu.prod. id: obso_001. location_country: DE. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_java8. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry DE; ON_HOST Host pay-api-01.eu.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java8)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_payments. criticality: tier_1. detected_at: 2026-05-18. env: prod. evidence: runtime scan. host: pay-api-01.eu.prod. id: obso_001. location_country: DE. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_java8. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); IN_ENVIRONMENT Environment prod; LOCATED_IN LocationCountry DE; ON_HOST Host pay-api-01.eu.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java8)",
         "risk_level": "high",
         "source_table": "apm_obso",
         "technology_id": "tech_java8"
@@ -2243,7 +2243,7 @@
         "id": "obso_002",
         "location_country": "DE",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_payments. criticality: tier_1. detected_at: 2026-05-18. env: prod. evidence: cmdb. host: pay-db-01.eu.prod. id: obso_002. location_country: DE. obsolescence_status: obsolete. risk_level: critical. source_table: apm_obso. technology_id: tech_postgres12. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry DE; ON_HOST Host pay-db-01.eu.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_payments. criticality: tier_1. detected_at: 2026-05-18. env: prod. evidence: cmdb. host: pay-db-01.eu.prod. id: obso_002. location_country: DE. obsolescence_status: obsolete. risk_level: critical. source_table: apm_obso. technology_id: tech_postgres12. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); IN_ENVIRONMENT Environment prod; LOCATED_IN LocationCountry DE; ON_HOST Host pay-db-01.eu.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
         "risk_level": "critical",
         "source_table": "apm_obso",
         "technology_id": "tech_postgres12"
@@ -2263,7 +2263,7 @@
         "id": "obso_003",
         "location_country": "IE",
         "obsolescence_status": "aging",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_payments. criticality: tier_1. detected_at: 2026-05-20. env: prod. evidence: runtime scan. host: shared-kafka-01.global. id: obso_003. location_country: IE. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_kafka28. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry IE; ON_HOST Host shared-kafka-01.global; REFERENCES_TECHNOLOGY Technology Kafka (tech_kafka28)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_payments. criticality: tier_1. detected_at: 2026-05-20. env: prod. evidence: runtime scan. host: shared-kafka-01.global. id: obso_003. location_country: IE. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_kafka28. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Payments API (app_payments); IN_ENVIRONMENT Environment prod; LOCATED_IN LocationCountry IE; ON_HOST Host shared-kafka-01.global; REFERENCES_TECHNOLOGY Technology Kafka (tech_kafka28)",
         "risk_level": "medium",
         "source_table": "apm_obso",
         "technology_id": "tech_kafka28"
@@ -2283,7 +2283,7 @@
         "id": "obso_004",
         "location_country": "DE",
         "obsolescence_status": "supported",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_auth. criticality: tier_1. detected_at: 2026-05-21. env: prod. evidence: runtime scan. host: auth-api-01.eu.prod. id: obso_004. location_country: DE. obsolescence_status: supported. risk_level: low. source_table: apm_obso. technology_id: tech_java17. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Identity Service (app_auth); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry DE; ON_HOST Host auth-api-01.eu.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java17)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_auth. criticality: tier_1. detected_at: 2026-05-21. env: prod. evidence: runtime scan. host: auth-api-01.eu.prod. id: obso_004. location_country: DE. obsolescence_status: supported. risk_level: low. source_table: apm_obso. technology_id: tech_java17. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Identity Service (app_auth); IN_ENVIRONMENT Environment prod; LOCATED_IN LocationCountry DE; ON_HOST Host auth-api-01.eu.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java17)",
         "risk_level": "low",
         "source_table": "apm_obso",
         "technology_id": "tech_java17"
@@ -2303,7 +2303,7 @@
         "id": "obso_005",
         "location_country": "DE",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_auth. criticality: tier_1. detected_at: 2026-05-21. env: prod. evidence: cmdb. host: auth-db-01.eu.prod. id: obso_005. location_country: DE. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_postgres12. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Identity Service (app_auth); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry DE; ON_HOST Host auth-db-01.eu.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_auth. criticality: tier_1. detected_at: 2026-05-21. env: prod. evidence: cmdb. host: auth-db-01.eu.prod. id: obso_005. location_country: DE. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_postgres12. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Identity Service (app_auth); IN_ENVIRONMENT Environment prod; LOCATED_IN LocationCountry DE; ON_HOST Host auth-db-01.eu.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
         "risk_level": "high",
         "source_table": "apm_obso",
         "technology_id": "tech_postgres12"
@@ -2323,7 +2323,7 @@
         "id": "obso_006",
         "location_country": "FR",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_search. criticality: tier_2. detected_at: 2026-05-22. env: prod. evidence: container image. host: edge-01.eu.prod. id: obso_006. location_country: FR. obsolescence_status: obsolete. risk_level: medium. source_table: apm_obso. technology_id: tech_node16. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Search Gateway (app_search); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry FR; ON_HOST Host edge-01.eu.prod; REFERENCES_TECHNOLOGY Technology Node.js (tech_node16)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_search. criticality: tier_2. detected_at: 2026-05-22. env: prod. evidence: container image. host: edge-01.eu.prod. id: obso_006. location_country: FR. obsolescence_status: obsolete. risk_level: medium. source_table: apm_obso. technology_id: tech_node16. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Search Gateway (app_search); IN_ENVIRONMENT Environment prod; LOCATED_IN LocationCountry FR; ON_HOST Host edge-01.eu.prod; REFERENCES_TECHNOLOGY Technology Node.js (tech_node16)",
         "risk_level": "medium",
         "source_table": "apm_obso",
         "technology_id": "tech_node16"
@@ -2343,7 +2343,7 @@
         "id": "obso_007",
         "location_country": "FR",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_search. criticality: tier_2. detected_at: 2026-05-22. env: prod. evidence: package scan. host: edge-01.eu.prod. id: obso_007. location_country: FR. obsolescence_status: obsolete. risk_level: medium. source_table: apm_obso. technology_id: tech_nginx117. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Search Gateway (app_search); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry FR; ON_HOST Host edge-01.eu.prod; REFERENCES_TECHNOLOGY Technology Nginx (tech_nginx117)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_search. criticality: tier_2. detected_at: 2026-05-22. env: prod. evidence: package scan. host: edge-01.eu.prod. id: obso_007. location_country: FR. obsolescence_status: obsolete. risk_level: medium. source_table: apm_obso. technology_id: tech_nginx117. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Search Gateway (app_search); IN_ENVIRONMENT Environment prod; LOCATED_IN LocationCountry FR; ON_HOST Host edge-01.eu.prod; REFERENCES_TECHNOLOGY Technology Nginx (tech_nginx117)",
         "risk_level": "medium",
         "source_table": "apm_obso",
         "technology_id": "tech_nginx117"
@@ -2363,7 +2363,7 @@
         "id": "obso_008",
         "location_country": "US",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_billing. criticality: tier_1. detected_at: 2026-05-23. env: prod. evidence: runtime scan. host: billing-worker-01.us.prod. id: obso_008. location_country: US. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_java8. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Billing Worker (app_billing); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry US; ON_HOST Host billing-worker-01.us.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java8)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_billing. criticality: tier_1. detected_at: 2026-05-23. env: prod. evidence: runtime scan. host: billing-worker-01.us.prod. id: obso_008. location_country: US. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_java8. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Billing Worker (app_billing); IN_ENVIRONMENT Environment prod; LOCATED_IN LocationCountry US; ON_HOST Host billing-worker-01.us.prod; REFERENCES_TECHNOLOGY Technology Java (tech_java8)",
         "risk_level": "high",
         "source_table": "apm_obso",
         "technology_id": "tech_java8"
@@ -2383,7 +2383,7 @@
         "id": "obso_009",
         "location_country": "US",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_billing. criticality: tier_1. detected_at: 2026-05-23. env: prod. evidence: cmdb. host: billing-db-01.us.prod. id: obso_009. location_country: US. obsolescence_status: obsolete. risk_level: critical. source_table: apm_obso. technology_id: tech_oracle11g. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Billing Worker (app_billing); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry US; ON_HOST Host billing-db-01.us.prod; REFERENCES_TECHNOLOGY Technology Oracle Database (tech_oracle11g)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_billing. criticality: tier_1. detected_at: 2026-05-23. env: prod. evidence: cmdb. host: billing-db-01.us.prod. id: obso_009. location_country: US. obsolescence_status: obsolete. risk_level: critical. source_table: apm_obso. technology_id: tech_oracle11g. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Billing Worker (app_billing); IN_ENVIRONMENT Environment prod; LOCATED_IN LocationCountry US; ON_HOST Host billing-db-01.us.prod; REFERENCES_TECHNOLOGY Technology Oracle Database (tech_oracle11g)",
         "risk_level": "critical",
         "source_table": "apm_obso",
         "technology_id": "tech_oracle11g"
@@ -2403,7 +2403,7 @@
         "id": "obso_010",
         "location_country": "US",
         "obsolescence_status": "aging",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_inventory. criticality: tier_2. detected_at: 2026-05-24. env: prod. evidence: runtime scan. host: inventory-api-01.us.prod. id: obso_010. location_country: US. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Inventory Service (app_inventory); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry US; ON_HOST Host inventory-api-01.us.prod; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_inventory. criticality: tier_2. detected_at: 2026-05-24. env: prod. evidence: runtime scan. host: inventory-api-01.us.prod. id: obso_010. location_country: US. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Inventory Service (app_inventory); IN_ENVIRONMENT Environment prod; LOCATED_IN LocationCountry US; ON_HOST Host inventory-api-01.us.prod; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
         "risk_level": "medium",
         "source_table": "apm_obso",
         "technology_id": "tech_python39"
@@ -2423,7 +2423,7 @@
         "id": "obso_011",
         "location_country": "US",
         "obsolescence_status": "obsolete",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_inventory. criticality: tier_2. detected_at: 2026-05-24. env: prod. evidence: cmdb. host: inventory-db-01.us.prod. id: obso_011. location_country: US. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_postgres12. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Inventory Service (app_inventory); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry US; ON_HOST Host inventory-db-01.us.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_inventory. criticality: tier_2. detected_at: 2026-05-24. env: prod. evidence: cmdb. host: inventory-db-01.us.prod. id: obso_011. location_country: US. obsolescence_status: obsolete. risk_level: high. source_table: apm_obso. technology_id: tech_postgres12. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Inventory Service (app_inventory); IN_ENVIRONMENT Environment prod; LOCATED_IN LocationCountry US; ON_HOST Host inventory-db-01.us.prod; REFERENCES_TECHNOLOGY Technology PostgreSQL (tech_postgres12)",
         "risk_level": "high",
         "source_table": "apm_obso",
         "technology_id": "tech_postgres12"
@@ -2443,7 +2443,7 @@
         "id": "obso_012",
         "location_country": "IE",
         "obsolescence_status": "aging",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_events. criticality: tier_1. detected_at: 2026-05-25. env: prod. evidence: runtime scan. host: shared-kafka-01.global. id: obso_012. location_country: IE. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_kafka28. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Event Collector (app_events); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry IE; ON_HOST Host shared-kafka-01.global; REFERENCES_TECHNOLOGY Technology Kafka (tech_kafka28)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_events. criticality: tier_1. detected_at: 2026-05-25. env: prod. evidence: runtime scan. host: shared-kafka-01.global. id: obso_012. location_country: IE. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_kafka28. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Event Collector (app_events); IN_ENVIRONMENT Environment prod; LOCATED_IN LocationCountry IE; ON_HOST Host shared-kafka-01.global; REFERENCES_TECHNOLOGY Technology Kafka (tech_kafka28)",
         "risk_level": "medium",
         "source_table": "apm_obso",
         "technology_id": "tech_kafka28"
@@ -2463,7 +2463,7 @@
         "id": "obso_013",
         "location_country": "IE",
         "obsolescence_status": "aging",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_events. criticality: tier_1. detected_at: 2026-05-25. env: prod. evidence: container image. host: event-collector-01.global. id: obso_013. location_country: IE. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Event Collector (app_events); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry IE; ON_HOST Host event-collector-01.global; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_events. criticality: tier_1. detected_at: 2026-05-25. env: prod. evidence: container image. host: event-collector-01.global. id: obso_013. location_country: IE. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: HAS_CRITICALITY Criticality tier_1; INCOMING_HAS_OBSOLESCENCE_RECORD Application Event Collector (app_events); IN_ENVIRONMENT Environment prod; LOCATED_IN LocationCountry IE; ON_HOST Host event-collector-01.global; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
         "risk_level": "medium",
         "source_table": "apm_obso",
         "technology_id": "tech_python39"
@@ -2483,7 +2483,7 @@
         "id": "obso_014",
         "location_country": "IE",
         "obsolescence_status": "aging",
-        "retrieval_text": "ObsolescenceRecord. application_id: app_warehouse. criticality: tier_2. detected_at: 2026-05-26. env: prod. evidence: runtime scan. host: warehouse-loader-01.global. id: obso_014. location_country: IE. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Warehouse Loader (app_warehouse); IN_ENVIRONMENT Environment prod; LOCATED_IN_COUNTRY LocationCountry IE; ON_HOST Host warehouse-loader-01.global; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
+        "retrieval_text": "ObsolescenceRecord. application_id: app_warehouse. criticality: tier_2. detected_at: 2026-05-26. env: prod. evidence: runtime scan. host: warehouse-loader-01.global. id: obso_014. location_country: IE. obsolescence_status: aging. risk_level: medium. source_table: apm_obso. technology_id: tech_python39. Relationships: HAS_CRITICALITY Criticality tier_2; INCOMING_HAS_OBSOLESCENCE_RECORD Application Warehouse Loader (app_warehouse); IN_ENVIRONMENT Environment prod; LOCATED_IN LocationCountry IE; ON_HOST Host warehouse-loader-01.global; REFERENCES_TECHNOLOGY Technology Python (tech_python39)",
         "risk_level": "medium",
         "source_table": "apm_obso",
         "technology_id": "tech_python39"
@@ -2582,8 +2582,8 @@
         "id": "tech_java17",
         "lifecycle": "supported",
         "name": "Java",
-        "retrieval_text": "Technology. category: runtime. id: tech_java17. lifecycle: supported. name: Java. source_table: apm_obso. vendor: Eclipse Adoptium. version: 17. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_004",
-        "source_table": "apm_obso",
+        "retrieval_text": "Technology. category: runtime. id: tech_java17. lifecycle: supported. name: Java. source_table: apm_technologies. vendor: Eclipse Adoptium. version: 17. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_004",
+        "source_table": "apm_technologies",
         "vendor": "Eclipse Adoptium",
         "version": "17"
       }
@@ -2597,8 +2597,8 @@
         "id": "tech_java8",
         "lifecycle": "obsolete",
         "name": "Java",
-        "retrieval_text": "Technology. category: runtime. id: tech_java8. lifecycle: obsolete. name: Java. source_table: apm_obso. vendor: Oracle. version: 8. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_001; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_008",
-        "source_table": "apm_obso",
+        "retrieval_text": "Technology. category: runtime. id: tech_java8. lifecycle: obsolete. name: Java. source_table: apm_technologies. vendor: Oracle. version: 8. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_001; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_008",
+        "source_table": "apm_technologies",
         "vendor": "Oracle",
         "version": "8"
       }
@@ -2612,8 +2612,8 @@
         "id": "tech_kafka28",
         "lifecycle": "aging",
         "name": "Kafka",
-        "retrieval_text": "Technology. category: messaging. id: tech_kafka28. lifecycle: aging. name: Kafka. source_table: apm_obso. vendor: Apache. version: 2.8. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_003; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_012",
-        "source_table": "apm_obso",
+        "retrieval_text": "Technology. category: messaging. id: tech_kafka28. lifecycle: aging. name: Kafka. source_table: apm_technologies. vendor: Apache. version: 2.8. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_003; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_012",
+        "source_table": "apm_technologies",
         "vendor": "Apache",
         "version": "2.8"
       }
@@ -2627,8 +2627,8 @@
         "id": "tech_nginx117",
         "lifecycle": "obsolete",
         "name": "Nginx",
-        "retrieval_text": "Technology. category: proxy. id: tech_nginx117. lifecycle: obsolete. name: Nginx. source_table: apm_obso. vendor: F5. version: 1.17. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_007",
-        "source_table": "apm_obso",
+        "retrieval_text": "Technology. category: proxy. id: tech_nginx117. lifecycle: obsolete. name: Nginx. source_table: apm_technologies. vendor: F5. version: 1.17. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_007",
+        "source_table": "apm_technologies",
         "vendor": "F5",
         "version": "1.17"
       }
@@ -2642,8 +2642,8 @@
         "id": "tech_node16",
         "lifecycle": "obsolete",
         "name": "Node.js",
-        "retrieval_text": "Technology. category: runtime. id: tech_node16. lifecycle: obsolete. name: Node.js. source_table: apm_obso. vendor: OpenJS. version: 16. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_006",
-        "source_table": "apm_obso",
+        "retrieval_text": "Technology. category: runtime. id: tech_node16. lifecycle: obsolete. name: Node.js. source_table: apm_technologies. vendor: OpenJS. version: 16. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_006",
+        "source_table": "apm_technologies",
         "vendor": "OpenJS",
         "version": "16"
       }
@@ -2657,8 +2657,8 @@
         "id": "tech_oracle11g",
         "lifecycle": "obsolete",
         "name": "Oracle Database",
-        "retrieval_text": "Technology. category: database. id: tech_oracle11g. lifecycle: obsolete. name: Oracle Database. source_table: apm_obso. vendor: Oracle. version: 11g. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_009",
-        "source_table": "apm_obso",
+        "retrieval_text": "Technology. category: database. id: tech_oracle11g. lifecycle: obsolete. name: Oracle Database. source_table: apm_technologies. vendor: Oracle. version: 11g. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_009",
+        "source_table": "apm_technologies",
         "vendor": "Oracle",
         "version": "11g"
       }
@@ -2672,8 +2672,8 @@
         "id": "tech_postgres12",
         "lifecycle": "obsolete",
         "name": "PostgreSQL",
-        "retrieval_text": "Technology. category: database. id: tech_postgres12. lifecycle: obsolete. name: PostgreSQL. source_table: apm_obso. vendor: PostgreSQL. version: 12. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_002; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_005; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_011",
-        "source_table": "apm_obso",
+        "retrieval_text": "Technology. category: database. id: tech_postgres12. lifecycle: obsolete. name: PostgreSQL. source_table: apm_technologies. vendor: PostgreSQL. version: 12. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_002; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_005; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_011",
+        "source_table": "apm_technologies",
         "vendor": "PostgreSQL",
         "version": "12"
       }
@@ -2687,8 +2687,8 @@
         "id": "tech_python39",
         "lifecycle": "aging",
         "name": "Python",
-        "retrieval_text": "Technology. category: runtime. id: tech_python39. lifecycle: aging. name: Python. source_table: apm_obso. vendor: Python Software Foundation. version: 3.9. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_010; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_013; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_014",
-        "source_table": "apm_obso",
+        "retrieval_text": "Technology. category: runtime. id: tech_python39. lifecycle: aging. name: Python. source_table: apm_technologies. vendor: Python Software Foundation. version: 3.9. Relationships: INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_010; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_013; INCOMING_REFERENCES_TECHNOLOGY ObsolescenceRecord obso_014",
+        "source_table": "apm_technologies",
         "vendor": "Python Software Foundation",
         "version": "3.9"
       }

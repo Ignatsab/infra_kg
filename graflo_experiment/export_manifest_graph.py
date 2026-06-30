@@ -39,7 +39,9 @@ from render_graph_viewer import (  # noqa: E402
 )
 
 from apm_mapping import TABLE_ALIASES  # noqa: E402
-from generate_manifest import build_manifest, read_table_headers  # noqa: E402
+from generate_manifest import build_manifest, read_table_headers, source_tables  # noqa: E402
+
+VALUE_NODE_LABELS = {"Host", "Criticality", "Environment", "LocationCountry"}
 
 
 def main() -> None:
@@ -324,6 +326,7 @@ def build_graph_from_manifest(manifest: dict[str, Any], data_dir: Path | str) ->
                         vertex_schemas,
                         label,
                         step.get("from"),
+                        step.get("properties"),
                         row,
                         source_table,
                     )
@@ -374,6 +377,7 @@ def add_manifest_vertex(
     vertex_schemas: dict[str, dict[str, Any]],
     label: str,
     field_mapping: object,
+    property_mapping: object,
     row: dict[str, str],
     source_table: str,
 ) -> str | None:
@@ -383,16 +387,27 @@ def add_manifest_vertex(
         identity_fields = [identity_fields]
 
     mapping = field_mapping if isinstance(field_mapping, dict) else None
+    from_column = field_mapping if isinstance(field_mapping, str) else None
     identity_values = [mapped_row_value(row, mapping, str(field)) for field in identity_fields]
+    if from_column:
+        identity_values = [(row.get(from_column) or "").strip()]
     if any(value == "" for value in identity_values):
         return None
 
     identity = "|".join(identity_values)
-    if mapping is None:
+    if from_column:
+        properties = {"source_table": source_table}
+        if label in VALUE_NODE_LABELS:
+            properties["name"] = identity
+    elif mapping is None:
         properties = row_properties(row, source_table)
     else:
         properties = {"source_table": source_table}
         for property_name, column_name in mapping.items():
+            properties[str(property_name)] = row.get(str(column_name), "")
+
+    if isinstance(property_mapping, dict):
+        for property_name, column_name in property_mapping.items():
             properties[str(property_name)] = row.get(str(column_name), "")
 
     return graph.add_node(label, identity, properties)
@@ -415,6 +430,9 @@ def edge_properties(resource_name: str, source_table: str, edge_type: str, row: 
 
 
 def source_table_from_resource_name(resource_name: str) -> str:
+    canonical_name = canonical_table_name(resource_name)
+    if canonical_name in source_tables():
+        return canonical_name
     if "__" not in resource_name:
         return ""
     return canonical_table_name(resource_name.split("__", 1)[0])

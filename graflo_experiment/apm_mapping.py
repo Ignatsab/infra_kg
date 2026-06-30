@@ -209,7 +209,7 @@ EDGES = [
         "target_key": {"vertex_field": "id", "column": "env"},
     },
     {
-        "name": "LOCATED_IN_COUNTRY",
+        "name": "LOCATED_IN",
         "source": "ObsolescenceRecord",
         "target": "LocationCountry",
         "source_table": "apm_obso",

@@ -5,11 +5,21 @@ from __future__ import annotations
 
 import argparse
 import csv
-import json
+import re
 from pathlib import Path
 from typing import Any
 
 from apm_mapping import EDGES, TABLE_ALIASES, VERTICES
+
+TABLE_ORDER = [
+    "apm_cluster",
+    "apm_subclusters",
+    "apm_applications",
+    "apm_contacts",
+    "apm_application_daps",
+    "apm_obso",
+    "apm_technologies",
+]
 
 
 def main() -> None:
@@ -109,61 +119,105 @@ def edge_schema(edge: dict[str, Any]) -> dict[str, Any]:
 
 def resource_configs() -> list[dict[str, Any]]:
     resources = []
-    for vertex in VERTICES:
-        resources.append(vertex_resource_config(vertex))
-    for edge in EDGES:
-        resources.append(edge_resource_config(edge))
+    for table_name in ordered_source_tables():
+        pipeline = table_resource_pipeline(table_name)
+        if not pipeline:
+            continue
+        resources.append(
+            {
+                "name": table_name,
+                "drop_trivial_input_fields": True,
+                "fail_fast": False,
+                "pipeline": pipeline,
+            }
+        )
     return resources
 
 
-def vertex_resource_config(vertex: dict[str, Any]) -> dict[str, Any]:
-    pipeline_step: dict[str, Any] = {"vertex": vertex["name"]}
-    if vertex.get("source_columns") != "all":
-        mapping = vertex_from_mapping(vertex)
-        pipeline_step["from"] = mapping
-    return {
-        "name": vertex_resource_name(vertex),
-        "drop_trivial_input_fields": True,
-        "fail_fast": False,
-        "pipeline": [pipeline_step],
-    }
+def table_resource_pipeline(table_name: str) -> list[dict[str, Any]]:
+    pipeline: list[dict[str, Any]] = []
+    seen_endpoint_steps: set[tuple[str, str, tuple[tuple[str, str], ...]]] = set()
+    local_record_labels = set()
 
+    for vertex in VERTICES:
+        if vertex["source_table"] == table_name and vertex.get("source_columns") == "all":
+            pipeline.append({"vertex": vertex["name"]})
+            local_record_labels.add(vertex["name"])
+            seen_endpoint_steps.add((vertex["name"], "", ()))
 
-def edge_resource_config(edge: dict[str, Any]) -> dict[str, Any]:
-    source_vertex = vertex_by_name(edge["source"])
-    target_vertex = vertex_by_name(edge["target"])
-    return {
-        "name": edge_resource_name(edge),
-        "drop_trivial_input_fields": True,
-        "fail_fast": False,
-        "pipeline": [
-            {
-                "vertex": edge["source"],
-                "from": vertex_from_edge_key(source_vertex, edge["source_key"]),
-            },
-            {
-                "vertex": edge["target"],
-                "from": vertex_from_edge_key(target_vertex, edge["target_key"]),
-            },
+    for edge in [item for item in EDGES if item["source_table"] == table_name]:
+        source_vertex = vertex_by_name(edge["source"])
+        target_vertex = vertex_by_name(edge["target"])
+        append_endpoint_step(
+            pipeline,
+            seen_endpoint_steps,
+            table_name,
+            source_vertex,
+            edge["source_key"],
+            local_record_labels,
+        )
+        append_endpoint_step(
+            pipeline,
+            seen_endpoint_steps,
+            table_name,
+            target_vertex,
+            edge["target_key"],
+            local_record_labels,
+        )
+        pipeline.append(
             {
                 "source": edge["source"],
                 "target": edge["target"],
                 "relation": edge["name"],
-            },
-        ],
+            }
+        )
+
+    return pipeline
+
+
+def append_endpoint_step(
+    pipeline: list[dict[str, Any]],
+    seen_endpoint_steps: set[tuple[str, str, tuple[tuple[str, str], ...]]],
+    table_name: str,
+    vertex: dict[str, Any],
+    edge_key: dict[str, str],
+    local_record_labels: set[str],
+) -> None:
+    column = edge_key["column"]
+    if column == "id" and vertex["name"] in local_record_labels:
+        return
+
+    step = vertex_reference_step(vertex, column)
+    signature = step_signature(step)
+    if signature in seen_endpoint_steps:
+        return
+
+    pipeline.append(step)
+    seen_endpoint_steps.add(signature)
+
+
+def vertex_reference_step(vertex: dict[str, Any], column: str) -> dict[str, Any]:
+    step: dict[str, Any] = {
+        "vertex": vertex["name"],
+        "from": column,
     }
+    property_mapping = {
+        field: source_column
+        for field, source_column in (vertex.get("properties") or {}).items()
+        if source_column != column
+    }
+    if property_mapping:
+        step["properties"] = property_mapping
+    return step
 
 
-def vertex_from_mapping(vertex: dict[str, Any]) -> dict[str, str]:
-    mapping = {field: column for field, column in vertex["identity"].items()}
-    mapping.update(vertex.get("properties") or {})
-    return mapping
-
-
-def vertex_from_edge_key(vertex: dict[str, Any], edge_key: dict[str, str]) -> dict[str, str]:
-    mapping = {edge_key["vertex_field"]: edge_key["column"]}
-    mapping.update(vertex.get("edge_properties") or {})
-    return mapping
+def step_signature(step: dict[str, Any]) -> tuple[str, str, tuple[tuple[str, str], ...]]:
+    properties = step.get("properties") or {}
+    return (
+        str(step["vertex"]),
+        str(step.get("from") or ""),
+        tuple(sorted((str(key), str(value)) for key, value in properties.items())),
+    )
 
 
 def vertex_by_name(name: str) -> dict[str, Any]:
@@ -174,23 +228,28 @@ def vertex_by_name(name: str) -> dict[str, Any]:
 
 
 def vertex_resource_name(vertex: dict[str, Any]) -> str:
-    return f"{vertex['source_table']}__vertex__{vertex['name']}"
+    return vertex["source_table"]
 
 
 def edge_resource_name(edge: dict[str, Any]) -> str:
-    return f"{edge['source_table']}__edge__{edge['name']}"
+    return edge["source_table"]
 
 
 def source_tables() -> set[str]:
     return {item["source_table"] for item in VERTICES} | {item["source_table"] for item in EDGES}
 
 
+def ordered_source_tables() -> list[str]:
+    tables = source_tables()
+    ordered = [table_name for table_name in TABLE_ORDER if table_name in tables]
+    ordered.extend(sorted(tables - set(ordered)))
+    return ordered
+
+
 def resource_bindings_by_table() -> dict[str, list[str]]:
-    bindings: dict[str, list[str]] = {table_name: [] for table_name in sorted(source_tables())}
-    for vertex in VERTICES:
-        bindings[vertex["source_table"]].append(vertex_resource_name(vertex))
-    for edge in EDGES:
-        bindings[edge["source_table"]].append(edge_resource_name(edge))
+    bindings: dict[str, list[str]] = {}
+    for table_name in ordered_source_tables():
+        bindings[table_name] = [table_name]
     return bindings
 
 
@@ -240,10 +299,7 @@ def render_yaml(value: Any, indent: int = 0) -> list[str]:
 
 
 def yaml_key(key: object) -> str:
-    key_text = str(key)
-    if key_text == "from":
-        return '"from"'
-    return key_text
+    return str(key)
 
 
 def is_scalar(value: Any) -> bool:
@@ -257,7 +313,26 @@ def scalar_yaml(value: Any) -> str:
         return "true" if value else "false"
     if isinstance(value, (int, float)):
         return str(value)
-    return json.dumps(str(value))
+    text = str(value)
+    if is_plain_yaml_scalar(text):
+        return text
+    return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+
+def is_plain_yaml_scalar(value: str) -> bool:
+    if not value:
+        return False
+    if value.strip() != value:
+        return False
+    if value in {"null", "true", "false", "{}", "[]"}:
+        return False
+    if value[0] in "-?:,[]{}#&*!|>'\"%@`":
+        return False
+    if "\n" in value or "\r" in value:
+        return False
+    if re.search(r"(^|[\s])#", value):
+        return False
+    return True
 
 
 if __name__ == "__main__":

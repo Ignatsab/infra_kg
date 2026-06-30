@@ -1,449 +1,281 @@
 schema:
   metadata:
-    name: "apm_topology"
-    version: "0.1.0"
-    description: "Experimental GraFlo manifest for APM infrastructure topology."
+    name: apm_topology
+    version: 0.1.0
+    description: Experimental GraFlo manifest for APM infrastructure topology.
   db_profile: {}
   graph:
     vertex_config:
       vertices:
-        - name: "Cluster"
+        - name: Cluster
           properties:
-            - "id"
-            - "name"
-            - "environment"
-            - "region"
-            - "owner_team"
+            - id
+            - name
+            - environment
+            - region
+            - owner_team
           identity:
-            - "id"
-        - name: "Subcluster"
+            - id
+        - name: Subcluster
           properties:
-            - "id"
-            - "name"
-            - "apm_cluster"
-            - "role"
-            - "zone"
+            - id
+            - name
+            - apm_cluster
+            - role
+            - zone
           identity:
-            - "id"
-        - name: "Application"
+            - id
+        - name: Application
           properties:
-            - "id"
-            - "name"
-            - "apm_cluster"
-            - "production_domain_manager"
-            - "application_manager"
-            - "domain_manager"
-            - "production_manager"
-            - "apm_spoc"
-            - "criticality"
-            - "business_owner"
-            - "runtime_tier"
+            - id
+            - name
+            - apm_cluster
+            - production_domain_manager
+            - application_manager
+            - domain_manager
+            - production_manager
+            - apm_spoc
+            - criticality
+            - business_owner
+            - runtime_tier
           identity:
-            - "id"
-        - name: "Contact"
+            - id
+        - name: Contact
           properties:
-            - "id"
-            - "name"
-            - "refog"
+            - id
+            - name
+            - refog
           identity:
-            - "id"
-        - name: "ApplicationDap"
+            - id
+        - name: ApplicationDap
           properties:
-            - "id"
-            - "apm_application"
-            - "dap_id"
-            - "dap_name"
-            - "direction"
-            - "protocol"
+            - id
+            - apm_application
+            - dap_id
+            - dap_name
+            - direction
+            - protocol
           identity:
-            - "id"
-        - name: "Dap"
+            - id
+        - name: Dap
           properties:
-            - "id"
-            - "name"
+            - id
+            - name
           identity:
-            - "id"
-        - name: "Technology"
+            - id
+        - name: Technology
           properties:
-            - "id"
-            - "name"
-            - "category"
-            - "vendor"
-            - "version"
-            - "lifecycle"
+            - id
+            - name
+            - category
+            - vendor
+            - version
+            - lifecycle
           identity:
-            - "id"
-        - name: "ObsolescenceRecord"
+            - id
+        - name: ObsolescenceRecord
           properties:
-            - "id"
-            - "application_id"
-            - "technology_id"
-            - "host"
-            - "criticality"
-            - "env"
-            - "location_country"
-            - "obsolescence_status"
-            - "risk_level"
-            - "detected_at"
-            - "evidence"
+            - id
+            - application_id
+            - technology_id
+            - host
+            - criticality
+            - env
+            - location_country
+            - obsolescence_status
+            - risk_level
+            - detected_at
+            - evidence
           identity:
-            - "id"
-        - name: "Host"
+            - id
+        - name: Host
           properties:
-            - "id"
-            - "name"
+            - id
+            - name
           identity:
-            - "id"
-        - name: "Criticality"
+            - id
+        - name: Criticality
           properties:
-            - "id"
-            - "name"
+            - id
+            - name
           identity:
-            - "id"
-        - name: "Environment"
+            - id
+        - name: Environment
           properties:
-            - "id"
-            - "name"
+            - id
+            - name
           identity:
-            - "id"
-        - name: "LocationCountry"
+            - id
+        - name: LocationCountry
           properties:
-            - "id"
-            - "name"
+            - id
+            - name
           identity:
-            - "id"
+            - id
     edge_config:
       edges:
-        - source: "Cluster"
-          target: "Subcluster"
-          relation: "HAS_SUBCLUSTER"
-        - source: "Cluster"
-          target: "Application"
-          relation: "HAS_APPLICATION"
-        - source: "Application"
-          target: "Contact"
-          relation: "HAS_PRODUCTION_DOMAIN_MANAGER"
-        - source: "Application"
-          target: "Contact"
-          relation: "HAS_APPLICATION_MANAGER"
-        - source: "Application"
-          target: "Contact"
-          relation: "HAS_DOMAIN_MANAGER"
-        - source: "Application"
-          target: "Contact"
-          relation: "HAS_PRODUCTION_MANAGER"
-        - source: "Application"
-          target: "Contact"
-          relation: "HAS_APM_SPOC"
-        - source: "Application"
-          target: "ApplicationDap"
-          relation: "HAS_DAP_BINDING"
-        - source: "ApplicationDap"
-          target: "Dap"
-          relation: "TARGETS_DAP"
-        - source: "Application"
-          target: "Dap"
-          relation: "EXPOSES_DAP"
-        - source: "Application"
-          target: "ObsolescenceRecord"
-          relation: "HAS_OBSOLESCENCE_RECORD"
-        - source: "ObsolescenceRecord"
-          target: "Host"
-          relation: "ON_HOST"
-        - source: "ObsolescenceRecord"
-          target: "Technology"
-          relation: "REFERENCES_TECHNOLOGY"
-        - source: "ObsolescenceRecord"
-          target: "Criticality"
-          relation: "HAS_CRITICALITY"
-        - source: "ObsolescenceRecord"
-          target: "Environment"
-          relation: "IN_ENVIRONMENT"
-        - source: "ObsolescenceRecord"
-          target: "LocationCountry"
-          relation: "LOCATED_IN_COUNTRY"
+        - source: Cluster
+          target: Subcluster
+          relation: HAS_SUBCLUSTER
+        - source: Cluster
+          target: Application
+          relation: HAS_APPLICATION
+        - source: Application
+          target: Contact
+          relation: HAS_PRODUCTION_DOMAIN_MANAGER
+        - source: Application
+          target: Contact
+          relation: HAS_APPLICATION_MANAGER
+        - source: Application
+          target: Contact
+          relation: HAS_DOMAIN_MANAGER
+        - source: Application
+          target: Contact
+          relation: HAS_PRODUCTION_MANAGER
+        - source: Application
+          target: Contact
+          relation: HAS_APM_SPOC
+        - source: Application
+          target: ApplicationDap
+          relation: HAS_DAP_BINDING
+        - source: ApplicationDap
+          target: Dap
+          relation: TARGETS_DAP
+        - source: Application
+          target: Dap
+          relation: EXPOSES_DAP
+        - source: Application
+          target: ObsolescenceRecord
+          relation: HAS_OBSOLESCENCE_RECORD
+        - source: ObsolescenceRecord
+          target: Host
+          relation: ON_HOST
+        - source: ObsolescenceRecord
+          target: Technology
+          relation: REFERENCES_TECHNOLOGY
+        - source: ObsolescenceRecord
+          target: Criticality
+          relation: HAS_CRITICALITY
+        - source: ObsolescenceRecord
+          target: Environment
+          relation: IN_ENVIRONMENT
+        - source: ObsolescenceRecord
+          target: LocationCountry
+          relation: LOCATED_IN
 ingestion_model:
   resources:
-    - name: "apm_cluster__vertex__Cluster"
+    - name: apm_cluster
       drop_trivial_input_fields: true
       fail_fast: false
       pipeline:
-        - vertex: "Cluster"
-    - name: "apm_subclusters__vertex__Subcluster"
+        - vertex: Cluster
+    - name: apm_subclusters
       drop_trivial_input_fields: true
       fail_fast: false
       pipeline:
-        - vertex: "Subcluster"
-    - name: "apm_applications__vertex__Application"
+        - vertex: Subcluster
+        - vertex: Cluster
+          from: apm_cluster
+        - source: Cluster
+          target: Subcluster
+          relation: HAS_SUBCLUSTER
+    - name: apm_applications
       drop_trivial_input_fields: true
       fail_fast: false
       pipeline:
-        - vertex: "Application"
-    - name: "apm_contacts__vertex__Contact"
+        - vertex: Application
+        - vertex: Cluster
+          from: apm_cluster
+        - source: Cluster
+          target: Application
+          relation: HAS_APPLICATION
+        - vertex: Contact
+          from: production_domain_manager
+        - source: Application
+          target: Contact
+          relation: HAS_PRODUCTION_DOMAIN_MANAGER
+        - vertex: Contact
+          from: application_manager
+        - source: Application
+          target: Contact
+          relation: HAS_APPLICATION_MANAGER
+        - vertex: Contact
+          from: domain_manager
+        - source: Application
+          target: Contact
+          relation: HAS_DOMAIN_MANAGER
+        - vertex: Contact
+          from: production_manager
+        - source: Application
+          target: Contact
+          relation: HAS_PRODUCTION_MANAGER
+        - vertex: Contact
+          from: apm_spoc
+        - source: Application
+          target: Contact
+          relation: HAS_APM_SPOC
+    - name: apm_contacts
       drop_trivial_input_fields: true
       fail_fast: false
       pipeline:
-        - vertex: "Contact"
-    - name: "apm_application_daps__vertex__ApplicationDap"
+        - vertex: Contact
+    - name: apm_application_daps
       drop_trivial_input_fields: true
       fail_fast: false
       pipeline:
-        - vertex: "ApplicationDap"
-    - name: "apm_application_daps__vertex__Dap"
+        - vertex: ApplicationDap
+        - vertex: Application
+          from: apm_application
+        - source: Application
+          target: ApplicationDap
+          relation: HAS_DAP_BINDING
+        - vertex: Dap
+          from: dap_id
+          properties:
+            name: dap_name
+        - source: ApplicationDap
+          target: Dap
+          relation: TARGETS_DAP
+        - source: Application
+          target: Dap
+          relation: EXPOSES_DAP
+    - name: apm_obso
       drop_trivial_input_fields: true
       fail_fast: false
       pipeline:
-        - vertex: "Dap"
-          "from":
-            id: "dap_id"
-            name: "dap_name"
-    - name: "apm_technologies__vertex__Technology"
+        - vertex: ObsolescenceRecord
+        - vertex: Application
+          from: application_id
+        - source: Application
+          target: ObsolescenceRecord
+          relation: HAS_OBSOLESCENCE_RECORD
+        - vertex: Host
+          from: host
+        - source: ObsolescenceRecord
+          target: Host
+          relation: ON_HOST
+        - vertex: Technology
+          from: technology_id
+        - source: ObsolescenceRecord
+          target: Technology
+          relation: REFERENCES_TECHNOLOGY
+        - vertex: Criticality
+          from: criticality
+        - source: ObsolescenceRecord
+          target: Criticality
+          relation: HAS_CRITICALITY
+        - vertex: Environment
+          from: env
+        - source: ObsolescenceRecord
+          target: Environment
+          relation: IN_ENVIRONMENT
+        - vertex: LocationCountry
+          from: location_country
+        - source: ObsolescenceRecord
+          target: LocationCountry
+          relation: LOCATED_IN
+    - name: apm_technologies
       drop_trivial_input_fields: true
       fail_fast: false
       pipeline:
-        - vertex: "Technology"
-    - name: "apm_obso__vertex__ObsolescenceRecord"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "ObsolescenceRecord"
-    - name: "apm_obso__vertex__Host"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "Host"
-          "from":
-            id: "host"
-            name: "host"
-    - name: "apm_obso__vertex__Criticality"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "Criticality"
-          "from":
-            id: "criticality"
-            name: "criticality"
-    - name: "apm_obso__vertex__Environment"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "Environment"
-          "from":
-            id: "env"
-            name: "env"
-    - name: "apm_obso__vertex__LocationCountry"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "LocationCountry"
-          "from":
-            id: "location_country"
-            name: "location_country"
-    - name: "apm_subclusters__edge__HAS_SUBCLUSTER"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "Cluster"
-          "from":
-            id: "apm_cluster"
-        - vertex: "Subcluster"
-          "from":
-            id: "id"
-        - source: "Cluster"
-          target: "Subcluster"
-          relation: "HAS_SUBCLUSTER"
-    - name: "apm_applications__edge__HAS_APPLICATION"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "Cluster"
-          "from":
-            id: "apm_cluster"
-        - vertex: "Application"
-          "from":
-            id: "id"
-        - source: "Cluster"
-          target: "Application"
-          relation: "HAS_APPLICATION"
-    - name: "apm_applications__edge__HAS_PRODUCTION_DOMAIN_MANAGER"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "Application"
-          "from":
-            id: "id"
-        - vertex: "Contact"
-          "from":
-            id: "production_domain_manager"
-        - source: "Application"
-          target: "Contact"
-          relation: "HAS_PRODUCTION_DOMAIN_MANAGER"
-    - name: "apm_applications__edge__HAS_APPLICATION_MANAGER"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "Application"
-          "from":
-            id: "id"
-        - vertex: "Contact"
-          "from":
-            id: "application_manager"
-        - source: "Application"
-          target: "Contact"
-          relation: "HAS_APPLICATION_MANAGER"
-    - name: "apm_applications__edge__HAS_DOMAIN_MANAGER"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "Application"
-          "from":
-            id: "id"
-        - vertex: "Contact"
-          "from":
-            id: "domain_manager"
-        - source: "Application"
-          target: "Contact"
-          relation: "HAS_DOMAIN_MANAGER"
-    - name: "apm_applications__edge__HAS_PRODUCTION_MANAGER"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "Application"
-          "from":
-            id: "id"
-        - vertex: "Contact"
-          "from":
-            id: "production_manager"
-        - source: "Application"
-          target: "Contact"
-          relation: "HAS_PRODUCTION_MANAGER"
-    - name: "apm_applications__edge__HAS_APM_SPOC"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "Application"
-          "from":
-            id: "id"
-        - vertex: "Contact"
-          "from":
-            id: "apm_spoc"
-        - source: "Application"
-          target: "Contact"
-          relation: "HAS_APM_SPOC"
-    - name: "apm_application_daps__edge__HAS_DAP_BINDING"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "Application"
-          "from":
-            id: "apm_application"
-        - vertex: "ApplicationDap"
-          "from":
-            id: "id"
-        - source: "Application"
-          target: "ApplicationDap"
-          relation: "HAS_DAP_BINDING"
-    - name: "apm_application_daps__edge__TARGETS_DAP"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "ApplicationDap"
-          "from":
-            id: "id"
-        - vertex: "Dap"
-          "from":
-            id: "dap_id"
-        - source: "ApplicationDap"
-          target: "Dap"
-          relation: "TARGETS_DAP"
-    - name: "apm_application_daps__edge__EXPOSES_DAP"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "Application"
-          "from":
-            id: "apm_application"
-        - vertex: "Dap"
-          "from":
-            id: "dap_id"
-        - source: "Application"
-          target: "Dap"
-          relation: "EXPOSES_DAP"
-    - name: "apm_obso__edge__HAS_OBSOLESCENCE_RECORD"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "Application"
-          "from":
-            id: "application_id"
-        - vertex: "ObsolescenceRecord"
-          "from":
-            id: "id"
-        - source: "Application"
-          target: "ObsolescenceRecord"
-          relation: "HAS_OBSOLESCENCE_RECORD"
-    - name: "apm_obso__edge__ON_HOST"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "ObsolescenceRecord"
-          "from":
-            id: "id"
-        - vertex: "Host"
-          "from":
-            id: "host"
-        - source: "ObsolescenceRecord"
-          target: "Host"
-          relation: "ON_HOST"
-    - name: "apm_obso__edge__REFERENCES_TECHNOLOGY"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "ObsolescenceRecord"
-          "from":
-            id: "id"
-        - vertex: "Technology"
-          "from":
-            id: "technology_id"
-        - source: "ObsolescenceRecord"
-          target: "Technology"
-          relation: "REFERENCES_TECHNOLOGY"
-    - name: "apm_obso__edge__HAS_CRITICALITY"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "ObsolescenceRecord"
-          "from":
-            id: "id"
-        - vertex: "Criticality"
-          "from":
-            id: "criticality"
-        - source: "ObsolescenceRecord"
-          target: "Criticality"
-          relation: "HAS_CRITICALITY"
-    - name: "apm_obso__edge__IN_ENVIRONMENT"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "ObsolescenceRecord"
-          "from":
-            id: "id"
-        - vertex: "Environment"
-          "from":
-            id: "env"
-        - source: "ObsolescenceRecord"
-          target: "Environment"
-          relation: "IN_ENVIRONMENT"
-    - name: "apm_obso__edge__LOCATED_IN_COUNTRY"
-      drop_trivial_input_fields: true
-      fail_fast: false
-      pipeline:
-        - vertex: "ObsolescenceRecord"
-          "from":
-            id: "id"
-        - vertex: "LocationCountry"
-          "from":
-            id: "location_country"
-        - source: "ObsolescenceRecord"
-          target: "LocationCountry"
-          relation: "LOCATED_IN_COUNTRY"
+        - vertex: Technology

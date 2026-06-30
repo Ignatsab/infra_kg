@@ -22,16 +22,32 @@ SPEC.loader.exec_module(export_manifest_graph)
 
 class GrafloManifestExportTest(unittest.TestCase):
     def test_generated_manifest_yaml_can_be_read_without_pyyaml(self) -> None:
-        manifest = export_manifest_graph.parse_generated_yaml(
-            (ROOT / "graflo_experiment" / "manifest.apm_topology.yaml").read_text(encoding="utf-8")
-        )
+        manifest_text = (ROOT / "graflo_experiment" / "manifest.apm_topology.yaml").read_text(encoding="utf-8")
+        manifest = export_manifest_graph.parse_generated_yaml(manifest_text)
 
         self.assertEqual("apm_topology", manifest["schema"]["metadata"]["name"])
         self.assertEqual(
             "Cluster",
             manifest["schema"]["graph"]["vertex_config"]["vertices"][0]["name"],
         )
-        self.assertGreater(len(manifest["ingestion_model"]["resources"]), 0)
+        self.assertEqual(
+            [
+                "apm_cluster",
+                "apm_subclusters",
+                "apm_applications",
+                "apm_contacts",
+                "apm_application_daps",
+                "apm_obso",
+                "apm_technologies",
+            ],
+            [resource["name"] for resource in manifest["ingestion_model"]["resources"]],
+        )
+        self.assertNotIn('"', manifest_text)
+        self.assertNotIn("__edge__", manifest_text)
+        self.assertNotIn("__vertex__", manifest_text)
+        self.assertNotIn("id: apm_cluster", manifest_text)
+        self.assertNotIn("LOCATED_IN_COUNTRY", manifest_text)
+        self.assertIn("relation: LOCATED_IN", manifest_text)
 
     def test_manifest_preview_matches_direct_fk_graph_counts(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -44,8 +60,10 @@ class GrafloManifestExportTest(unittest.TestCase):
             graph = export_manifest_graph.build_graph_from_manifest(manifest, base)
 
         expected = build_graph_from_tables(mock_tables(), include_derived=False)
+        expected_edge_counts = expected.edge_counts()
+        expected_edge_counts["LOCATED_IN"] = expected_edge_counts.pop("LOCATED_IN_COUNTRY")
         self.assertEqual(expected.label_counts(), graph.label_counts())
-        self.assertEqual(expected.edge_counts(), graph.edge_counts())
+        self.assertEqual(expected_edge_counts, graph.edge_counts())
         self.assertEqual([], graph.warnings)
 
     def test_manifest_preview_supports_apm_clusters_alias(self) -> None:

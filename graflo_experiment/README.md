@@ -58,6 +58,30 @@ python3 graflo_experiment/generate_manifest.py \
 The generator writes plain YAML scalars where possible, so the manifest stays
 easy to read and does not wrap every value in quotes.
 
+## Refresh CSVs From PostgreSQL
+
+For real data, keep `data/real/APM_DATA` as a reproducible staging folder. Put
+the PostgreSQL connection in `.env` with either `POSTGRES_DSN` or the individual
+`POSTGRES_HOST`, `POSTGRES_DB`, `POSTGRES_USER`, and `POSTGRES_PASSWORD`
+variables, then export:
+
+```bash
+python3 scripts/export_postgres_apm_csv.py \
+  --output-dir data/real/APM_DATA \
+  --table-prefix apm_
+```
+
+For a first sample:
+
+```bash
+python3 scripts/export_postgres_apm_csv.py \
+  --output-dir data/real/APM_DATA \
+  --table-prefix apm_ \
+  --limit 5000
+```
+
+Then regenerate the Graflo manifest from `data/real/APM_DATA`.
+
 ## Validate With Graflo
 
 Install Graflo in the environment where you want to test it:

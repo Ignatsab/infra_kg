@@ -32,6 +32,70 @@ Generate mock source tables:
 python3 scripts/generate_mock_data.py
 ```
 
+## Data Source Options
+
+The recommended production path is:
+
+1. Read `apm_*` tables from PostgreSQL.
+2. Export a point-in-time CSV snapshot into `data/real/APM_DATA`.
+3. Generate the manifest and graph from that folder.
+
+This keeps the graph build reproducible: if validation or visualization looks
+wrong, the exact input files are still available for debugging. It also avoids
+holding long database cursors open while experimenting with graph shape.
+
+Set one of these connection styles in `.env`:
+
+```bash
+POSTGRES_DSN=postgresql://USER:PASSWORD@HOST:5432/DBNAME
+POSTGRES_SCHEMA=public
+```
+
+or:
+
+```bash
+POSTGRES_HOST=HOST
+POSTGRES_PORT=5432
+POSTGRES_DB=DBNAME
+POSTGRES_USER=USER
+POSTGRES_PASSWORD=PASSWORD
+POSTGRES_SCHEMA=public
+```
+
+Then refresh the CSV staging folder:
+
+```bash
+python3 scripts/export_postgres_apm_csv.py \
+  --output-dir data/real/APM_DATA \
+  --table-prefix apm_
+```
+
+For a safer first sample:
+
+```bash
+python3 scripts/export_postgres_apm_csv.py \
+  --output-dir data/real/APM_DATA \
+  --table-prefix apm_ \
+  --limit 5000
+```
+
+After that, use the same commands as the CSV flow:
+
+```bash
+python3 graflo_experiment/generate_manifest.py \
+  --data-dir data/real/APM_DATA \
+  --output graflo_experiment/manifest.apm_topology.yaml
+
+python3 graflo_experiment/export_manifest_graph.py \
+  --data-dir data/real/APM_DATA \
+  --manifest graflo_experiment/manifest.apm_topology.yaml \
+  --viewer-output build/graflo_topology_viewer.html
+```
+
+A fully direct DB-to-graph path is possible later, but the CSV snapshot layer is
+the better first step while the schema and relationship naming are still being
+reviewed.
+
 Export the graph to JSON and Cypher:
 
 ```bash

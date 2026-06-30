@@ -5,6 +5,7 @@ description = "APM topology tables to Memgraph knowledge graph proof of concept"
 requires-python = ">=3.10"
 dependencies = [
     "neo4j>=5.20.0,<6",
+    "psycopg[binary]>=3.1.0,<4",
 ]
 
 [tool.pytest.ini_options]
